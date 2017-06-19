@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Content Compression Resistance和Content Hugging · Morefun With Coding</title><meta name="description" content="Content Compression Resistance和Content Hugging - Tinghui"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://morefun.mobi/atom.xml" title="Morefun With Coding"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/Tinghui" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="mailto:tinghui.zhang3@gmail.com" target="_self" class="nav-list-link">EMAIL</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Content Compression Resistance和Content Hugging</h1><div class="post-info">2015年1月28日</div><div class="post-content"><p>AutoLayout中，<code>Content Compression Resistance</code>和<code>Content Hugging</code>这两个概念，从字面上很难理解它们意思和用途，苹果官方文档中相关描述也比较少。中文翻译中大多数都把它们按字面翻译成<code>内容压缩阻力</code>和<code>内容吸附性</code>，也不是很好理解。最近搜索和查看了一些文章和资料，搞清楚了它们的作用，在此整理一下。</p>
+<a id="more"></a>
+<h2 id="固有内容尺寸（Intrinsic-Content-Size）"><a href="#固有内容尺寸（Intrinsic-Content-Size）" class="headerlink" title="固有内容尺寸（Intrinsic Content Size）"></a>固有内容尺寸（Intrinsic Content Size）</h2><p>要理解内容压缩阻力和内容吸附性这两个概念，首先要理解固有内容尺寸（Intrinsic Content Size）这一概念。</p>
+<p>每个视图都有内容压缩阻力优先级（Content Compression Resistance Priority）和内容吸附性优先级（Content Hugging Priority）。<strong>但只有当视图定义了固有内容尺寸后，这两种优先级才会起作用；</strong>否则如果都没有定义内容尺寸大小，又如何知道应该抗压缩或者吸附至什么大小呢。</p>
+<p>那么，固有内容尺寸是什么，有什么作用呢？</p>
+<p>引用自苹果官方AutoLayout指南里面对固有内容尺寸的描述：</p>
+<blockquote>
+<p><strong>Intrinsic Content Size</strong></p>
+<p>Leaf-level views such as buttons typically know more about what size they should be than does the code that is positioning them. This is communicated through the intrinsic content size, which tells the layout system that a view contains some content that it doesn’t natively understand, and indicates how large that content is, intrinsically.</p>
+<p>For elements such as text labels, you should typically set the element to be its intrinsic size (select Editor &gt; Size To Fit Content). This means that the element will grow and shrink appropriately with different content for different languages.</p>
+</blockquote>
+<p>什么意思呢？</p>
+<p>简单来说就是，像按钮、文本标签这类视图控件，在布局的时候，它们自己内部比外部布局代码更清楚自己需要多大的尺寸来显示自己的内容。这个尺寸就是由固有内容尺寸（intrinsic content size）来传达的。这就相当于，固有内容尺寸告诉布局系统：“这个视图里面包含了一些你不能理解的内容，但是我给你指出了那些内容有多大的尺寸。”</p>
+<p>由此可见，固有内容尺寸是为了实现视图自适应大小而准备的。</p>
+<h2 id="Content-Compression-Resistance-与-Content-Hugging"><a href="#Content-Compression-Resistance-与-Content-Hugging" class="headerlink" title="Content Compression Resistance 与 Content Hugging"></a>Content Compression Resistance 与 Content Hugging</h2><p>关于这两个概念，最容易理解的文档说明在UIView Class Reference文档里面：</p>
+<blockquote>
+<p><strong><code>- contentCompressionResistancePriorityForAxis:</code></strong></p>
+<p>Returns the priority with which a view resists being made smaller than its intrinsic size.</p>
+<p><strong><code>- contentHuggingPriorityForAxis:</code></strong></p>
+<p>Returns the priority with which a view resists being made larger than its intrinsic size.</p>
+</blockquote>
+<p>通过以上两个接口的说明，其意义已经相当清楚了：内容压缩阻力优先级就是视图反压缩的优先级，优先级越大，视图就越不容易被压小；内容吸附性优先级就是视图反拉伸的优先级，优先级越大，视图就越不容易被拉大。</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>下面，引用一个来自<a href="http://stackoverflow.com/questions/15850417/cocoa-autolayout-content-hugging-vs-content-compression-resistance-priority" target="_blank" rel="external">stackoverflow</a>的例子，这个例子很形象的解释了内容压缩阻力和内容吸附性优先级的作用。</p>
+<p>假设，你有一个下面这样的按钮：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[		Click Me		]</div></pre></td></tr></table></figure>
+<p>按钮与其父视图之间的边距约束优先级是500。</p>
+<p>那么，如果按钮的吸附性优先级（Hugging priority）大于500，按钮看起来会是这样：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Click Me]</div></pre></td></tr></table></figure>
+<p>如果，吸附性优先级小于500，按钮会是这样：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[		Click Me		]</div></pre></td></tr></table></figure>
+<p>如果现在父视图收缩了，按钮的压缩阻力优先级（Compression Resistance priority）大于500，它看起来会是这样：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Click Me]</div></pre></td></tr></table></figure>
+<p>否则，如果压缩阻力优先级小于500，它会是这样：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[Cli..]</div></pre></td></tr></table></figure>
+<p>如果不是这样，很可能是其他的一些约束扰乱了你的整个布局。<br>例如，你可能将边距约束优先级设置成了1000。或者可能是加一个优先级较高的宽度约束。遇到这种情况，可以试试“Editor &gt; Size to Fit Content”命令。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>因此，我们可以简单总结为：</p>
+<ol>
+<li><strong>Content Hugging: 反拉伸</strong></li>
+<li><strong>Content Compression Resistance: 反压缩</strong></li>
+<li><strong>仅当视图定义了自己的Intrinsic Content Size，那么它的Content Compression Resistance优先级和Content Hugging优先级属性才有作用。</strong></li>
+</ol>
+<p>参考</p>
+<ol>
+<li><a href="(https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/AutoLayoutConcepts/AutoLayoutConcepts.html#//apple_ref/doc/uid/TP40010853-CH14-SW2">Auto Layout Guide</a>)</li>
+<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/index.html#//apple_ref/occ/instm/UIView/contentHuggingPriorityForAxis:" target="_blank" rel="external">UIView Class Reference</a></li>
+<li><a href="http://www.objc.io/issue-3/advanced-auto-layout-toolbox.html" target="_blank" rel="external">Advanced Auto Layout Toolbox</a></li>
+<li><a href="http://stackoverflow.com/questions/15850417/cocoa-autolayout-content-hugging-vs-content-compression-resistance-priority" target="_blank" rel="external">Cocoa Autolayout: content hugging vs content compression resistance priority</a></li>
+</ol>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p></div></article></div></main><footer><div class="paginator"><a href="/2015/09/01/2015-09-01-he-shi-shi-yong-updateconstraints/" class="prev">上一篇</a><a href="/2014/10/15/2014-10-15-shi-yong-autolayoutshi-xian-uitableviewde-celldong-tai-bu-ju-he-ke-bian-xing-gao/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'Tinghui';
+var disqus_identifier = '2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/';
+var disqus_title = 'Content Compression Resistance和Content Hugging';
+var disqus_url = 'http://morefun.mobi/2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//Tinghui.disqus.com/count.js" async></script><div class="copyright"><p>© 2012 - 2017 <a href="http://morefun.mobi">Tinghui</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

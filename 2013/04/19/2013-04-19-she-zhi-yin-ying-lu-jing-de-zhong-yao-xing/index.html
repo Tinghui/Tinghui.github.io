@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 给阴影设置shadowPath的重要性 · Morefun With Coding</title><meta name="description" content="给阴影设置shadowPath的重要性 - Tinghui"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://morefun.mobi/atom.xml" title="Morefun With Coding"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/Tinghui" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="mailto:tinghui.zhang3@gmail.com" target="_self" class="nav-list-link">EMAIL</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">给阴影设置shadowPath的重要性</h1><div class="post-info">2013年4月19日</div><div class="post-content"><p>iOS中，给视图加阴影很容易，只需要：</p>
+<ol>
+<li>项目中引入QuartzCore框架</li>
+<li>实现文件中import QuartzCore的头文件</li>
+<li>然后仅需一行代码<code>[myView.layer setShadowOpacity:0.5]</code></li>
+</ol>
+<p><img src="https://markpospesel.files.wordpress.com/2012/04/shadow1.png?w=584" alt="image">  </p>
+<p>然而，最简单的方法通常都不是性能最好的方法。<br><a id="more"></a></p>
+<p>如果再用这个视图作动画(特别当它是UITableViewCell的一部分的时候)，你可能会注意到动画的卡顿。这是因为在计算视图阴影的时候，为了计算出怎样渲染视图的阴影，Core Animation需要做一次离屏渲染才能确定视图的形状。</p>
+<p>为了证明这一点。现在打开模拟器，勾选上「Debug」菜单中的「Color Off-screen Rendered」选项。</p>
+<p><img src="https://markpospesel.files.wordpress.com/2012/04/simulator-menu.png?w=584" alt="image"></p>
+<p>或者，接上iOS设备，启动Instruments(⌘I)，选择Core Animation模板，选中Core Animation栏，勾上”Color Offscreen-Rendered Yellow”选项。</p>
+<p><img src="https://markpospesel.files.wordpress.com/2012/04/instruments.png?w=584" alt="IMAGE"></p>
+<p>之后在模拟器（或设备）上，会看到类似下面的画面：</p>
+<p><img src="https://markpospesel.files.wordpress.com/2012/04/offscreen-rendered1.png?w=584" alt="IMAGE"></p>
+<p>这表明某些东西（在我们这个例子中就是阴影）造成了一个昂贵的离屏渲染。</p>
+<h3 id="快速修正"><a href="#快速修正" class="headerlink" title="快速修正"></a>快速修正</h3><p>幸运地是，修正阴影的这个性能问题和添加阴影一样简单。只需告诉Core Animation视图是什么形状的就行了。使用view.layer的<code>setShadowPath:</code>方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[myView.layer setShadowPath:[[UIBezierPath bezierPathWithRect:myView.bounds] CGPath]];</div></pre></td></tr></table></figure>
+<p>(注意：因为视图不同的形状，这里代码可能有所不同。UIBezierPath有许多便捷的方法可以调用。比如你的视图有圆角，可以使用<code>bezierPathWithRoundedRect:cornerRadius:</code>方法。)</p>
+<p>现在再测试一下，指示离屏渲染内容的黄色区块应该消失了吧。</p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>当视图的bounds变化后，你需要更新layer的shadowPath。同样，如果你要做一个bounds变化的动画，也需要给layer的shadowPath做动画来匹配bounds的变化。给layer的shadowPath做动画需要用到CAAnimation，因为UIView不能直接对shadowPath做动画(shadowPath是CALayer的属性)。用CAKeyframeAnimation可以很简单地对shadowPath做一个动画，只需从一个CGPath变化到另一个CGPath就可以了。</p>
+<p>原文: <a href="http://markpospesel.wordpress.com/2012/04/03/on-the-importance-of-setting-shadowpath/" target="_blank" rel="external">On the importance of setting shadowPath</a></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2013/04/24/2013-04-24-guan-yu-bu-yao-zai-inithe-deallocli-mian-shi-yong-accessor-de-wen-ti/" class="prev">上一篇</a><a href="/2012/12/05/2012-12-05-effective-obj-c-arc-and-pitfalls-in-it/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'Tinghui';
+var disqus_identifier = '2013/04/19/2013-04-19-she-zhi-yin-ying-lu-jing-de-zhong-yao-xing/';
+var disqus_title = '给阴影设置shadowPath的重要性';
+var disqus_url = 'http://morefun.mobi/2013/04/19/2013-04-19-she-zhi-yin-ying-lu-jing-de-zhong-yao-xing/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//Tinghui.disqus.com/count.js" async></script><div class="copyright"><p>© 2012 - 2017 <a href="http://morefun.mobi">Tinghui</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 什么时候使用updateConstraints · Morefun With Coding</title><meta name="description" content="什么时候使用updateConstraints - Tinghui"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://morefun.mobi/atom.xml" title="Morefun With Coding"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/Tinghui" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="mailto:tinghui.zhang3@gmail.com" target="_self" class="nav-list-link">EMAIL</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">什么时候使用updateConstraints</h1><div class="post-info">2015年9月1日</div><div class="post-content"><p>UIView中的<code>updateConstraints</code>方法一直是一个令人纠结的地方。按照<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/#//apple_ref/occ/instm/UIView/updateConstraints" target="_blank" rel="external">苹果官方文档</a>中给出的建议：</p>
+<blockquote>
+<p>Custom views that set up constraints themselves should do so by overriding this method. When your custom view notes that a change has been made to the view that invalidates one of its constraints, it should immediately remove that constraint, and then call setNeedsUpdateConstraints to note that constraints need to be updated. Before layout is performed, your implementation of updateConstraints will be invoked, allowing you to verify that all necessary constraints for your content are in place at a time when your custom view’s properties are not changing.</p>
+</blockquote>
+<p>当视图的改变使得某个约束无效时，应当把该约束移除，并调用<code>setNeedsUpdateConstraints</code>以标记视图需要更新约束，然后在<code>updateConstraints</code>中更新约束。</p>
+<p>然而，实际上却并不那么好用：</p>
+<a id="more"></a>
+<ol>
+<li>每次执行<code>updateConstraints()</code>方法时，视图的状态并不是完全相同的。视图可能已经有一些约束了，而且大部分情况下你可能只想更改一部分约束。这就导致<code>updateConstraints()</code>中散落着各种if语句用来判断指定的约束是否已经存在。</li>
+<li>视图也不一定完全拥有它的所有约束。视图层级中的其他视图可能会把约束加到你的视图上，所以你的代码也不能假设constraints数组中的哪个约束是干什么的。这意味着你必须用单独的属性来跟踪所有可能需要修改的约束。</li>
+<li>改变约束通常是在响应事件的时候。如果你遵循了官方文档的建议，在处理事件，改变内部状态后，就需要调用<code>setNeedsUpdateConstraints()</code>。结果就是：修改布局的代码（在updateConstraints()里面）和触发修改的代码分离在不同的地方，逻辑难以理解。</li>
+</ol>
+<p>那么我们应该按照文档建议的那样使用<code>updateConstraints()</code>吗？在今年的WWDC技术讲座 <a href="https://developer.apple.com/videos/wwdc/2015/?id=219" target="_blank" rel="external">Mysteries of Auto Layout (Part 2) </a>上，苹果给出了新的建议：</p>
+<blockquote>
+<p>Really, all this is is a way for views to have a chance to make changes to constraints just in time for the next layout pass, but it’s often not actually needed.</p>
+<p>All of your initial constraint setup should ideally happen inside Interface Builder. Or if you really find that you need to allocate your constraints programmatically, some place like viewDidLoad is much better. updateConstraints is really just for work that needs to be repeated periodically.</p>
+<p>Also, it’s pretty straightforward to just change constraints when you find the need to do that; whereas, if you take that logic apart from the other code that’s related to it and you move it into a separate method that gets executed at a later time, your code becomes a lot harder to follow, so it will be harder for you to maintain, it will be a lot harder for other people to understand.</p>
+<p>So when would you need to use updateConstraints? Well, it boils down to performance. If you find that just changing your constraints in place is too slow, then update constraints might be able to help you out. It turns out that changing a constraint inside updateConstraints is actually faster than changing a constraint at other times. The reason for that is because the engine is able to treat all the constraint changes that happen in this pass as a batch.</p>
+</blockquote>
+<p>总结下来就是：不要将<code>updateConstraints()</code>用于视图的初始化设置。当你需要在单个布局流程（single layout pass）中添加、修改或删除大量约束的时候，用它来获得最佳性能。如果没有性能问题，直接更新约束更简单。</p>
+<p>参考：</p>
+<ol>
+<li><a href="http://oleb.net/blog/2015/08/how-to-use-updateconstraints/" target="_blank" rel="external">How to Use updateConstraints</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/#//apple_ref/occ/instm/UIView/updateConstraints" target="_blank" rel="external">UIView Class Reference</a></li>
+<li><a href="https://developer.apple.com/videos/wwdc/2015/?id=219" target="_blank" rel="external">WWDC session: Mysteries of Auto Layout (Part 2)</a></li>
+</ol>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p></div></article></div></main><footer><div class="paginator"><a href="/2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'Tinghui';
+var disqus_identifier = '2015/09/01/2015-09-01-he-shi-shi-yong-updateconstraints/';
+var disqus_title = '什么时候使用updateConstraints';
+var disqus_url = 'http://morefun.mobi/2015/09/01/2015-09-01-he-shi-shi-yong-updateconstraints/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//Tinghui.disqus.com/count.js" async></script><div class="copyright"><p>© 2012 - 2017 <a href="http://morefun.mobi">Tinghui</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

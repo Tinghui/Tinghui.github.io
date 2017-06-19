@@ -1,0 +1,24 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 7种常见的代码问题 · Morefun With Coding</title><meta name="description" content="7种常见的代码问题 - Tinghui"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://morefun.mobi/atom.xml" title="Morefun With Coding"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/Tinghui" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="mailto:tinghui.zhang3@gmail.com" target="_self" class="nav-list-link">EMAIL</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">7种常见的代码问题</h1><div class="post-info">2014年3月21日</div><div class="post-content"><p>我进行过很多代码审查，其中有7种最常见的代码问题。</p>
+<h2 id="被注释掉的代码"><a href="#被注释掉的代码" class="headerlink" title="被注释掉的代码"></a>被注释掉的代码</h2><p>这让我觉得你没有学会如何使用版本控制工具和标记功能。如果这些旧代码已经不再有用了，我干嘛还需要读它！？</p>
+<p>如果它很重要，将来你可能会需要返回来查看它。那么你可以在版本控制工具中给它添加一个适当的标记，然后把它从当前代码中移除掉。<br><a id="more"></a></p>
+<h2 id="无用的注释"><a href="#无用的注释" class="headerlink" title="无用的注释"></a>无用的注释</h2><p>那些没有任何价值的注释，那些明摆着是显而易见的注释，或者对部分代码做的注释，都应该放进方法里面。</p>
+<p><strong>记住：</strong> 注释很快就会过时的，并且人们不会维护它。</p>
+<h2 id="空方法"><a href="#空方法" class="headerlink" title="空方法"></a>空方法</h2><p>一个只调用super的方法被认为是一个空方法。把它移除掉。</p>
+<h2 id="文件太长"><a href="#文件太长" class="headerlink" title="文件太长"></a>文件太长</h2><p>一个代码超过400行的文件你如何读的下去？眼睛看着都难受啊，请用组合(composition)、分类(categories)或其他方式来组织你的代码。</p>
+<p>每当我发现一个文件的代码行数过长，我的第一印象都会假定它破坏了单一职责原则(SRP，Single Responsibility Principle)，除非证明并非如此。</p>
+<h2 id="不可变的对象属性用错了修饰符"><a href="#不可变的对象属性用错了修饰符" class="headerlink" title="不可变的对象属性用错了修饰符"></a>不可变的对象属性用错了修饰符</h2><p>如果你有一个不可变的对象属性，并且它有一个可变的副本，请用copy。否则，如果有人给你这个不可变的属性赋值了一个可变的副本，并且修改了这个副本，那么你最终不得不面对这种烦人的bug。</p>
+<p><strong>记住：</strong> 如果你对像NSString这样的不可变的对象调用copy，实际上它只会retain它，不会有性能损失。</p>
+<h2 id="不关心结果"><a href="#不关心结果" class="headerlink" title="不关心结果"></a>不关心结果</h2><p>如果你调用我的API但是不传递容差处理(errorHandler)相关的方法，我会让你付出沉重的代价(崩溃)。有些情况下我也会对完成结果的回调(completion results)做相同的处理。</p>
+<p><strong>记住：</strong> 当你设计API的时候，如果不允许使用者在不关心结果的情况下调用某些消耗很大的方法，那么你的用户会很感激你给他们减少了电量消耗。</p>
+<h2 id="没有断言或有效性验证"><a href="#没有断言或有效性验证" class="headerlink" title="没有断言或有效性验证"></a>没有断言或有效性验证</h2><p>为你的假设加上断言，用断言来强制执行API的正确使用方法或者以确保你的假设通过了实际的验证。如果不是，你可以很快的知道。</p>
+<p>如果你还发现了其他常见的问题，欢迎给我发个<a href="http://twitter.com/merowing_" target="_blank" rel="external">推特</a>。</p>
+<p>译自：<a href="http://www.merowing.info/2014/03/7-most-common-code-issues/#.UyuU_dy_7PA" target="_blank" rel="external">7种常见的代码问题</a></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p></div></article></div></main><footer><div class="paginator"><a href="/2014/04/15/2014-04-15-shi-yong-nssecurecodingxie-yi-jin-xing-bian-jie-ma/" class="prev">上一篇</a><a href="/2014/03/16/2014-03-16-yi-adopting-modern-objective-c/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'Tinghui';
+var disqus_identifier = '2014/03/21/2014-03-21-yi-7chong-chang-jian-de-dai-ma-wen-ti/';
+var disqus_title = '7种常见的代码问题';
+var disqus_url = 'http://morefun.mobi/2014/03/21/2014-03-21-yi-7chong-chang-jian-de-dai-ma-wen-ti/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//Tinghui.disqus.com/count.js" async></script><div class="copyright"><p>© 2012 - 2017 <a href="http://morefun.mobi">Tinghui</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

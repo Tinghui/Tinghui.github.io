@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> iOS MVC设计模式最佳实践要点 · Morefun With Coding</title><meta name="description" content="iOS MVC设计模式最佳实践要点 - Tinghui"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://morefun.mobi/atom.xml" title="Morefun With Coding"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/Tinghui" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="mailto:tinghui.zhang3@gmail.com" target="_self" class="nav-list-link">EMAIL</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">iOS MVC设计模式最佳实践要点</h1><div class="post-info">2013年5月20日</div><div class="post-content"><p>一些关于MVC模式的实践要点，摘自《iOS5 Programming Pushing The Limits》。</p>
+<h3 id="模型-Model"><a href="#模型-Model" class="headerlink" title="模型(Model)"></a>模型(Model)</h3><ul>
+<li><p><strong>一个好的模型类仅以独立的描述性的方式封装数据。</strong></p>
+<p>  比如一个Person类，可能有name、address、brithdate、image这些描述性的数据。但是不应该有显示或修改这些功能。</p>
+</li>
+<li><p><strong>模型类应当只引用其他模型类，永远不要引用视图(View)类或控制器(Controller)类</strong></p>
+<p>  模型类可以定义一个协议，用delegate的形式和它们交互，这样就不需要引用一个特定类型的视图类或者控制器类了。</p>
+<a id="more"></a>    
+</li>
+</ul>
+<h3 id="视图-View"><a href="#视图-View" class="headerlink" title="视图(View)"></a>视图(View)</h3><ul>
+<li><p><strong>视图类负责展示数据</strong></p>
+</li>
+<li><p><strong>视图类负责接收用户输入事件，但是不负责处理它们</strong></p>
+<p>  当用户点击一个视图后，视图可以以delegate的方式发出通知“我被点击了”，但是不应该直接进入处理逻辑或者修改其他视图什么的。</p>
+<p>  比如，UITableViewCell上，点击一个删除按钮后，视图应该通知delegate删除按钮被点击了，而不是直接告诉模型类删除数据或者告诉tableView移除屏幕上显示的内容，这些都是控制器的责任。</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>视图类不要引用控制器类</strong></p>
+<p>  像模型类一样，可以用delegate的方式和控制器类交互。</p>
+</li>
+<li><p><strong>除了superView或subView，视图类不要引用其他任何视图类</strong></p>
+</li>
+</ul>
+<ul>
+<li><p><strong>视图类可以引用模型类</strong></p>
+<p>  但它引用的模型类通常就是它要显示的那个模型类。</p>
+<p>  没有引用任何特殊模型类的视图重用性更高。比如UITableViewCell，它只用于显示字符串和图片，没有引用什么特殊的模型类，所以重用性高。</p>
+<p>  有时，你需要根据实际情况在重用性和易用性上做取舍。通常，对于应用开发人员来说，定制的视图类通常更容易使用；但对于框架开发人员(比如UIKit团队)来说，就会更侧重于重用性。</p>
+</li>
+</ul>
+<h3 id="控制器-Controller"><a href="#控制器-Controller" class="headerlink" title="控制器(Controller)"></a>控制器(Controller)</h3><ul>
+<li><p><strong>控制器类负责协调模型和视图，它实现了应用程序的大部分逻辑</strong></p>
+<p>  控制器类通常是程序中最不能重用的部分，这就是为什么要严格禁止模型类或视图类直接引用控制器类的原因。</p>
+<p>  这里所说的直接引用是指引用一个特定类型的类。比如UITableView引用一个实现了<uitableviewdelegate>协议的类是OK的，都是不应该引用一个特定的，比如叫MyTableViewController的类。</uitableviewdelegate></p>
+</li>
+<li><p><strong>另一常见的错误是，使用appDelegate保存全局数据</strong></p>
+<p>  如下例子，经常这么写的话，会造成很多对象直接引用appDelegate类，这样代码会很难重用，因为这些代码都要依赖于特殊的appDelegate类。如果要访问全局数据的化，用单例模式好些。</p>
+  <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//不要这么干</span></div><div class="line">MyAppDelegate *appDelegate = (MyAppDelegate *)[[<span class="built_in">UIApplication</span> sharedApplication] delegate];</div><div class="line">Something *something = [appDelegate something];</div><div class="line"><span class="comment">//不要这么干</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2013/06/11/2013-06-11-core-animation-3djie-shao-di-1bu-fen/" class="prev">上一篇</a><a href="/2013/05/16/2013-05-16-ru-he-shi-yong-objcde-associatedobjecthan-shu-gei-xian-you-lei-tian-jia-xin-property/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'Tinghui';
+var disqus_identifier = '2013/05/20/2013-05-20-ios-mvcshe-ji-mo-shi-zui-jia-shi-jian-yao-dian/';
+var disqus_title = 'iOS MVC设计模式最佳实践要点';
+var disqus_url = 'http://morefun.mobi/2013/05/20/2013-05-20-ios-mvcshe-ji-mo-shi-zui-jia-shi-jian-yao-dian/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//Tinghui.disqus.com/count.js" async></script><div class="copyright"><p>© 2012 - 2017 <a href="http://morefun.mobi">Tinghui</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

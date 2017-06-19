@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://morefun.mobi/"/>
+  <link href="http://blog.morefun.mobi/"/>
   <updated>2017-06-18T14:59:24.000Z</updated>
-  <id>http://morefun.mobi/</id>
+  <id>http://blog.morefun.mobi/</id>
   
   <author>
     <name>Tinghui</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>什么时候使用updateConstraints</title>
-    <link href="http://morefun.mobi/2015/09/01/2015-09-01-he-shi-shi-yong-updateconstraints/"/>
-    <id>http://morefun.mobi/2015/09/01/2015-09-01-he-shi-shi-yong-updateconstraints/</id>
+    <link href="http://blog.morefun.mobi/2015/09/01/2015-09-01-he-shi-shi-yong-updateconstraints/"/>
+    <id>http://blog.morefun.mobi/2015/09/01/2015-09-01-he-shi-shi-yong-updateconstraints/</id>
     <published>2015-09-01T15:22:00.000Z</published>
     <updated>2017-06-18T14:59:24.000Z</updated>
     
@@ -61,15 +61,15 @@
     
     </summary>
     
-      <category term="AutoLayout" scheme="http://morefun.mobi/categories/AutoLayout/"/>
+      <category term="AutoLayout" scheme="http://blog.morefun.mobi/categories/AutoLayout/"/>
     
     
   </entry>
   
   <entry>
     <title>Content Compression Resistance和Content Hugging</title>
-    <link href="http://morefun.mobi/2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/"/>
-    <id>http://morefun.mobi/2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/</id>
+    <link href="http://blog.morefun.mobi/2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/"/>
+    <id>http://blog.morefun.mobi/2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/</id>
     <published>2015-01-28T05:54:00.000Z</published>
     <updated>2017-06-18T14:52:18.000Z</updated>
     
@@ -129,15 +129,15 @@
     
     </summary>
     
-      <category term="AutoLayout" scheme="http://morefun.mobi/categories/AutoLayout/"/>
+      <category term="AutoLayout" scheme="http://blog.morefun.mobi/categories/AutoLayout/"/>
     
     
   </entry>
   
   <entry>
     <title>使用Autolayout实现UITableView的Cell动态布局和动态行高</title>
-    <link href="http://morefun.mobi/2014/10/15/2014-10-15-shi-yong-autolayoutshi-xian-uitableviewde-celldong-tai-bu-ju-he-ke-bian-xing-gao/"/>
-    <id>http://morefun.mobi/2014/10/15/2014-10-15-shi-yong-autolayoutshi-xian-uitableviewde-celldong-tai-bu-ju-he-ke-bian-xing-gao/</id>
+    <link href="http://blog.morefun.mobi/2014/10/15/2014-10-15-shi-yong-autolayoutshi-xian-uitableviewde-celldong-tai-bu-ju-he-ke-bian-xing-gao/"/>
+    <id>http://blog.morefun.mobi/2014/10/15/2014-10-15-shi-yong-autolayoutshi-xian-uitableviewde-celldong-tai-bu-ju-he-ke-bian-xing-gao/</id>
     <published>2014-10-15T10:22:00.000Z</published>
     <updated>2017-06-18T14:29:46.000Z</updated>
     
@@ -214,15 +214,15 @@
     
     </summary>
     
-      <category term="AutoLayout" scheme="http://morefun.mobi/categories/AutoLayout/"/>
+      <category term="AutoLayout" scheme="http://blog.morefun.mobi/categories/AutoLayout/"/>
     
     
   </entry>
   
   <entry>
     <title>Objective-C到Swift：一些想法和建议</title>
-    <link href="http://morefun.mobi/2014/07/15/2014-07-15-you-objective-cdao-swiftde-xie-gan-xiang-he-ti-shi/"/>
-    <id>http://morefun.mobi/2014/07/15/2014-07-15-you-objective-cdao-swiftde-xie-gan-xiang-he-ti-shi/</id>
+    <link href="http://blog.morefun.mobi/2014/07/15/2014-07-15-you-objective-cdao-swiftde-xie-gan-xiang-he-ti-shi/"/>
+    <id>http://blog.morefun.mobi/2014/07/15/2014-07-15-you-objective-cdao-swiftde-xie-gan-xiang-he-ti-shi/</id>
     <published>2014-07-15T01:25:00.000Z</published>
     <updated>2017-06-18T14:24:49.000Z</updated>
     
@@ -359,19 +359,19 @@
     
     </summary>
     
-      <category term="Objc" scheme="http://morefun.mobi/categories/Objc/"/>
+      <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
     
-      <category term="Swift" scheme="http://morefun.mobi/categories/Objc/Swift/"/>
+      <category term="Swift" scheme="http://blog.morefun.mobi/categories/Objc/Swift/"/>
     
-      <category term="编程思想" scheme="http://morefun.mobi/categories/Objc/Swift/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
+      <category term="编程思想" scheme="http://blog.morefun.mobi/categories/Objc/Swift/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
     
     
   </entry>
   
   <entry>
     <title>iOS的Model-View-ViewModel模式</title>
-    <link href="http://morefun.mobi/2014/05/17/2014-05-17-yi-model-view-viewmodel-for-ios/"/>
-    <id>http://morefun.mobi/2014/05/17/2014-05-17-yi-model-view-viewmodel-for-ios/</id>
+    <link href="http://blog.morefun.mobi/2014/05/17/2014-05-17-yi-model-view-viewmodel-for-ios/"/>
+    <id>http://blog.morefun.mobi/2014/05/17/2014-05-17-yi-model-view-viewmodel-for-ios/</id>
     <published>2014-05-17T05:21:00.000Z</published>
     <updated>2017-06-18T14:24:43.000Z</updated>
     
@@ -414,19 +414,19 @@
     
     </summary>
     
-      <category term="翻译" scheme="http://morefun.mobi/categories/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/categories/%E7%BF%BB%E8%AF%91/"/>
     
-      <category term="设计模式" scheme="http://morefun.mobi/categories/%E7%BF%BB%E8%AF%91/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+      <category term="设计模式" scheme="http://blog.morefun.mobi/categories/%E7%BF%BB%E8%AF%91/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
-      <category term="架构" scheme="http://morefun.mobi/categories/%E7%BF%BB%E8%AF%91/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%9E%B6%E6%9E%84/"/>
+      <category term="架构" scheme="http://blog.morefun.mobi/categories/%E7%BF%BB%E8%AF%91/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%9E%B6%E6%9E%84/"/>
     
     
   </entry>
   
   <entry>
     <title>使用NSSecureCoding协议进行编解码</title>
-    <link href="http://morefun.mobi/2014/04/15/2014-04-15-shi-yong-nssecurecodingxie-yi-jin-xing-bian-jie-ma/"/>
-    <id>http://morefun.mobi/2014/04/15/2014-04-15-shi-yong-nssecurecodingxie-yi-jin-xing-bian-jie-ma/</id>
+    <link href="http://blog.morefun.mobi/2014/04/15/2014-04-15-shi-yong-nssecurecodingxie-yi-jin-xing-bian-jie-ma/"/>
+    <id>http://blog.morefun.mobi/2014/04/15/2014-04-15-shi-yong-nssecurecodingxie-yi-jin-xing-bian-jie-ma/</id>
     <published>2014-04-15T06:08:00.000Z</published>
     <updated>2017-06-18T05:12:52.000Z</updated>
     
@@ -476,19 +476,19 @@
     
     </summary>
     
-      <category term="翻译" scheme="http://morefun.mobi/categories/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/categories/%E7%BF%BB%E8%AF%91/"/>
     
-      <category term="NSCoding" scheme="http://morefun.mobi/categories/%E7%BF%BB%E8%AF%91/NSCoding/"/>
+      <category term="NSCoding" scheme="http://blog.morefun.mobi/categories/%E7%BF%BB%E8%AF%91/NSCoding/"/>
     
-      <category term="runtime" scheme="http://morefun.mobi/categories/%E7%BF%BB%E8%AF%91/NSCoding/runtime/"/>
+      <category term="runtime" scheme="http://blog.morefun.mobi/categories/%E7%BF%BB%E8%AF%91/NSCoding/runtime/"/>
     
     
   </entry>
   
   <entry>
     <title>7种常见的代码问题</title>
-    <link href="http://morefun.mobi/2014/03/21/2014-03-21-yi-7chong-chang-jian-de-dai-ma-wen-ti/"/>
-    <id>http://morefun.mobi/2014/03/21/2014-03-21-yi-7chong-chang-jian-de-dai-ma-wen-ti/</id>
+    <link href="http://blog.morefun.mobi/2014/03/21/2014-03-21-yi-7chong-chang-jian-de-dai-ma-wen-ti/"/>
+    <id>http://blog.morefun.mobi/2014/03/21/2014-03-21-yi-7chong-chang-jian-de-dai-ma-wen-ti/</id>
     <published>2014-03-21T01:20:00.000Z</published>
     <updated>2017-06-18T15:00:18.000Z</updated>
     
@@ -517,17 +517,17 @@
     
     </summary>
     
-      <category term="编程风格" scheme="http://morefun.mobi/categories/%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC/"/>
+      <category term="编程风格" scheme="http://blog.morefun.mobi/categories/%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC/"/>
     
-      <category term="翻译" scheme="http://morefun.mobi/categories/%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/categories/%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC/%E7%BF%BB%E8%AF%91/"/>
     
     
   </entry>
   
   <entry>
     <title>Adopting Modern Objective-C</title>
-    <link href="http://morefun.mobi/2014/03/16/2014-03-16-yi-adopting-modern-objective-c/"/>
-    <id>http://morefun.mobi/2014/03/16/2014-03-16-yi-adopting-modern-objective-c/</id>
+    <link href="http://blog.morefun.mobi/2014/03/16/2014-03-16-yi-adopting-modern-objective-c/"/>
+    <id>http://blog.morefun.mobi/2014/03/16/2014-03-16-yi-adopting-modern-objective-c/</id>
     <published>2014-03-16T03:46:00.000Z</published>
     <updated>2017-06-17T15:48:31.000Z</updated>
     
@@ -642,17 +642,17 @@
     
     </summary>
     
-      <category term="Objc" scheme="http://morefun.mobi/categories/Objc/"/>
+      <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
     
-      <category term="翻译" scheme="http://morefun.mobi/categories/Objc/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/categories/Objc/%E7%BF%BB%E8%AF%91/"/>
     
     
   </entry>
   
   <entry>
     <title>关于iOS和OS X废弃的API你需要知道的一切</title>
-    <link href="http://morefun.mobi/2014/02/11/2014-02-11-ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/"/>
-    <id>http://morefun.mobi/2014/02/11/2014-02-11-ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/</id>
+    <link href="http://blog.morefun.mobi/2014/02/11/2014-02-11-ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/"/>
+    <id>http://blog.morefun.mobi/2014/02/11/2014-02-11-ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/</id>
     <published>2014-02-11T06:27:00.000Z</published>
     <updated>2017-06-17T15:39:39.000Z</updated>
     
@@ -701,17 +701,17 @@
     
     </summary>
     
-      <category term="iOS" scheme="http://morefun.mobi/categories/iOS/"/>
+      <category term="iOS" scheme="http://blog.morefun.mobi/categories/iOS/"/>
     
-      <category term="翻译" scheme="http://morefun.mobi/categories/iOS/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/categories/iOS/%E7%BF%BB%E8%AF%91/"/>
     
     
   </entry>
   
   <entry>
     <title>UIApplication​Delegate的launch​Options</title>
-    <link href="http://morefun.mobi/2014/01/08/2014-01-08-uiapplicationdelegate-launchoptions/"/>
-    <id>http://morefun.mobi/2014/01/08/2014-01-08-uiapplicationdelegate-launchoptions/</id>
+    <link href="http://blog.morefun.mobi/2014/01/08/2014-01-08-uiapplicationdelegate-launchoptions/"/>
+    <id>http://blog.morefun.mobi/2014/01/08/2014-01-08-uiapplicationdelegate-launchoptions/</id>
     <published>2014-01-08T02:14:00.000Z</published>
     <updated>2017-06-17T15:13:49.000Z</updated>
     
@@ -807,17 +807,17 @@
     
     </summary>
     
-      <category term="iOS" scheme="http://morefun.mobi/categories/iOS/"/>
+      <category term="iOS" scheme="http://blog.morefun.mobi/categories/iOS/"/>
     
-      <category term="翻译" scheme="http://morefun.mobi/categories/iOS/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/categories/iOS/%E7%BF%BB%E8%AF%91/"/>
     
     
   </entry>
   
   <entry>
     <title>Core Animation 3D介绍 第2部分</title>
-    <link href="http://morefun.mobi/2013/06/24/2013-06-24-core-animation-3djie-shao-di-2bu-fen/"/>
-    <id>http://morefun.mobi/2013/06/24/2013-06-24-core-animation-3djie-shao-di-2bu-fen/</id>
+    <link href="http://blog.morefun.mobi/2013/06/24/2013-06-24-core-animation-3djie-shao-di-2bu-fen/"/>
+    <id>http://blog.morefun.mobi/2013/06/24/2013-06-24-core-animation-3djie-shao-di-2bu-fen/</id>
     <published>2013-06-24T04:58:00.000Z</published>
     <updated>2017-06-17T14:48:43.000Z</updated>
     
@@ -880,17 +880,17 @@
     
     </summary>
     
-      <category term="动画" scheme="http://morefun.mobi/categories/%E5%8A%A8%E7%94%BB/"/>
+      <category term="动画" scheme="http://blog.morefun.mobi/categories/%E5%8A%A8%E7%94%BB/"/>
     
-      <category term="翻译" scheme="http://morefun.mobi/categories/%E5%8A%A8%E7%94%BB/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/categories/%E5%8A%A8%E7%94%BB/%E7%BF%BB%E8%AF%91/"/>
     
     
   </entry>
   
   <entry>
     <title>Core Animation 3D介绍 第1部分</title>
-    <link href="http://morefun.mobi/2013/06/11/2013-06-11-core-animation-3djie-shao-di-1bu-fen/"/>
-    <id>http://morefun.mobi/2013/06/11/2013-06-11-core-animation-3djie-shao-di-1bu-fen/</id>
+    <link href="http://blog.morefun.mobi/2013/06/11/2013-06-11-core-animation-3djie-shao-di-1bu-fen/"/>
+    <id>http://blog.morefun.mobi/2013/06/11/2013-06-11-core-animation-3djie-shao-di-1bu-fen/</id>
     <published>2013-06-11T05:21:00.000Z</published>
     <updated>2017-06-17T14:40:52.000Z</updated>
     
@@ -1002,17 +1002,17 @@
     
     </summary>
     
-      <category term="动画" scheme="http://morefun.mobi/categories/%E5%8A%A8%E7%94%BB/"/>
+      <category term="动画" scheme="http://blog.morefun.mobi/categories/%E5%8A%A8%E7%94%BB/"/>
     
-      <category term="翻译" scheme="http://morefun.mobi/categories/%E5%8A%A8%E7%94%BB/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/categories/%E5%8A%A8%E7%94%BB/%E7%BF%BB%E8%AF%91/"/>
     
     
   </entry>
   
   <entry>
     <title>iOS MVC设计模式最佳实践要点</title>
-    <link href="http://morefun.mobi/2013/05/20/2013-05-20-ios-mvcshe-ji-mo-shi-zui-jia-shi-jian-yao-dian/"/>
-    <id>http://morefun.mobi/2013/05/20/2013-05-20-ios-mvcshe-ji-mo-shi-zui-jia-shi-jian-yao-dian/</id>
+    <link href="http://blog.morefun.mobi/2013/05/20/2013-05-20-ios-mvcshe-ji-mo-shi-zui-jia-shi-jian-yao-dian/"/>
+    <id>http://blog.morefun.mobi/2013/05/20/2013-05-20-ios-mvcshe-ji-mo-shi-zui-jia-shi-jian-yao-dian/</id>
     <published>2013-05-20T03:04:00.000Z</published>
     <updated>2017-06-17T14:16:15.000Z</updated>
     
@@ -1072,17 +1072,17 @@
     
     </summary>
     
-      <category term="编程思想" scheme="http://morefun.mobi/categories/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
+      <category term="编程思想" scheme="http://blog.morefun.mobi/categories/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
     
-      <category term="设计模式" scheme="http://morefun.mobi/categories/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+      <category term="设计模式" scheme="http://blog.morefun.mobi/categories/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
     
   </entry>
   
   <entry>
     <title>使用objc的AssociatedObject函数给现有类添加新property</title>
-    <link href="http://morefun.mobi/2013/05/16/2013-05-16-ru-he-shi-yong-objcde-associatedobjecthan-shu-gei-xian-you-lei-tian-jia-xin-property/"/>
-    <id>http://morefun.mobi/2013/05/16/2013-05-16-ru-he-shi-yong-objcde-associatedobjecthan-shu-gei-xian-you-lei-tian-jia-xin-property/</id>
+    <link href="http://blog.morefun.mobi/2013/05/16/2013-05-16-ru-he-shi-yong-objcde-associatedobjecthan-shu-gei-xian-you-lei-tian-jia-xin-property/"/>
+    <id>http://blog.morefun.mobi/2013/05/16/2013-05-16-ru-he-shi-yong-objcde-associatedobjecthan-shu-gei-xian-you-lei-tian-jia-xin-property/</id>
     <published>2013-05-16T03:49:00.000Z</published>
     <updated>2017-06-17T14:14:19.000Z</updated>
     
@@ -1100,17 +1100,17 @@
     
     </summary>
     
-      <category term="Objc" scheme="http://morefun.mobi/categories/Objc/"/>
+      <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
     
-      <category term="runtime" scheme="http://morefun.mobi/categories/Objc/runtime/"/>
+      <category term="runtime" scheme="http://blog.morefun.mobi/categories/Objc/runtime/"/>
     
     
   </entry>
   
   <entry>
     <title>GCD使用详解 下篇</title>
-    <link href="http://morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-xia-pian/"/>
-    <id>http://morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-xia-pian/</id>
+    <link href="http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-xia-pian/"/>
+    <id>http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-xia-pian/</id>
     <published>2013-05-07T08:19:00.000Z</published>
     <updated>2017-06-17T14:08:50.000Z</updated>
     
@@ -1230,19 +1230,19 @@
     
     </summary>
     
-      <category term="Objc" scheme="http://morefun.mobi/categories/Objc/"/>
+      <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
     
-      <category term="GCD" scheme="http://morefun.mobi/categories/Objc/GCD/"/>
+      <category term="GCD" scheme="http://blog.morefun.mobi/categories/Objc/GCD/"/>
     
-      <category term="翻译" scheme="http://morefun.mobi/categories/Objc/GCD/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/categories/Objc/GCD/%E7%BF%BB%E8%AF%91/"/>
     
     
   </entry>
   
   <entry>
     <title>GCD使用详解 上篇</title>
-    <link href="http://morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-shang-pian/"/>
-    <id>http://morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-shang-pian/</id>
+    <link href="http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-shang-pian/"/>
+    <id>http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-shang-pian/</id>
     <published>2013-05-07T06:46:00.000Z</published>
     <updated>2017-06-17T14:08:48.000Z</updated>
     
@@ -1311,19 +1311,19 @@
     
     </summary>
     
-      <category term="Objc" scheme="http://morefun.mobi/categories/Objc/"/>
+      <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
     
-      <category term="GCD" scheme="http://morefun.mobi/categories/Objc/GCD/"/>
+      <category term="GCD" scheme="http://blog.morefun.mobi/categories/Objc/GCD/"/>
     
-      <category term="翻译" scheme="http://morefun.mobi/categories/Objc/GCD/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/categories/Objc/GCD/%E7%BF%BB%E8%AF%91/"/>
     
     
   </entry>
   
   <entry>
     <title>在init和dealloc中使用accessor</title>
-    <link href="http://morefun.mobi/2013/04/24/2013-04-24-guan-yu-bu-yao-zai-inithe-deallocli-mian-shi-yong-accessor-de-wen-ti/"/>
-    <id>http://morefun.mobi/2013/04/24/2013-04-24-guan-yu-bu-yao-zai-inithe-deallocli-mian-shi-yong-accessor-de-wen-ti/</id>
+    <link href="http://blog.morefun.mobi/2013/04/24/2013-04-24-guan-yu-bu-yao-zai-inithe-deallocli-mian-shi-yong-accessor-de-wen-ti/"/>
+    <id>http://blog.morefun.mobi/2013/04/24/2013-04-24-guan-yu-bu-yao-zai-inithe-deallocli-mian-shi-yong-accessor-de-wen-ti/</id>
     <published>2013-04-24T08:23:00.000Z</published>
     <updated>2017-06-16T16:05:11.000Z</updated>
     
@@ -1358,17 +1358,17 @@
     
     </summary>
     
-      <category term="Objc" scheme="http://morefun.mobi/categories/Objc/"/>
+      <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
     
-      <category term="翻译" scheme="http://morefun.mobi/categories/Objc/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/categories/Objc/%E7%BF%BB%E8%AF%91/"/>
     
     
   </entry>
   
   <entry>
     <title>给阴影设置shadowPath的重要性</title>
-    <link href="http://morefun.mobi/2013/04/19/2013-04-19-she-zhi-yin-ying-lu-jing-de-zhong-yao-xing/"/>
-    <id>http://morefun.mobi/2013/04/19/2013-04-19-she-zhi-yin-ying-lu-jing-de-zhong-yao-xing/</id>
+    <link href="http://blog.morefun.mobi/2013/04/19/2013-04-19-she-zhi-yin-ying-lu-jing-de-zhong-yao-xing/"/>
+    <id>http://blog.morefun.mobi/2013/04/19/2013-04-19-she-zhi-yin-ying-lu-jing-de-zhong-yao-xing/</id>
     <published>2013-04-19T02:46:00.000Z</published>
     <updated>2017-06-16T16:04:59.000Z</updated>
     
@@ -1409,17 +1409,17 @@
     
     </summary>
     
-      <category term="iOS" scheme="http://morefun.mobi/categories/iOS/"/>
+      <category term="iOS" scheme="http://blog.morefun.mobi/categories/iOS/"/>
     
-      <category term="性能" scheme="http://morefun.mobi/categories/iOS/%E6%80%A7%E8%83%BD/"/>
+      <category term="性能" scheme="http://blog.morefun.mobi/categories/iOS/%E6%80%A7%E8%83%BD/"/>
     
     
   </entry>
   
   <entry>
     <title>高效的ARC代码和陷阱</title>
-    <link href="http://morefun.mobi/2012/12/05/2012-12-05-effective-obj-c-arc-and-pitfalls-in-it/"/>
-    <id>http://morefun.mobi/2012/12/05/2012-12-05-effective-obj-c-arc-and-pitfalls-in-it/</id>
+    <link href="http://blog.morefun.mobi/2012/12/05/2012-12-05-effective-obj-c-arc-and-pitfalls-in-it/"/>
+    <id>http://blog.morefun.mobi/2012/12/05/2012-12-05-effective-obj-c-arc-and-pitfalls-in-it/</id>
     <published>2012-12-05T02:00:00.000Z</published>
     <updated>2017-06-17T14:08:33.000Z</updated>
     
@@ -1514,17 +1514,17 @@
     
     </summary>
     
-      <category term="Objc" scheme="http://morefun.mobi/categories/Objc/"/>
+      <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
     
-      <category term="翻译" scheme="http://morefun.mobi/categories/Objc/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/categories/Objc/%E7%BF%BB%E8%AF%91/"/>
     
     
   </entry>
   
   <entry>
     <title>改变导航控制器的Push和Pop动画效果</title>
-    <link href="http://morefun.mobi/2012/07/07/2012-07-07-gai-bian-uinavigationcontroller-de-push-he-pop-dong-hua/"/>
-    <id>http://morefun.mobi/2012/07/07/2012-07-07-gai-bian-uinavigationcontroller-de-push-he-pop-dong-hua/</id>
+    <link href="http://blog.morefun.mobi/2012/07/07/2012-07-07-gai-bian-uinavigationcontroller-de-push-he-pop-dong-hua/"/>
+    <id>http://blog.morefun.mobi/2012/07/07/2012-07-07-gai-bian-uinavigationcontroller-de-push-he-pop-dong-hua/</id>
     <published>2012-07-07T12:00:00.000Z</published>
     <updated>2017-06-16T16:04:36.000Z</updated>
     
@@ -1539,9 +1539,9 @@
     
     </summary>
     
-      <category term="动画" scheme="http://morefun.mobi/categories/%E5%8A%A8%E7%94%BB/"/>
+      <category term="动画" scheme="http://blog.morefun.mobi/categories/%E5%8A%A8%E7%94%BB/"/>
     
-      <category term="iOS" scheme="http://morefun.mobi/categories/%E5%8A%A8%E7%94%BB/iOS/"/>
+      <category term="iOS" scheme="http://blog.morefun.mobi/categories/%E5%8A%A8%E7%94%BB/iOS/"/>
     
     
   </entry>

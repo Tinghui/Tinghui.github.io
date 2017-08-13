@@ -101,7 +101,7 @@
 <p>这是来自苹果的系统日志API(Libc-763.11 gen/asl.c)的源代码。<code>dispatch_io_create</code>函数创建了一个dispatch I/O。它指定了一个会在发生错误的时候被执行的block，以及执行block的队列。<code>dispatch_io_set_low_water</code>函数指定了每次读取操作最多可以读取的数据长度(数据会按这个尺寸分块)。<code>dispatch_io_read</code>函数在全局队列上开启读取操作。每当一块数据被读取后，数据作为参数会被传递给<code>dispatch_io_read</code>的回调函数，因此，block就可以扫描或组合数据了。</p>
 <p>如果你想读取文件的时候速度快些，就试试用dispatch I/O吧。</p>
 <p>译自: <a href="http://www.amazon.com/Pro-Multithreading-Memory-Management-iOS/dp/1430241160" target="_blank" rel="external">《Pro Multithreading and Memory Management for iOS and OS X with ARC, Grand Central Dispatch, and Blocks》</a>第7章</p>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>
 
 
 </div></article></div></main><footer><div class="paginator"><a href="/2013/05/16/2013-05-16-ru-he-shi-yong-objcde-associatedobjecthan-shu-gei-xian-you-lei-tian-jia-xin-property/" class="prev">上一篇</a><a href="/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-shang-pian/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'rockonmycode';

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.morefun.mobi/"/>
-  <updated>2017-06-18T14:59:24.000Z</updated>
+  <updated>2017-08-13T08:38:48.000Z</updated>
   <id>http://blog.morefun.mobi/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.morefun.mobi/2015/09/01/2015-09-01-he-shi-shi-yong-updateconstraints/"/>
     <id>http://blog.morefun.mobi/2015/09/01/2015-09-01-he-shi-shi-yong-updateconstraints/</id>
     <published>2015-09-01T15:22:00.000Z</published>
-    <updated>2017-06-18T14:59:24.000Z</updated>
+    <updated>2017-08-13T08:38:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>UIView中的<code>updateConstraints</code>方法一直是一个令人纠结的地方。按照<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/#//apple_ref/occ/instm/UIView/updateConstraints" target="_blank" rel="external">苹果官方文档</a>中给出的建议：</p>
 <blockquote>
@@ -48,7 +48,9 @@
 <li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/#//apple_ref/occ/instm/UIView/updateConstraints" target="_blank" rel="external">UIView Class Reference</a></li>
 <li><a href="https://developer.apple.com/videos/wwdc/2015/?id=219" target="_blank" rel="external">WWDC session: Mysteries of Auto Layout (Part 2)</a></li>
 </ol>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>]]></content>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>
+
+]]></content>
     
     <summary type="html">
     
@@ -71,7 +73,7 @@
     <link href="http://blog.morefun.mobi/2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/"/>
     <id>http://blog.morefun.mobi/2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/</id>
     <published>2015-01-28T05:54:00.000Z</published>
-    <updated>2017-06-18T14:52:18.000Z</updated>
+    <updated>2017-08-13T08:53:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>AutoLayout中，<code>Content Compression Resistance</code>和<code>Content Hugging</code>这两个概念，从字面上很难理解它们意思和用途，苹果官方文档中相关描述也比较少。中文翻译中大多数都把它们按字面翻译成<code>内容压缩阻力</code>和<code>内容吸附性</code>，也不是很好理解。最近搜索和查看了一些文章和资料，搞清楚了它们的作用，在此整理一下。</p>
 <a id="more"></a>
@@ -116,12 +118,12 @@
 </ol>
 <p>参考</p>
 <ol>
-<li><a href="(https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/AutoLayoutConcepts/AutoLayoutConcepts.html#//apple_ref/doc/uid/TP40010853-CH14-SW2">Auto Layout Guide</a>)</li>
+<li><a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/AutoLayoutConcepts/AutoLayoutConcepts.html#//apple_ref/doc/uid/TP40010853-CH14-SW2" target="_blank" rel="external">Auto Layout Guide</a></li>
 <li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/index.html#//apple_ref/occ/instm/UIView/contentHuggingPriorityForAxis:" target="_blank" rel="external">UIView Class Reference</a></li>
 <li><a href="http://www.objc.io/issue-3/advanced-auto-layout-toolbox.html" target="_blank" rel="external">Advanced Auto Layout Toolbox</a></li>
 <li><a href="http://stackoverflow.com/questions/15850417/cocoa-autolayout-content-hugging-vs-content-compression-resistance-priority" target="_blank" rel="external">Cocoa Autolayout: content hugging vs content compression resistance priority</a></li>
 </ol>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>]]></content>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>]]></content>
     
     <summary type="html">
     
@@ -139,7 +141,7 @@
     <link href="http://blog.morefun.mobi/2014/10/15/2014-10-15-shi-yong-autolayoutshi-xian-uitableviewde-celldong-tai-bu-ju-he-ke-bian-xing-gao/"/>
     <id>http://blog.morefun.mobi/2014/10/15/2014-10-15-shi-yong-autolayoutshi-xian-uitableviewde-celldong-tai-bu-ju-he-ke-bian-xing-gao/</id>
     <published>2014-10-15T10:22:00.000Z</published>
-    <updated>2017-06-18T14:29:46.000Z</updated>
+    <updated>2017-08-13T08:53:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文翻译自：<a href="http://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights" target="_blank" rel="external">stackoverflow</a></p>
 <p>有人在<a href="http://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights" target="_blank" rel="external">stackoverflow</a>上问了一个问题：</p>
@@ -193,7 +195,7 @@
 <li><a href="https://github.com/Tinghui/UITableView-CellHeightCalculation" target="_blank" rel="external">UITableView-CellHeightCalculation</a>：根据本文思路封装的UITableView动态行高计算和行高缓存库，由本人开源和维护。</li>
 </ul>
 <p>有任何问题，欢迎大家留言讨论！</p>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>
 
 
 ]]></content>
@@ -224,7 +226,7 @@
     <link href="http://blog.morefun.mobi/2014/07/15/2014-07-15-you-objective-cdao-swiftde-xie-gan-xiang-he-ti-shi/"/>
     <id>http://blog.morefun.mobi/2014/07/15/2014-07-15-you-objective-cdao-swiftde-xie-gan-xiang-he-ti-shi/</id>
     <published>2014-07-15T01:25:00.000Z</published>
-    <updated>2017-06-18T14:24:49.000Z</updated>
+    <updated>2017-08-13T08:53:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文分享一些在由Objective-C转换至Swift的过程中产生的思考，并尝试总结了一些技巧建议和一些误区陷阱。本文尽量通过对比来展示这两种语言在同一个问题上的不同处理方法。开始吧！</p>
 <h2 id="单文件-vs-接口-实现文件"><a href="#单文件-vs-接口-实现文件" class="headerlink" title="单文件 vs. 接口-实现文件"></a>单文件 vs. 接口-实现文件</h2><p>第一个重大的变化是：<code>interface.h/implementation.m</code>的文件结构被舍弃了。</p>
@@ -348,7 +350,7 @@
 <p>Ciao</p>
 <p><a href="https://twitter.com/bitwaker" target="_blank" rel="external">Follow @bitwaker</a></p>
 <p>译自：<a href="http://www.thinkandbuild.it/from-objective-c-to-swift/" target="_blank" rel="external">FROM OBJECTIVE-C TO SWIFT: THOUGHTS AND HINTS</a></p>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>]]></content>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>]]></content>
     
     <summary type="html">
     
@@ -373,7 +375,7 @@
     <link href="http://blog.morefun.mobi/2014/05/17/2014-05-17-yi-model-view-viewmodel-for-ios/"/>
     <id>http://blog.morefun.mobi/2014/05/17/2014-05-17-yi-model-view-viewmodel-for-ios/</id>
     <published>2014-05-17T05:21:00.000Z</published>
-    <updated>2017-06-18T14:24:43.000Z</updated>
+    <updated>2017-08-13T08:53:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>如果你已经做过一段时间的iOS开发，那么你一定听说过模型—视图—控制器或MVC模式。这是构建iOS应用的标准方式。不过最近，我越来越厌倦MVC的缺点。本文，我们先重温一下MVC是什么，它有什么缺点。然后再介绍一种构建应用的新方式：Model-View-ViewModel。</p>
 <h2 id="Model-View-Controller"><a href="#Model-View-Controller" class="headerlink" title="Model-View-Controller"></a>Model-View-Controller</h2><p>模型-视图-控制器模式(Model-View-Controller)是构造代码的权威范式。苹果甚至<a href="https://developer.apple.com/library/ios/documentation/general/conceptual/devpedia-cocoacore/MVC.html" target="_blank" rel="external">这么说</a>。MVC模式，所有对象都被界定为，要么是一个模型，要么是一个视图，或者要么是一个控制器。模型持有数据，视图向用户呈现一个可交互的界面，视图控制器做模型和视图之间的中介者。</p>
@@ -403,7 +405,7 @@
 <p>如果你再看看MVVM那个示意图，你会发现我使用了模糊的形容词——“通知(notify)”和”更新(update)”，但是并没有指出要怎么做。你可以用KVO，像在MVC里面一样，但是这很快就会变得难以控制。实践中，使用<a href="http://www.teehanlax.com/blog/getting-started-with-reactivecocoa/" target="_blank" rel="external">ReactiveCocoa</a>将各个分散的区块粘合在一起是一个很好的方式。</p>
 <p>关于如何联合使用MVVM和ReactiveCocoa，请阅读Colin Wheeler的这篇<a href="http://cocoasamurai.blogspot.ca/2013/03/basic-mvvm-with-reactivecocoa.html" target="_blank" rel="external">优秀文章</a>，或查看我写的一个<a href="https://github.com/AshFurrow/C-41" target="_blank" rel="external">开源应用</a>。也可以阅读我写的关于ReactiveCocoa和MVVM的<a href="https://leanpub.com/iosfrp" target="_blank" rel="external">书</a>。</p>
 <p>译自：<a href="http://www.teehanlax.com/blog/model-view-viewmodel-for-ios/" target="_blank" rel="external">Model-View-ViewModel for iOS</a></p>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>]]></content>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>]]></content>
     
     <summary type="html">
     
@@ -428,7 +430,7 @@
     <link href="http://blog.morefun.mobi/2014/04/15/2014-04-15-shi-yong-nssecurecodingxie-yi-jin-xing-bian-jie-ma/"/>
     <id>http://blog.morefun.mobi/2014/04/15/2014-04-15-shi-yong-nssecurecodingxie-yi-jin-xing-bian-jie-ma/</id>
     <published>2014-04-15T06:08:00.000Z</published>
-    <updated>2017-06-18T05:12:52.000Z</updated>
+    <updated>2017-08-13T08:53:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>在iOS和Mac OS上，<code>NSCoding</code>是一种简单方便的数据存储方法。它可以直接将你的数据模型对象写入一个文件，之后又可以直接将它们读入内存而不需要编写任何文件解析和序列化的逻辑。将一个对象（假设它已经实现了NSCoding协议）保存至一个文件，只需要这样做：</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">Foo *someFoo = [[Foo alloc] init];</div><div class="line">[<span class="built_in">NSKeyedArchiver</span> archiveRootObject:someFoo toFile:someFile];</div></pre></td></tr></table></figure>
@@ -465,7 +467,7 @@
 <p>好了，现在你的模型类已经拥有了一个可以打开即用的支持NSSecureCoding的简单基类。另外，你也可以直接使用我写的一个叫<code>AutoCoding</code>的分类，它正是使用了上述方法来为任何一个没有实现NSCoding和NSSecureCoding协议的对象加入自动NSCoding和NSSecureCoding能力。</p>
 <p>译自：<a href="http://iosdevelopertips.com/general/object-encoding-and-decoding-with-nssecurecoding.html" target="_blank" rel="external">Object Encoding and Decoding with NSSecureCoding Protocol</a></p>
 <p>原文作者为<a href="https://twitter.com/nicklockwood" target="_blank" rel="external">Nick Lockwood</a>，他是<a href="http://www.informit.com/store/ios-core-animation-advanced-techniques-9780133440751" target="_blank" rel="external">《iOS Core Animation: Advanced Techniques》</a>一书的作者，也是iCarousel、iRate等开源项目的作者。</p>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>]]></content>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>]]></content>
     
     <summary type="html">
     
@@ -490,7 +492,7 @@
     <link href="http://blog.morefun.mobi/2014/03/21/2014-03-21-yi-7chong-chang-jian-de-dai-ma-wen-ti/"/>
     <id>http://blog.morefun.mobi/2014/03/21/2014-03-21-yi-7chong-chang-jian-de-dai-ma-wen-ti/</id>
     <published>2014-03-21T01:20:00.000Z</published>
-    <updated>2017-06-18T15:00:18.000Z</updated>
+    <updated>2017-08-13T08:53:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>我进行过很多代码审查，其中有7种最常见的代码问题。</p>
 <h2 id="被注释掉的代码"><a href="#被注释掉的代码" class="headerlink" title="被注释掉的代码"></a>被注释掉的代码</h2><p>这让我觉得你没有学会如何使用版本控制工具和标记功能。如果这些旧代码已经不再有用了，我干嘛还需要读它！？</p>
@@ -507,7 +509,7 @@
 <h2 id="没有断言或有效性验证"><a href="#没有断言或有效性验证" class="headerlink" title="没有断言或有效性验证"></a>没有断言或有效性验证</h2><p>为你的假设加上断言，用断言来强制执行API的正确使用方法或者以确保你的假设通过了实际的验证。如果不是，你可以很快的知道。</p>
 <p>如果你还发现了其他常见的问题，欢迎给我发个<a href="http://twitter.com/merowing_" target="_blank" rel="external">推特</a>。</p>
 <p>译自：<a href="http://www.merowing.info/2014/03/7-most-common-code-issues/#.UyuU_dy_7PA" target="_blank" rel="external">7种常见的代码问题</a></p>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>]]></content>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>]]></content>
     
     <summary type="html">
     
@@ -529,7 +531,7 @@
     <link href="http://blog.morefun.mobi/2014/03/16/2014-03-16-yi-adopting-modern-objective-c/"/>
     <id>http://blog.morefun.mobi/2014/03/16/2014-03-16-yi-adopting-modern-objective-c/</id>
     <published>2014-03-16T03:46:00.000Z</published>
-    <updated>2017-06-17T15:48:31.000Z</updated>
+    <updated>2017-08-13T08:53:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>苹果2014年03月10日发布了一个新文档，介绍了Objective-C的几个新技巧，包括：</p>
 <ul>
@@ -627,7 +629,7 @@
 <li>使用下标语法，因此像<code>[dictionary setObject:@3 forKey:key]</code>这样的语句会变成<code>dictionary[key] = @3</code>。</li>
 </ul>
 <p>要使用这个现代的Objective-C转换工具，在Xcode菜单中选择“Edit &gt; Refactor &gt; Convert to Modern Objective-C Syntax”。</p>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>]]></content>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>]]></content>
     
     <summary type="html">
     
@@ -654,7 +656,7 @@
     <link href="http://blog.morefun.mobi/2014/02/11/2014-02-11-ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/"/>
     <id>http://blog.morefun.mobi/2014/02/11/2014-02-11-ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/</id>
     <published>2014-02-11T06:27:00.000Z</published>
-    <updated>2017-06-17T15:39:39.000Z</updated>
+    <updated>2017-08-13T08:53:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>已废弃(Deprecated)的API指的是那些已经过时并且在将来某个时间最终会被移除掉的方法或类。通常，苹果在引入一个更优秀的API后就会把原来的API给废弃掉。因为，新引入的API通常意味着可以更好的发挥新硬件或操作系统的性能，或者可以使用一些在构建原有API时根本还没有的语言特性(e.g. blocks)。</p>
 <p>每当苹果添加新方法的时候，他们都会在方法声明的后面用一个很特殊的宏来标明哪些iOS版本支持它们。例如，在UIViewController中，苹果引入了一个使用block来处理回调的方法用来展示一个模态controller，它的声明是这样的：</p>
@@ -690,7 +692,7 @@
 <p>看清楚我们在这里做了什么吗？我们变换了respondsToSelector:的用法：我们用它来测试是否新的API不可用，然后将整段代码放到一个条件代码块中，这样它就只会在deployment target比iOS7低的情况下才会被编译。如果app是为iOS6编译的，它就会先检查新的API是否存在，如果不存在就调用旧的API。如果app是为iOS7编译的，那一整块逻辑代码都会被跳过，直接调用新的API。</p>
 <h3 id="补充阅读"><a href="#补充阅读" class="headerlink" title="补充阅读"></a>补充阅读</h3><p>苹果有一个关于<a href="https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/cross_development/Using/using.html#//apple_ref/doc/uid/20002000-SW5" target="_blank" rel="external">废弃API用法的实例和相关的编译器警告</a>的简单文档，如果感兴趣可以看看。</p>
 <p>原文: <a href="http://iosdevelopertips.com/best-practices/eveything-you-need-to-know-about-ios-and-os-x-deprecated-apis.html" target="_blank" rel="external">Everything You Need to Know about iOS and OS X Deprecated APIs</a></p>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>]]></content>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>]]></content>
     
     <summary type="html">
     
@@ -1112,7 +1114,7 @@
     <link href="http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-xia-pian/"/>
     <id>http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-xia-pian/</id>
     <published>2013-05-07T08:19:00.000Z</published>
-    <updated>2017-06-17T14:08:50.000Z</updated>
+    <updated>2017-08-13T08:53:48.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Dispatch-Queue的一些函数"><a href="#Dispatch-Queue的一些函数" class="headerlink" title="Dispatch Queue的一些函数"></a>Dispatch Queue的一些函数</h2><p>GCD还提供了许多很有用的API用于控制队列中的任务。接下来，我们挨个看看这些API，你就明白为什么GCD如此强大。</p>
 <h3 id="dispatch-set-target-queue"><a href="#dispatch-set-target-queue" class="headerlink" title="dispatch_set_target_queue"></a>dispatch_set_target_queue</h3><p><code>dispatch_set_target_queue</code>函数用于设置一个”目标”队列。这个函数主要用来为新创建的队列设置优先级。当用<code>dispatch_queue_create</code>函数创建一个队列后，无论创建的是并行队列还是串行队列，队列的优先级都和全局队列的默认优先级一样。创建队列后，你可以用这个函数来修改队列的优先级。下面的代码演示了如何给一个串行队列设置background优先级。</p>
@@ -1217,7 +1219,7 @@
 <p>这是来自苹果的系统日志API(Libc-763.11 gen/asl.c)的源代码。<code>dispatch_io_create</code>函数创建了一个dispatch I/O。它指定了一个会在发生错误的时候被执行的block，以及执行block的队列。<code>dispatch_io_set_low_water</code>函数指定了每次读取操作最多可以读取的数据长度(数据会按这个尺寸分块)。<code>dispatch_io_read</code>函数在全局队列上开启读取操作。每当一块数据被读取后，数据作为参数会被传递给<code>dispatch_io_read</code>的回调函数，因此，block就可以扫描或组合数据了。</p>
 <p>如果你想读取文件的时候速度快些，就试试用dispatch I/O吧。</p>
 <p>译自: <a href="http://www.amazon.com/Pro-Multithreading-Memory-Management-iOS/dp/1430241160" target="_blank" rel="external">《Pro Multithreading and Memory Management for iOS and OS X with ARC, Grand Central Dispatch, and Blocks》</a>第7章</p>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>
 
 
 ]]></content>
@@ -1244,7 +1246,7 @@
     <link href="http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-shang-pian/"/>
     <id>http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-shang-pian/</id>
     <published>2013-05-07T06:46:00.000Z</published>
-    <updated>2017-06-17T14:08:48.000Z</updated>
+    <updated>2017-08-13T08:53:48.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Dispatch-Queues"><a href="#Dispatch-Queues" class="headerlink" title="Dispatch Queues"></a>Dispatch Queues</h2><p>Dispatch Queue，顾名思义，它是一个队列，用于存储要执行的任务。程序员可以用block语法编写要执行的任务，再通过<code>dispatch_async</code>函数将它加入到一个dispatch队列中。然后dispatch队列会按照FIFO的顺序执行这些任务。如图7-1所示。</p>
 <p><img src="/images/posts/GCD7-1_execution_on_a_dispatch_queue.png" alt=""></p>
@@ -1301,7 +1303,7 @@
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">* 在优先级为default的全局dispatch队列上执行一个block</div><div class="line">*/</div><div class="line"><span class="built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^&#123;</div><div class="line">	<span class="comment">/*</span></div><div class="line">	* 这里，是一些需要并发的执行的任务</div><div class="line">	*/</div><div class="line"></div><div class="line">	<span class="comment">/*</span></div><div class="line">	* 然后，在主线程队列上执行了一个block</div><div class="line">	*/</div><div class="line">	<span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</div><div class="line"></div><div class="line">	<span class="comment">/*</span></div><div class="line">	* 这里，是一些会在主线程上面执行的操作.</div><div class="line">	*/</div><div class="line">	&#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>现在，我们已经学习了GCD的基础知识。接下来，我会介绍一些API，通过这些API我们可以更好的管理GCD队列，使它们更高效。</p>
 <p>译自:  《<a href="http://www.amazon.com/Pro-Multithreading-Memory-Management-iOS/dp/1430241160" target="_blank" rel="external">Pro Multithreading and Memory Management for iOS and OS X with ARC, Grand Central Dispatch, and Blocks”</a>》 第7章</p>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>]]></content>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>]]></content>
     
     <summary type="html">
     
@@ -1421,7 +1423,7 @@
     <link href="http://blog.morefun.mobi/2012/12/05/2012-12-05-effective-obj-c-arc-and-pitfalls-in-it/"/>
     <id>http://blog.morefun.mobi/2012/12/05/2012-12-05-effective-obj-c-arc-and-pitfalls-in-it/</id>
     <published>2012-12-05T02:00:00.000Z</published>
-    <updated>2017-06-17T14:08:33.000Z</updated>
+    <updated>2017-08-13T08:53:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>Objective-C是一个非常酷的编程语言。<a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html" target="_blank" rel="external">TIOBE</a>已经公布了十一月的编程语言排行榜，Objective-C很可能会再次成为年度编程语言。Objective-C的流行不只是因为iOS和Mac OS X平台的原因，还得益于它在移动设备上的高性能。在Objective-C中，手动内存管理代替了垃圾回收机制。当然，现在Objective-C也不需要纯手动管理内存了，苹果引入了自动引用计数(Automatic Reference Counting, 简称ARC)机制，在编译时自动加入内存管理代码。大部分情况下，这非常棒。然而，当ARC和Core Foundation对象混用的时候，总是感觉很混乱。今天，我们聊聊ARC的要点和陷阱，尤其是用toll-free bridging将Objc对象和CF对象相互转换时的一些注意事项。<a id="more"></a></p>
 <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>本文先简单的介绍一下ARC的两个主要的使用场景：Objective-C的property 和 ARC修饰符。然后再重点关注一下ARC与Core Foundation框架的内存管理问题。</p>
@@ -1506,7 +1508,7 @@
 <p>希望这篇文章对你有帮助！欢迎讨论和分享！</p>
 <p>原文：<a href="http://www.idryman.org/blog/2012/11/22/arc-best-practices-and-pitfalls/" target="_blank" rel="external">Effective Obj-C ARC and Pitfalls in It</a></p>
 <p>译注：如果还想了解ARC更详细的知识，可以看看官方文档《<a href="http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html" target="_blank" rel="external">Transitioning to ARC Release Notes</a>》或这篇《<a href="http://www.cocoachina.com/bbs/read.php?tid=92507" target="_blank" rel="external">iOS5 ARC完全指南</a>》。</p>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%"></p>]]></content>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>]]></content>
     
     <summary type="html">
     

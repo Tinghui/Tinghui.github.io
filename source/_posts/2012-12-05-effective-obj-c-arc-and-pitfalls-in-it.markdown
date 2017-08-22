@@ -243,4 +243,4 @@ ARC很方便，但是刚开始使用时可能不容易搞清楚用法。当面�
 
 译注：如果还想了解ARC更详细的知识，可以看看官方文档《[Transitioning to ARC Release Notes](http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html)》或这篇《[iOS5 ARC完全指南](http://www.cocoachina.com/bbs/read.php?tid=92507)》。
 
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%" /></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>

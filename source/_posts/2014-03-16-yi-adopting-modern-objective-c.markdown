@@ -278,4 +278,4 @@ XCode提供了一个现代的Objective-C转换工具，可以协助你完成转�
 
 要使用这个现代的Objective-C转换工具，在Xcode菜单中选择“Edit > Refactor > Convert to Modern Objective-C Syntax”。
 
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%" /></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>

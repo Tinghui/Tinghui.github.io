@@ -42,4 +42,5 @@ UIView中的`updateConstraints`方法一直是一个令人纠结的地方。按�
 2. [UIView Class Reference](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/#//apple_ref/occ/instm/UIView/updateConstraints)
 3. [WWDC session: Mysteries of Auto Layout (Part 2)](https://developer.apple.com/videos/wwdc/2015/?id=219)
 
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%" /></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>
+

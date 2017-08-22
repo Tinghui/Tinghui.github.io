@@ -194,6 +194,6 @@ iOS7中，你可以（也绝对应当）使用table view的`estimatedRowHeight`�
 
 有任何问题，欢迎大家留言讨论！
 
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%" /></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>
 
 

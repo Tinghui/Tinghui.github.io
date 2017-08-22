@@ -77,4 +77,4 @@ MVVM模式下，视图和视图控制器正式的连接在一起，我们把它�
 
 译自：[Model-View-ViewModel for iOS](http://www.teehanlax.com/blog/model-view-viewmodel-for-ios/)
 
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%" /></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>

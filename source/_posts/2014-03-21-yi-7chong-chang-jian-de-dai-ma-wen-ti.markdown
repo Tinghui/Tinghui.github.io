@@ -52,4 +52,4 @@ categories: [编程风格, 翻译]
 
 译自：[7种常见的代码问题](http://www.merowing.info/2014/03/7-most-common-code-issues/#.UyuU_dy_7PA)
 
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%" /></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>

@@ -202,4 +202,4 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
 译自:  《[Pro Multithreading and Memory Management for iOS and OS X with ARC, Grand Central Dispatch, and Blocks"](http://www.amazon.com/Pro-Multithreading-Memory-Management-iOS/dp/1430241160)》 第7章
 
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%" /></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>

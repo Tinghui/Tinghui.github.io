@@ -17,4 +17,4 @@ comments: true
 * 如果一个选项在target settings中没有被设定（不以粗体显示），那么它会继承project settings中的设置。如果它在project settings中也没有被设定（不以粗体显示），就会继承Xcode的默认设置。
 * 一般情况下，建议配置target settings。如果在同一个project中，多个target需要使用相同的设定，那么配置project settings。
 
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%" /></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>

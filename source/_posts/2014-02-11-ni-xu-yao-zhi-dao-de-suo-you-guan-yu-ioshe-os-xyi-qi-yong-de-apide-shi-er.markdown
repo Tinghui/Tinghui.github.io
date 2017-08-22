@@ -125,4 +125,4 @@ else
 
 原文: [Everything You Need to Know about iOS and OS X Deprecated APIs](http://iosdevelopertips.com/best-practices/eveything-you-need-to-know-about-ios-and-os-x-deprecated-apis.html)
 
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%" /></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>

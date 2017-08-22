@@ -520,4 +520,4 @@ Ciao
 
 译自：[FROM OBJECTIVE-C TO SWIFT: THOUGHTS AND HINTS](http://www.thinkandbuild.it/from-objective-c-to-swift/)
 
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%" /></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>

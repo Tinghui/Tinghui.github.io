@@ -44,4 +44,4 @@ PS.
 * 现在你知道“<#”、“#>”这两个符号的作用了吧？
 * 为什么例子中，我们的快捷键“@property ”后面要加一个空格？试试不加空格有什么效果？
 
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%" /></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>

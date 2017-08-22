@@ -357,4 +357,4 @@ case '@':
 
 原文作者为[Nick Lockwood](https://twitter.com/nicklockwood)，他是[《iOS Core Animation: Advanced Techniques》](http://www.informit.com/store/ios-core-animation-advanced-techniques-9780133440751)一书的作者，也是iCarousel、iRate等开源项目的作者。
 
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="30%" height="30%" /></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>

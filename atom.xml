@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.morefun.mobi/"/>
-  <updated>2017-08-13T08:38:48.000Z</updated>
+  <updated>2017-08-22T17:17:29.000Z</updated>
   <id>http://blog.morefun.mobi/</id>
   
   <author>
@@ -14,6 +14,82 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>打造更好的iOS文本输入体验</title>
+    <link href="http://blog.morefun.mobi/2017/08/13/the-keys-to-a-better-text-input-experience-in-iOS/"/>
+    <id>http://blog.morefun.mobi/2017/08/13/the-keys-to-a-better-text-input-experience-in-iOS/</id>
+    <published>2017-08-13T09:28:20.000Z</published>
+    <updated>2017-08-22T17:17:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>做客户端开发，不可避免的需要和文本输入打交道。今天我们来聊聊，如何在iOS里面打造更好的文本输入体验。</p>
+<p>全文包含4部分内容：</p>
+<p><a href="#1">1. 处理键盘遮挡视图问题</a><br><a href="#2">2. 动态高度的输入框</a><br><a href="#3">3. 记住用户选择的键盘</a><br><a href="#4">4. 自定义键盘</a></p>
+<a id="more"></a>
+<h4 id="处理键盘遮挡视图问题"><a href="#处理键盘遮挡视图问题" class="headerlink" title="处理键盘遮挡视图问题"></a><span id="1">处理键盘遮挡视图问题</span></h4><p>我们都知道，键盘有不同的尺寸，不同语言的键盘或不同设置的键盘，尺寸都会不同。比如纯英文键盘和汉字九宫格键盘高度就不一样，更不用说还有其他不同高度的第三方键盘呢。</p>
+<p>而处理键盘遮挡视图问题，首先需要得到键盘的高度。iOS中有几个和键盘相关的通知：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">static</span> let <span class="built_in">UIKeyboardWillShow</span>: <span class="built_in">NSNotification</span>.Name</div><div class="line"><span class="keyword">static</span> let <span class="built_in">UIKeyboardDidShow</span>: <span class="built_in">NSNotification</span>.Name</div><div class="line"><span class="keyword">static</span> let <span class="built_in">UIKeyboardWillHide</span>: <span class="built_in">NSNotification</span>.Name</div><div class="line"><span class="keyword">static</span> let <span class="built_in">UIKeyboardDidHide</span>: <span class="built_in">NSNotification</span>.Name</div><div class="line"><span class="keyword">static</span> let <span class="built_in">UIKeyboardWillChangeFrame</span>: <span class="built_in">NSNotification</span>.Name</div><div class="line"><span class="keyword">static</span> let <span class="built_in">UIKeyboardDidChangeFrame</span>: <span class="built_in">NSNotification</span>.Name</div></pre></td></tr></table></figure>
+<p>这些通知的<code>userInfo</code>里面都包含一个叫<code>UIKeyboardFrameEndUserInfoKey</code>的key。我们注册这些通知，就可以从通知中获得键盘的<code>frame</code>信息：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">@objc private func handleKeyboardNotification(_ notification: Notification) &#123;</div><div class="line">    guard let userInfo = notification.userInfo,</div><div class="line">        let frame = userInfo[<span class="built_in">UIKeyboardFrameEndUserInfoKey</span>] as? <span class="built_in">CGRect</span> <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>获得<code>frame</code>后，并不能立即使用。因为键盘都是全屏的，它的<code>frame</code>总是处于屏幕坐标系当中的。我们需要将键盘的<code>frame</code>转化到我们的视图坐标系当中：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">let convertedFrame = view.convert(frame, from: <span class="built_in">UIScreen</span>.main.coordinateSpace)</div></pre></td></tr></table></figure>
+<p>然后再计算出，键盘和我们的视图之间的重叠高度：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">let intersectedKeyboardHeight = view.frame.intersection(convertedFrame).height</div></pre></td></tr></table></figure>
+<p>之后再调节我们的布局约束，把被遮挡内容往上移，即可避免键盘遮挡我们的视图内容。例如：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">    <span class="built_in">UIView</span>.animate(withDuration: <span class="number">0.3</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.bottomConstraint.constant = intersectedKeyboardHeight + <span class="number">60.0</span></div><div class="line">        <span class="keyword">self</span>.view.layoutIfNeeded()</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当然，如果视图是scrollView，也可以调整scrollView的<code>contentInset</code>和<code>contentOffset</code>，解决遮挡。</p>
+<p>通常，在处理键盘遮挡问题时，我们都会让界面跟随着键盘动画一起移动。然而我们自己做的动画，可能会遇到和键盘动画不同步的问题。这个问题，<a href="http://nonomori.farbox.com/post/ios-7-jian-pan-dong-hua" target="_blank" rel="external">这篇文章</a>有讨论。正确的做法是：从<code>userInfo</code>中取出键盘动画的<code>duration</code>和<code>curve</code>来使用。</p>
+<p>不过，现在通常都不需要自己处理键盘遮挡问题。原生的UITableViewController会自动调整<code>contentInset</code>，并且如果需要也会自动滚动内容，以避免键盘遮挡问题。此外，也有很多专门处理键盘交互的开源库，比如 <a href="https://github.com/michaeltyson/TPKeyboardAvoiding" target="_blank" rel="external">TPKeyboardAvoiding</a> 就是其中一个比较优秀的库，也是我经常使用的库，在此推荐给大家。它代码入侵少，不需要写任何配置或初始化代码，仅需将界面上使用的scrollView、tableView 或 collectionView 的类替换为TPKeyboardAvoiding对应类即可。剩下的“键盘遮挡”、“点击空白区域隐藏键盘”、“点击键盘Next按钮自动跳到下一个输入框”等问题就交给它处理。</p>
+<h4 id="动态高度的输入框"><a href="#动态高度的输入框" class="headerlink" title="动态高度的输入框"></a><span id="2">动态高度的输入框</span></h4><p>动态高度的输入框，也很常见，比如微信聊天界面的输入框，高度就会随输入内容动态增长。实现这个需求，其实并不复杂。</p>
+<p>首先，禁用textView的<code>scrollable</code>属性：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">textView.isScrollEnabled = <span class="literal">false</span></div></pre></td></tr></table></figure>
+<p>禁用<code>scrollable</code>属性之后，可以直接用textView的<code>sizeThatFits</code>方法，计算内容高度：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">newSize.height = textView.sizeThatFits(<span class="built_in">CGSize</span>(width: textView.bounds.width</div><div class="line">  , height: <span class="built_in">CGFloat</span>.greatestFiniteMagnitude)).height + kVertialPadding</div></pre></td></tr></table></figure>
+<p>如果要限制最大高度，增加一个高度约束即可：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">override var intrinsicContentSize: <span class="built_in">CGSize</span> &#123;</div><div class="line">    var newSize = bounds.size</div><div class="line">       </div><div class="line">    <span class="comment">//disable textView's scrollable, then textView can calculate height itself.</span></div><div class="line">    let oldScrollable = textView.isScrollEnabled</div><div class="line">    textView.isScrollEnabled = <span class="literal">false</span></div><div class="line">    newSize.height = textView.sizeThatFits(<span class="built_in">CGSize</span>(width: textView.bounds.width</div><div class="line">      , height: <span class="built_in">CGFloat</span>.greatestFiniteMagnitude)).height + kVertialPadding</div><div class="line">    textView.isScrollEnabled = oldScrollable</div><div class="line">       </div><div class="line">    <span class="keyword">return</span> newSize</div><div class="line">&#125;</div><div class="line"></div><div class="line">override func awakeFromNib() &#123;</div><div class="line">   <span class="keyword">super</span>.awakeFromNib()</div><div class="line">   </div><div class="line">   ...</div><div class="line">   </div><div class="line">   textChangeObserver = NotificationCenter.default.addObserver(forName: <span class="built_in">NSNotification</span>.Name.UITextViewTextDidChange, object: textView, queue: OperationQueue.main) &#123; [unowned <span class="keyword">self</span>] (notification) <span class="keyword">in</span></div><div class="line">      guard let textView = notification.object as? <span class="built_in">UITextView</span> <span class="keyword">else</span> &#123;</div><div class="line">          <span class="keyword">return</span></div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      var height = <span class="keyword">self</span>.intrinsicContentSize.height</div><div class="line">      height = max(height, <span class="keyword">self</span>.minHeight)</div><div class="line">      height = min(height, <span class="keyword">self</span>.maxHeight)</div><div class="line">      </div><div class="line">      let isMaxHeight = (height == <span class="keyword">self</span>.maxHeight);</div><div class="line">      textView.isScrollEnabled = isMaxHeight</div><div class="line">      <span class="keyword">self</span>.textViewHeightConstraint.isActive = isMaxHeight</div><div class="line">      <span class="keyword">self</span>.textViewHeightConstraint.constant = height - <span class="keyword">self</span>.kVertialPadding</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="记住用户选择的键盘"><a href="#记住用户选择的键盘" class="headerlink" title="记住用户选择的键盘"></a><span id="3">记住用户选择的键盘</span></h4><p>在使用多语言的用户中，会遇到这样一个问题。例如，和朋友A聊天用的是中文，和朋友B聊天用的是英文，这样就会需要在两种键盘之间不停地切换。</p>
+<p>在iOS的「信息」应用中有个小细节，就是当我和朋友A聊天时，应用知道我使用的是中文键盘；而当我和朋友B聊天时，应用知道我使用的是英文键盘。在键盘弹出时，自动弹出对应语言的键盘。</p>
+<p><img src="/images/posts/wwdc17-242-imessage-cn-en-keyboard.png" alt=""></p>
+<p>这是如何做到的？</p>
+<p>原来是iOS系统提供一个被称作“文本输入上下文标示符”的标示符，可以将它和任何一个UIResponder关联起来。当系统发现我们将一个标示符和某个UIResponder关联起来后，它都会把标示符自动跟用户选择的键盘关联起来，并保存到user default中。下次，当这个UIResponder成为第一响应者(FirstResponder)的时候，对应的键盘就会被自动检索出来。</p>
+<p><img src="/images/posts/wwdc17-242-remember-user-selected-keyboard.jpg" alt=""></p>
+<p>我们唯一要做的是找一个好一点的标示符。标示符需要具有唯一性，不要重复。比如说，用户ID、对话ID、群组ID，这些都是很好的标示符。</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">override var textInputContextIdentifier: String? &#123;</div><div class="line">   <span class="keyword">return</span> <span class="string">"an unique identifier. ex. userId, "</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="自定义键盘"><a href="#自定义键盘" class="headerlink" title="自定义键盘"></a><span id="4">自定义键盘</span></h4><p>创建自定义键盘，首先要继承<code>UIInputViewController</code>，然后在其提供的<code>inputView</code>上加入自定义的键盘界面控件。响应用户的输入事件，主要依靠<code>textDocumentProxy</code>属性进行。比如，可以通过<code>textDocumentProxy</code>属性向光标位置插入文本、或删除光标前面的文本。下图展示了键盘运行过程中一些重要的对象，以及它们在开发流程中的位置。</p>
+<p><img src="/images/posts/wwdc17-242-keyboard-architecture_2x.png" alt=""></p>
+<p>我们开发的自定义键盘，如果只在自己的应用内部使用，只需将<code>inputView</code>传递给输入框或响应者对象：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">self</span>.textView.inputView = <span class="keyword">self</span>.customInputViewController.inputView</div></pre></td></tr></table></figure>
+<p>如果自定义键盘，要在整个系统中使用，则需要创建一个自定义键盘扩展。<br>创建自定义键盘扩展非常简单，如果你已经实现了一个<code>UIInputViewController</code>子类，你都不需要修改任何代码，仅需要：</p>
+<ol>
+<li>在项目里面新建一个「Custom Keyboard Extension」类型的target</li>
+<li>将已经实现的<code>UIInputViewController</code>子类加入target</li>
+<li>将自定义键盘需要的图片等资源加入target</li>
+<li>将target的Info.plist中 NSExtension - NSExtensionPrincipalClass 键值中的类名改为你的自定义<code>UIInputViewController</code>子类名</li>
+</ol>
+<p>然后，用户只要在设置里面开启键盘，就可以在系统的任何地方使用。</p>
+<p><img src="/images/posts/wwdc17-242-enable-custom-keyboard.png" alt=""></p>
+<p>全文完！</p>
+<p>参考：<br><a href="https://developer.apple.com/videos/play/wwdc2017/242/" target="_blank" rel="external">WWDC 2017 - Session 242 - The Keys to a Better Text Input Experience</a><br><a href="https://developer.apple.com/documentation/uikit/uiwindow" target="_blank" rel="external">UIWindow Reference</a><br><a href="http://nonomori.farbox.com/post/ios-7-jian-pan-dong-hua" target="_blank" rel="external">iOS 7 键盘动画</a><br><a href="https://developer.apple.com/library/content/documentation/General/Conceptual/ExtensibilityPG/CustomKeyboard.html" target="_blank" rel="external">App Extension Programming Guide - Custom Keyboard</a><br><a href="https://developer.apple.com/documentation/uikit/uiinputviewcontroller" target="_blank" rel="external">UIInputViewController Class Reference</a></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>
+
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;做客户端开发，不可避免的需要和文本输入打交道。今天我们来聊聊，如何在iOS里面打造更好的文本输入体验。&lt;/p&gt;
+&lt;p&gt;全文包含4部分内容：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#1&quot;&gt;1. 处理键盘遮挡视图问题&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;#2&quot;&gt;2. 动态高度的输入框&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;#3&quot;&gt;3. 记住用户选择的键盘&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;#4&quot;&gt;4. 自定义键盘&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="UI" scheme="http://blog.morefun.mobi/categories/UI/"/>
+    
+      <category term="iOS" scheme="http://blog.morefun.mobi/categories/UI/iOS/"/>
+    
+      <category term="文本" scheme="http://blog.morefun.mobi/categories/UI/iOS/%E6%96%87%E6%9C%AC/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>什么时候使用updateConstraints</title>
@@ -1519,31 +1595,6 @@
       <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
     
       <category term="翻译" scheme="http://blog.morefun.mobi/categories/Objc/%E7%BF%BB%E8%AF%91/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>改变导航控制器的Push和Pop动画效果</title>
-    <link href="http://blog.morefun.mobi/2012/07/07/2012-07-07-gai-bian-uinavigationcontroller-de-push-he-pop-dong-hua/"/>
-    <id>http://blog.morefun.mobi/2012/07/07/2012-07-07-gai-bian-uinavigationcontroller-de-push-he-pop-dong-hua/</id>
-    <published>2012-07-07T12:00:00.000Z</published>
-    <updated>2017-06-16T16:04:36.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>UINavigationController的push和pop动画只有从右边推入和推出这一种效果。以下代码可以很灵活的改变UINavigationController的push或pop动画效果。</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">CATransition</span>* transition = [<span class="built_in">CATransition</span> animation];</div><div class="line">transition.duration = <span class="number">0.5</span>;</div><div class="line">transition.timingFunction = [<span class="built_in">CAMediaTimingFunction</span> functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</div><div class="line">transition.type = kCATransitionPush; <span class="comment">//4种: kCATransitionMoveIn, kCATransitionMoveIn, kCATransitionReveal, kCATransitionFade</span></div><div class="line">transition.subtype = kCATransitionFromTop; <span class="comment">//4种: kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom</span></div><div class="line">[<span class="keyword">self</span>.navigationController.view.layer addAnimation:transition forKey:<span class="literal">nil</span>];</div><div class="line">[[<span class="keyword">self</span> navigationController] popViewControllerAnimated:<span class="literal">NO</span>]; <span class="comment">//关键地方：Animated:NO禁用navigationController自带的动画</span></div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;UINavigationController的push和pop动画只有从右边推入和推出这一种效果。以下代码可以很灵活的改变UINavigationController的push或pop动画效果。&lt;/p&gt;
-&lt;figure class=&quot;highlight objc&quot;&gt;&lt;tab
-    
-    </summary>
-    
-      <category term="动画" scheme="http://blog.morefun.mobi/categories/%E5%8A%A8%E7%94%BB/"/>
-    
-      <category term="iOS" scheme="http://blog.morefun.mobi/categories/%E5%8A%A8%E7%94%BB/iOS/"/>
     
     
   </entry>

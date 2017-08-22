@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.morefun.mobi/2017/08/13/the-keys-to-a-better-text-input-experience-in-iOS/</loc>
+    
+    <lastmod>2017-08-22T17:17:29.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-shang-pian/</loc>
     
     <lastmod>2017-08-13T08:53:48.000Z</lastmod>
@@ -10,13 +17,6 @@
   
   <url>
     <loc>http://blog.morefun.mobi/2012/05/06/2012-05-06-xcode-code-snippets/</loc>
-    
-    <lastmod>2017-08-13T08:53:48.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.morefun.mobi/2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/</loc>
     
     <lastmod>2017-08-13T08:53:48.000Z</lastmod>
     
@@ -37,21 +37,7 @@
   </url>
   
   <url>
-    <loc>http://blog.morefun.mobi/2014/07/15/2014-07-15-you-objective-cdao-swiftde-xie-gan-xiang-he-ti-shi/</loc>
-    
-    <lastmod>2017-08-13T08:53:48.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.morefun.mobi/2012/05/20/2012-05-20-xcode-edit-project-settings-vs-edit-active-target/</loc>
-    
-    <lastmod>2017-08-13T08:53:48.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.morefun.mobi/2014/04/15/2014-04-15-shi-yong-nssecurecodingxie-yi-jin-xing-bian-jie-ma/</loc>
+    <loc>http://blog.morefun.mobi/2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/</loc>
     
     <lastmod>2017-08-13T08:53:48.000Z</lastmod>
     
@@ -65,7 +51,28 @@
   </url>
   
   <url>
+    <loc>http://blog.morefun.mobi/2012/05/20/2012-05-20-xcode-edit-project-settings-vs-edit-active-target/</loc>
+    
+    <lastmod>2017-08-13T08:53:48.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-xia-pian/</loc>
+    
+    <lastmod>2017-08-13T08:53:48.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.morefun.mobi/2014/07/15/2014-07-15-you-objective-cdao-swiftde-xie-gan-xiang-he-ti-shi/</loc>
+    
+    <lastmod>2017-08-13T08:53:48.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.morefun.mobi/2014/04/15/2014-04-15-shi-yong-nssecurecodingxie-yi-jin-xing-bian-jie-ma/</loc>
     
     <lastmod>2017-08-13T08:53:48.000Z</lastmod>
     
@@ -79,14 +86,14 @@
   </url>
   
   <url>
-    <loc>http://blog.morefun.mobi/2014/03/16/2014-03-16-yi-adopting-modern-objective-c/</loc>
+    <loc>http://blog.morefun.mobi/2014/02/11/2014-02-11-ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/</loc>
     
     <lastmod>2017-08-13T08:53:48.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.morefun.mobi/2014/02/11/2014-02-11-ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/</loc>
+    <loc>http://blog.morefun.mobi/2014/03/16/2014-03-16-yi-adopting-modern-objective-c/</loc>
     
     <lastmod>2017-08-13T08:53:48.000Z</lastmod>
     

@@ -135,7 +135,7 @@ override func awakeFromNib() {
 
 在iOS的「信息」应用中有个小细节，就是当我和朋友A聊天时，应用知道我使用的是中文键盘；而当我和朋友B聊天时，应用知道我使用的是英文键盘。在键盘弹出时，自动弹出对应语言的键盘。
 
-![](/images/posts/wwdc17-242-imessage-cn-en-keyboard.png)
+![](/images/posts/wwdc17-242-imessage-keyboard.jpg)
 
 这是如何做到的？
 

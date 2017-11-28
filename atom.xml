@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Morefun With Coding</title>
+  <title>Coding With MoreFun</title>
   
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.morefun.mobi/"/>
-  <updated>2017-08-22T17:25:24.000Z</updated>
+  <updated>2017-11-28T04:44:18.968Z</updated>
   <id>http://blog.morefun.mobi/</id>
   
   <author>
@@ -16,11 +16,147 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>iOS测试驱动开发入门介绍</title>
+    <link href="http://blog.morefun.mobi/2017/11/27/ios-tdd-intro/"/>
+    <id>http://blog.morefun.mobi/2017/11/27/ios-tdd-intro/</id>
+    <published>2017-11-27T15:20:11.000Z</published>
+    <updated>2017-11-28T04:44:18.968Z</updated>
+    
+    <content type="html"><![CDATA[<p>1996年，Kent Beck提出了一个称作<a href="https://zh.wikipedia.org/wiki/极限编程" target="_blank" rel="external"><strong>极限编程</strong></a>(Extreme Programming)的软件开发方法。它基于12条编程实践规则，其中一条规则倡导：开发者必须编写单元测试，并且软件的所有部分都必须经过彻底的测试。所有测试都必须在软件(或新功能)发布给客户之前通过。应当先于测试的生产代码之前编写测试。</p>
+<p>这种测试优先的程序设计方法被称作<a href="https://zh.wikipedia.org/wiki/测试驱动开发" target="_blank" rel="external">测试驱动开发</a>(Test-Driven Development，以下简称TDD)。<strong>它的基本思想是在开发功能代码之前，先编写测试代码。</strong>也就是说在明确要开发某个功能后，首先思考如何对这个功能进行测试，完成测试代码的编写，然后再编写相关的实际功能代码，以满足这些测试用例。然后如此继续添加其他功能，直至完成全部功能的开发。<br><a id="more"></a> </p>
+<h4 id="TDD的工作流程"><a href="#TDD的工作流程" class="headerlink" title="TDD的工作流程"></a>TDD的工作流程</h4><p style="text-align:center"><img src="/images/posts/tdd_workflow.png" width="50%" height="50%"><br></p>
+
+<p>TDD的工作流程包括三个简单的步骤：红、绿、重构。</p>
+<p><strong>红</strong>：首先编写一个测试用例，它需要测试尚未实现的功能或者你希望确保覆盖的边界条件。因为功能还未实现，测试会失败。</p>
+<p><strong>绿</strong>：编写最简单的代码使测试通过。不用管代码写得好不好或者是否整洁。通常，最简单的实现对于要实现的功能来说是不够的，但只要足以使所有测试通过就可以。后面，你可以增加另外的测试，进一步推动功能的开发。</p>
+<p><strong>重构</strong>：在「绿」步骤中，代码写得如何并不重要。因为在这一步中，你将会改进代码。删除重复，提取公共值，等等。在测试的保护下，不用担心会破坏已经实现的功能，可以大胆的重构，使代码更好。</p>
+<h4 id="TDD示例演示"><a href="#TDD示例演示" class="headerlink" title="TDD示例演示"></a>TDD示例演示</h4><p>假设我们正在开发一个博客平台的应用程序，每个帖子会有一个标题，我们需要将标题中所有单词的首字母转换成大写字母。我们将以TDD的方式来实现这个功能，以演示TDD的开发流程。</p>
+<p>首先打开Xcode，选择「iOS - Single View App」，创建一个新项目，名字就叫「FirstTDDDemo」好了。开发语言选择「Swift」，并勾选上「Include Unit Tests」。</p>
+<p>开始编写测试之前，我们先要思考以下问题:</p>
+<ul>
+<li><strong>前置条件（Precondition）</strong>：在调用该方法之前，系统的状态是什么？</li>
+<li><strong>调用（Invocation）</strong>：方法的签名应该是什么样的？如果该方法有输入参数，输入参数是什么？</li>
+<li><strong>断言（Assertion）</strong>：方法调用的预期结果是什么？怎么判断测试通过？</li>
+</ul>
+<p>对于我们这个例子来说：</p>
+<ul>
+<li>前置条件：没有。</li>
+<li>调用：该方法应该取一个字符串并返回一个字符串。方法的名字可以叫<code>makeHeadline</code>。</li>
+<li>断言：方法输出的字符串应该和输入字符串内容相同，并且所有单词都应该以大写字母开头。</li>
+</ul>
+<p>这些信息足够了，我们开始编写测试代码。</p>
+<p><strong>红 - 例1</strong></p>
+<p>打开<code>FirstTDDDemoTests.swift</code>文件，在<code>FirstTDDDemoTests</code>类中添加以下代码：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">testMakeHeadline_ReturnsStringWithEachWordStartCapital</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="keyword">let</span> viewController = <span class="type">ViewController</span>()</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> string = <span class="string">"this is A test headline"</span></div><div class="line">    </div><div class="line">    <span class="keyword">let</span> headline = viewController.makeHeadline(string)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个测试方法没有写完，因为我们还没有写断言，没有测试任何东西。但我们不得不暂停。因为现在编译器已经报错，说我们的<code>ViewController</code>类没有<code>makeHeadline</code>方法。</p>
+<p>根据TDD流程，我们需要添加代码，直到编译器不再报错。测试代码编译不通过，也意味着“测试失败”。测试失败意味着我们需要编写代码。</p>
+<p>打开<code>ViewController.swift</code>，在<code>ViewController</code>类中加入以下代码：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">makeHeadline</span><span class="params">(<span class="number">_</span> string: String)</span></span> &#123;</div><div class="line">        </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>编译器仍然在报错，但这是Xcode的原因，我们需要编译运行一下测试。按<code>Command+U</code>快捷键，编译运行测试，可以看到测试方法通过，<code>FirstTDDDemoTests</code>中所有的测试方法都绿了。</p>
+<p>但现在编译器仍然有一个警告：<code>headline</code>常量没有被使用。接下来，在测试中加入断言：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">testMakeHeadline_ReturnsStringWithEachWordStartCapital</span><span class="params">()</span></span> &#123;</div><div class="line">   <span class="keyword">let</span> viewController = <span class="type">ViewController</span>()</div><div class="line">   </div><div class="line">   <span class="keyword">let</span> string = <span class="string">"this is A test headline"</span></div><div class="line">   </div><div class="line">   <span class="keyword">let</span> headline = viewController.makeHeadline(string)</div><div class="line">   </div><div class="line">   <span class="type">XCTAssertEqual</span>(headline, <span class="string">"This Is A Test Headline"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Command+U</code>编译运行测试，可以看到编译器又报错：Argument type ‘()’ does not conform to expected type ‘Equatable’。这是因为<code>makeHeadline(_:)</code>方法返回的是一个<code>Void</code>或者<code>()</code>，不能和一个<code>String</code>类型对象作比较。</p>
+<p>在开始编写测试代码之前，我们思考过方法的签名。方法应该接受一个字符串返回一个字符串，因此我们需要修改<code>makeHeadline(_:)</code>方法：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">makeHeadline</span><span class="params">(<span class="number">_</span> string: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">   <span class="keyword">return</span> <span class="string">""</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>方法返回一个空字符串，测试编译通过。运行测试，可以看到测试失败。我们的测试已经编写完成，这次是测试断言失败。我们需要进入下一步。</p>
+<p><strong>绿 - 例1</strong></p>
+<p>现在，我们的测试在断言时失败。因为空字符串和我们期望得到的字符串<code>This Is A Test Headline</code>不相等。根据TDD流程，我们需要添加最简单的代码实现，让测试通过。</p>
+<p>回到<code>ViewController</code>，将<code>makeHeadline(_:)</code>修改为：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">makeHeadline</span><span class="params">(<span class="number">_</span> string: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">   <span class="keyword">return</span> <span class="string">"This Is A Test Headline"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们知道，这段代码是错误的而且很愚蠢，但它是能让测试通过的最简单的代码。运行测试，可以看到测试通过。</p>
+<p>虽然我们刚刚编写的代码对于要实现的功能来说毫无用处，但它对我们开发人员仍然是有价值的。它告诉我们，还需要另一个测试。</p>
+<p><strong>重构 - 例1</strong></p>
+<p>在编写更多的测试之前，我们需要重构现有的测试。生产代码中，没有什么可以重构的，它已经不能更简单或更优雅了。但测试代码还是有优化空间的。</p>
+<p>我们知道，在XCTest框架中，每个测试类都有一个<code>setUp()</code>方法，该方法在每个测试用例被调用前都会被自动调用。</p>
+<p>通常，我们在编写测试用例的时候，每个测试类都只针对一个生产类进行测试。比如这里，<code>FirstTDDDemoTests</code>这个测试类针对<code>ViewController</code>这个生产类进行测试。如果后面要对其他生产类进行测试，通常情况下会为其单独创建一个测试类。</p>
+<p>如果我们的测试类<code>FirstTDDDemoTests</code>只针对<code>ViewController</code>类进行测试，不出意外的话，几乎所有测试用例都需要创建一个<code>ViewController</code>的实例对象。这无疑会很麻烦，并且会产生很多重复代码。</p>
+<p>所以，我们可以将<code>viewController</code>提取出来，成为<code>FirstTDDDemoTests</code>类的一个属性，并在<code>setUp()</code>方法中进行初始化。由于<code>setUp()</code>会在每个测试用例被调用之前被调用。这也相当于，每个测试用例开始时，它拿到的那个<code>viewController</code>都是新创建的一个对象，不会有其他测试用例运行后的遗留状态，也能够避免测试数据的干扰。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FirstTDDDemoTests</span>: <span class="title">XCTestCase</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> viewController: <span class="type">ViewController</span>!</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">setUp</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.setUp()</div><div class="line">        <span class="comment">// Put setup code here. This method is called before the invocation of each test method in the class.</span></div><div class="line">        viewController = <span class="type">ViewController</span>()</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后，测试用例中的<code>let viewController = ViewController()</code>可以移除掉：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">testMakeHeadline_ReturnsStringWithEachWordStartCapital</span><span class="params">()</span></span> &#123;</div><div class="line">   <span class="keyword">let</span> string = <span class="string">"this is A test headline"</span></div><div class="line">   </div><div class="line">   <span class="keyword">let</span> headline = viewController.makeHeadline(string)</div><div class="line">   </div><div class="line">   <span class="type">XCTAssertEqual</span>(headline, <span class="string">"This Is A Test Headline"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Command+U</code>运行测试，测试通过。我们开始编写下一个测试用例。</p>
+<p><strong>红 - 例2</strong></p>
+<p>如前一节所述，我们编写的生产代码只适用于一个特定的标题，但我们要实现的功能必须适用于任何标题。所以，我们需要另一个测试。</p>
+<p>在<code>FirstTDDDemoTests</code>类中，增加以下测试：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">testMakeHeadline_ReturnsStringWithEachWordStartCapital2</span><span class="params">()</span></span> &#123;</div><div class="line">   <span class="keyword">let</span> string = <span class="string">"Here is another Example"</span></div><div class="line">   </div><div class="line">   <span class="keyword">let</span> headline = viewController.makeHeadline(string)</div><div class="line">   </div><div class="line">   <span class="type">XCTAssertEqual</span>(headline, <span class="string">"Here Is Another Example"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行测试，显然会失败。</p>
+<p><strong>绿 - 例2</strong></p>
+<p>打开<code>ViewController.swift</code>，将<code>makeHeadline(_:)</code>的实现替换为如下代码：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">makeHeadline</span><span class="params">(<span class="number">_</span> string: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">   <span class="keyword">let</span> words = string.components(separatedBy: <span class="string">" "</span>)</div><div class="line">   </div><div class="line">   <span class="keyword">var</span> headline = <span class="string">""</span></div><div class="line">   <span class="keyword">for</span> <span class="keyword">var</span> word <span class="keyword">in</span> words &#123;</div><div class="line">       <span class="keyword">let</span> firstCharacter = word.remove(at: word.startIndex)</div><div class="line">       headline += <span class="string">"\(String(firstCharacter).uppercased())\(word) "</span></div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   headline.remove(at: headline.index(before: headline.endIndex))</div><div class="line">   <span class="keyword">return</span> headline</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这段实现代码，不过多解释。其实就是将标题拆分成单词列表，然后将单词首字母替换成大写，最后将所有单词拼接成新标题。</p>
+<p>运行测试，所有测试都通过。</p>
+<p>看起来，我们的工作已经完成，是吧？哈哈，永远不要忘了我们还要重构，除非已经没有任何可以重构的。</p>
+<p><strong>重构 - 例2</strong></p>
+<p>我们编写了两个测试用例，但测试相关的信息不是结构化的。我们可以修改一下，将它们改得更可读：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">testMakeHeadline_ReturnsStringWithEachWordStartCapital</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="keyword">let</span> inputString = <span class="string">"this is A test headline"</span></div><div class="line">    <span class="keyword">let</span> expectedHeadline = <span class="string">"This Is A Test Headline"</span></div><div class="line">    </div><div class="line">    <span class="keyword">let</span> result = viewController.makeHeadline(inputString)</div><div class="line">    <span class="type">XCTAssertEqual</span>(result, expectedHeadline)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">testMakeHeadline_ReturnsStringWithEachWordStartCapital2</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="keyword">let</span> inputString = <span class="string">"Here is another Example"</span></div><div class="line">    <span class="keyword">let</span> expectedHeadline = <span class="string">"Here Is Another Example"</span></div><div class="line">    </div><div class="line">    <span class="keyword">let</span> result = viewController.makeHeadline(inputString)</div><div class="line">    <span class="type">XCTAssertEqual</span>(result, expectedHeadline)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在，这两个测试用例都很容易阅读和理解。它们都遵循一个逻辑结构：前置条件、调用和断言。</p>
+<p>运行测试，所有测试应该仍然能通过。</p>
+<p>接下来，我们的实现代码也可以重构一下。现在的实现代码像是从Objective-C翻译过来的Swift代码。但Swift有很多不同的概念，编写的代码可以更少更易读。</p>
+<p>我们来将实现代码改得更Swfit化。将<code>makeHeadline(_:)</code>替换为如下代码：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">makeHeadline</span><span class="params">(<span class="number">_</span> string: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">let</span> headline = string</div><div class="line">        .components(separatedBy: <span class="string">" "</span>)</div><div class="line">        .<span class="built_in">map</span> &#123;</div><div class="line">            <span class="keyword">var</span> word = $<span class="number">0</span></div><div class="line">            <span class="keyword">let</span> firstCharacter = word.remove(at: word.startIndex)</div><div class="line">            <span class="keyword">return</span> <span class="string">"\(String(firstCharacter).uppercased())\(word)"</span></div><div class="line">        &#125;</div><div class="line">        .joined(separator: <span class="string">" "</span>)</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> headline</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>修改后这个实现中，我们使用<code>map</code>函数来迭代单词数组，并返回另一个包含首字母大写的单词的数组。然后，通过使用空格作为分隔符，将结果转换为字符串。</p>
+<p>再次运行测试，以确保我们的重构没有破坏任何东西。所有的测试都应该通过。</p>
+<p>回顾一下，我们用一个例子演示了TDD的工作流程。我们从一个测试失败的测试开始。编写代码使测试通过。最后，重构代码以保持整洁。</p>
+<p>你看到的这些步骤看起来是如此的简单并且有点愚蠢，以至于你可能认为可以跳过一些步骤。但是，这样它就不再是TDD。TDD的美妙之处在于，这些步骤和规则非常简单。你不必浪费脑力去思考这些步骤到底意味着什么，只需要记住「红-绿-重构」的步骤：编写测试，使它们通过，然后改进代码。</p>
+<h4 id="TDD的优缺点"><a href="#TDD的优缺点" class="headerlink" title="TDD的优缺点"></a>TDD的优缺点</h4><p>我们体验了TDD的开发流程，它在保证开发质量方面，很有吸引力。但它也是一种有别于传统开发流程的开发方法，有优点，也有缺点。</p>
+<p><strong>优点</strong></p>
+<ul>
+<li><p><strong>产出的都是需要的代码</strong>：遵循TDD的规则，当所有测试通过时，你必须停止编写生产代码。由于你写的代码都是以最简单的形式让测试通过的代码。所以，最终产品中的所有代码实际上都是实现这些功能所需要的代码。</p>
+</li>
+<li><p><strong>更模块化的设计</strong>：在TDD中，你一次只集中一个小功能。而当你先编写测试时，代码会自动变得容易测试。易于测试的代码具有清晰的接口。这将为你的应用程序带来更模块化的设计。</p>
+</li>
+<li><p><strong>更易于维护</strong>：由于应用程序的各个部分彼此解耦，并且具有清晰的接口，代码变得更易于维护。你可以在不影响其他模块的情况下为功能更换一个更好的实现。</p>
+</li>
+<li><p><strong>更易于重构</strong>：所有功能都已经经过彻底地测试。你不用害怕做出巨大的修改，因为如果所有测试仍然通过，那么一切都安好。</p>
+</li>
+<li><p><strong>高测试覆盖率</strong>：每个功能都有测试，这会带来高测试覆盖率，让你对自己的代码更有信心。</p>
+</li>
+<li><p><strong>测试既是代码的文档</strong>：测试代码展示了你的代码是如何使用的。因此它相当于是你的代码的文档和示例代码，展示了代码的作用以及如何使用接口。</p>
+</li>
+<li><p><strong>更少的调试</strong>：你每天浪费了多少时间在调试找Bug上？使用TDD，在编写测试时可以提前发现错误，更不容易产出Bug。</p>
+</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li><p><strong>没有银弹</strong>：测试有助于发现错误，但它们不能发现你在测试代码和实现代码中引入的bug。如果你没有明白你需要解决的问题是什么，那么编写测试也没有多大帮助。</p>
+</li>
+<li><p><strong>开始看起来比较慢</strong>：如果你刚开始TDD，你会觉得需要更长的时间才能完成一个简单的实现。你需要先考虑接口设计，编写测试代码并运行测试，最后才能开始编写实现代码。</p>
+</li>
+<li><p><strong>团队中所有成员都需要做TDD</strong>：由于TDD影响代码的设计，因此建议团队中的所有成员都使用TDD或者都不使用。除此之外，有时很难向管理层证明TDD。因为他们经常会觉得，如果开发人员花一半的时间来编写最终并不会存在于产品中的代码(测试代码)，那么新功能的实现将会需要更长的时间。所以，如果整个团队都认同单元测试的重要性，这才有所帮助。</p>
+</li>
+<li><p><strong>需求变化时需要维护测试用例</strong>：也许对TDD最强烈的争论就是测试与代码一样必须进行维护。无论什么时候需求变化了，你都需要修改代码和测试。但是你使用的是TDD，这意味着你需要先更改测试，然后再通过测试。因此，实际上，这个缺点和前一个一样，显然需要花费更长时间。</p>
+</li>
+</ul>
+<font color="gray"><br>全文完。<br><br>以上大部分内容，来自「Test-Driven iOS Development with Swift」一书内容的转译。如果对iOS上的TDD感兴趣，推荐阅读该书。里面有一个贯穿全书的ToDoList应用作为例子，对数据模型的测试、视图控制器的测试、网络接口测试、UI界面测试以及如何使用Mock对象进行测试等内容都做了介绍。<br></font>
+
+
+<p>参考：</p>
+<ol>
+<li><a href="https://zh.wikipedia.org/wiki/测试驱动开发" target="_blank" rel="external">维基百科 - 测试驱动开发</a></li>
+<li><a href="https://www.packtpub.com/application-development/test-driven-ios-development-swift" target="_blank" rel="external">Test-Driven iOS Development with Swift</a></li>
+</ol>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;1996年，Kent Beck提出了一个称作&lt;a href=&quot;https://zh.wikipedia.org/wiki/极限编程&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;strong&gt;极限编程&lt;/strong&gt;&lt;/a&gt;(Extreme Programming)的软件开发方法。它基于12条编程实践规则，其中一条规则倡导：开发者必须编写单元测试，并且软件的所有部分都必须经过彻底的测试。所有测试都必须在软件(或新功能)发布给客户之前通过。应当先于测试的生产代码之前编写测试。&lt;/p&gt;
+&lt;p&gt;这种测试优先的程序设计方法被称作&lt;a href=&quot;https://zh.wikipedia.org/wiki/测试驱动开发&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;测试驱动开发&lt;/a&gt;(Test-Driven Development，以下简称TDD)。&lt;strong&gt;它的基本思想是在开发功能代码之前，先编写测试代码。&lt;/strong&gt;也就是说在明确要开发某个功能后，首先思考如何对这个功能进行测试，完成测试代码的编写，然后再编写相关的实际功能代码，以满足这些测试用例。然后如此继续添加其他功能，直至完成全部功能的开发。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="软件工程" scheme="http://blog.morefun.mobi/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
+    
+    
+      <category term="TDD" scheme="http://blog.morefun.mobi/tags/TDD/"/>
+    
+  </entry>
+  
+  <entry>
     <title>打造更好的iOS文本输入体验</title>
     <link href="http://blog.morefun.mobi/2017/08/13/the-keys-to-a-better-text-input-experience-in-iOS/"/>
     <id>http://blog.morefun.mobi/2017/08/13/the-keys-to-a-better-text-input-experience-in-iOS/</id>
     <published>2017-08-13T09:28:20.000Z</published>
-    <updated>2017-08-22T17:25:24.000Z</updated>
+    <updated>2017-11-27T15:25:31.000Z</updated>
     
     <content type="html"><![CDATA[<p>做客户端开发，不可避免的需要和文本输入打交道。今天我们来聊聊，如何在iOS里面打造更好的文本输入体验。</p>
 <p>全文包含4部分内容：</p>
@@ -82,12 +218,14 @@
     
     </summary>
     
-      <category term="UI" scheme="http://blog.morefun.mobi/categories/UI/"/>
+      <category term="iOS" scheme="http://blog.morefun.mobi/categories/iOS/"/>
     
-      <category term="iOS" scheme="http://blog.morefun.mobi/categories/UI/iOS/"/>
     
-      <category term="文本" scheme="http://blog.morefun.mobi/categories/UI/iOS/%E6%96%87%E6%9C%AC/"/>
+      <category term="iOS" scheme="http://blog.morefun.mobi/tags/iOS/"/>
     
+      <category term="UI" scheme="http://blog.morefun.mobi/tags/UI/"/>
+    
+      <category term="文本" scheme="http://blog.morefun.mobi/tags/%E6%96%87%E6%9C%AC/"/>
     
   </entry>
   
@@ -96,7 +234,7 @@
     <link href="http://blog.morefun.mobi/2015/09/01/2015-09-01-he-shi-shi-yong-updateconstraints/"/>
     <id>http://blog.morefun.mobi/2015/09/01/2015-09-01-he-shi-shi-yong-updateconstraints/</id>
     <published>2015-09-01T15:22:00.000Z</published>
-    <updated>2017-08-13T08:38:48.000Z</updated>
+    <updated>2017-08-29T16:46:08.000Z</updated>
     
     <content type="html"><![CDATA[<p>UIView中的<code>updateConstraints</code>方法一直是一个令人纠结的地方。按照<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/#//apple_ref/occ/instm/UIView/updateConstraints" target="_blank" rel="external">苹果官方文档</a>中给出的建议：</p>
 <blockquote>
@@ -139,8 +277,10 @@
     
     </summary>
     
-      <category term="AutoLayout" scheme="http://blog.morefun.mobi/categories/AutoLayout/"/>
+      <category term="iOS" scheme="http://blog.morefun.mobi/categories/iOS/"/>
     
+    
+      <category term="AutoLayout" scheme="http://blog.morefun.mobi/tags/AutoLayout/"/>
     
   </entry>
   
@@ -149,7 +289,7 @@
     <link href="http://blog.morefun.mobi/2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/"/>
     <id>http://blog.morefun.mobi/2015/01/28/2015-01-28-autolayoutzhong-de-content-compression-resistancehe-content-huggingdao-di-shi-shi-yao-yi-si/</id>
     <published>2015-01-28T05:54:00.000Z</published>
-    <updated>2017-08-13T08:53:48.000Z</updated>
+    <updated>2017-08-29T16:45:25.000Z</updated>
     
     <content type="html"><![CDATA[<p>AutoLayout中，<code>Content Compression Resistance</code>和<code>Content Hugging</code>这两个概念，从字面上很难理解它们意思和用途，苹果官方文档中相关描述也比较少。中文翻译中大多数都把它们按字面翻译成<code>内容压缩阻力</code>和<code>内容吸附性</code>，也不是很好理解。最近搜索和查看了一些文章和资料，搞清楚了它们的作用，在此整理一下。</p>
 <a id="more"></a>
@@ -207,8 +347,10 @@
     
     </summary>
     
-      <category term="AutoLayout" scheme="http://blog.morefun.mobi/categories/AutoLayout/"/>
+      <category term="iOS" scheme="http://blog.morefun.mobi/categories/iOS/"/>
     
+    
+      <category term="AutoLayout" scheme="http://blog.morefun.mobi/tags/AutoLayout/"/>
     
   </entry>
   
@@ -217,7 +359,7 @@
     <link href="http://blog.morefun.mobi/2014/10/15/2014-10-15-shi-yong-autolayoutshi-xian-uitableviewde-celldong-tai-bu-ju-he-ke-bian-xing-gao/"/>
     <id>http://blog.morefun.mobi/2014/10/15/2014-10-15-shi-yong-autolayoutshi-xian-uitableviewde-celldong-tai-bu-ju-he-ke-bian-xing-gao/</id>
     <published>2014-10-15T10:22:00.000Z</published>
-    <updated>2017-08-13T08:53:48.000Z</updated>
+    <updated>2017-08-29T16:45:11.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文翻译自：<a href="http://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights" target="_blank" rel="external">stackoverflow</a></p>
 <p>有人在<a href="http://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights" target="_blank" rel="external">stackoverflow</a>上问了一个问题：</p>
@@ -292,8 +434,10 @@
     
     </summary>
     
-      <category term="AutoLayout" scheme="http://blog.morefun.mobi/categories/AutoLayout/"/>
+      <category term="iOS" scheme="http://blog.morefun.mobi/categories/iOS/"/>
     
+    
+      <category term="AutoLayout" scheme="http://blog.morefun.mobi/tags/AutoLayout/"/>
     
   </entry>
   
@@ -302,7 +446,7 @@
     <link href="http://blog.morefun.mobi/2014/07/15/2014-07-15-you-objective-cdao-swiftde-xie-gan-xiang-he-ti-shi/"/>
     <id>http://blog.morefun.mobi/2014/07/15/2014-07-15-you-objective-cdao-swiftde-xie-gan-xiang-he-ti-shi/</id>
     <published>2014-07-15T01:25:00.000Z</published>
-    <updated>2017-08-13T08:53:48.000Z</updated>
+    <updated>2017-08-29T16:44:44.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文分享一些在由Objective-C转换至Swift的过程中产生的思考，并尝试总结了一些技巧建议和一些误区陷阱。本文尽量通过对比来展示这两种语言在同一个问题上的不同处理方法。开始吧！</p>
 <h2 id="单文件-vs-接口-实现文件"><a href="#单文件-vs-接口-实现文件" class="headerlink" title="单文件 vs. 接口-实现文件"></a>单文件 vs. 接口-实现文件</h2><p>第一个重大的变化是：<code>interface.h/implementation.m</code>的文件结构被舍弃了。</p>
@@ -437,12 +581,14 @@
     
     </summary>
     
-      <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
+      <category term="Swift" scheme="http://blog.morefun.mobi/categories/Swift/"/>
     
-      <category term="Swift" scheme="http://blog.morefun.mobi/categories/Objc/Swift/"/>
     
-      <category term="编程思想" scheme="http://blog.morefun.mobi/categories/Objc/Swift/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
+      <category term="Objc" scheme="http://blog.morefun.mobi/tags/Objc/"/>
     
+      <category term="编程思想" scheme="http://blog.morefun.mobi/tags/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
+    
+      <category term="Swift" scheme="http://blog.morefun.mobi/tags/Swift/"/>
     
   </entry>
   
@@ -451,7 +597,7 @@
     <link href="http://blog.morefun.mobi/2014/05/17/2014-05-17-yi-model-view-viewmodel-for-ios/"/>
     <id>http://blog.morefun.mobi/2014/05/17/2014-05-17-yi-model-view-viewmodel-for-ios/</id>
     <published>2014-05-17T05:21:00.000Z</published>
-    <updated>2017-08-13T08:53:48.000Z</updated>
+    <updated>2017-08-29T16:44:10.000Z</updated>
     
     <content type="html"><![CDATA[<p>如果你已经做过一段时间的iOS开发，那么你一定听说过模型—视图—控制器或MVC模式。这是构建iOS应用的标准方式。不过最近，我越来越厌倦MVC的缺点。本文，我们先重温一下MVC是什么，它有什么缺点。然后再介绍一种构建应用的新方式：Model-View-ViewModel。</p>
 <h2 id="Model-View-Controller"><a href="#Model-View-Controller" class="headerlink" title="Model-View-Controller"></a>Model-View-Controller</h2><p>模型-视图-控制器模式(Model-View-Controller)是构造代码的权威范式。苹果甚至<a href="https://developer.apple.com/library/ios/documentation/general/conceptual/devpedia-cocoacore/MVC.html" target="_blank" rel="external">这么说</a>。MVC模式，所有对象都被界定为，要么是一个模型，要么是一个视图，或者要么是一个控制器。模型持有数据，视图向用户呈现一个可交互的界面，视图控制器做模型和视图之间的中介者。</p>
@@ -492,12 +638,14 @@
     
     </summary>
     
-      <category term="翻译" scheme="http://blog.morefun.mobi/categories/%E7%BF%BB%E8%AF%91/"/>
+      <category term="架构" scheme="http://blog.morefun.mobi/categories/%E6%9E%B6%E6%9E%84/"/>
     
-      <category term="设计模式" scheme="http://blog.morefun.mobi/categories/%E7%BF%BB%E8%AF%91/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
-      <category term="架构" scheme="http://blog.morefun.mobi/categories/%E7%BF%BB%E8%AF%91/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%9E%B6%E6%9E%84/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/tags/%E7%BF%BB%E8%AF%91/"/>
     
+      <category term="设计模式" scheme="http://blog.morefun.mobi/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="架构" scheme="http://blog.morefun.mobi/tags/%E6%9E%B6%E6%9E%84/"/>
     
   </entry>
   
@@ -506,7 +654,7 @@
     <link href="http://blog.morefun.mobi/2014/04/15/2014-04-15-shi-yong-nssecurecodingxie-yi-jin-xing-bian-jie-ma/"/>
     <id>http://blog.morefun.mobi/2014/04/15/2014-04-15-shi-yong-nssecurecodingxie-yi-jin-xing-bian-jie-ma/</id>
     <published>2014-04-15T06:08:00.000Z</published>
-    <updated>2017-08-13T08:53:48.000Z</updated>
+    <updated>2017-08-29T16:42:57.000Z</updated>
     
     <content type="html"><![CDATA[<p>在iOS和Mac OS上，<code>NSCoding</code>是一种简单方便的数据存储方法。它可以直接将你的数据模型对象写入一个文件，之后又可以直接将它们读入内存而不需要编写任何文件解析和序列化的逻辑。将一个对象（假设它已经实现了NSCoding协议）保存至一个文件，只需要这样做：</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">Foo *someFoo = [[Foo alloc] init];</div><div class="line">[<span class="built_in">NSKeyedArchiver</span> archiveRootObject:someFoo toFile:someFile];</div></pre></td></tr></table></figure>
@@ -554,12 +702,14 @@
     
     </summary>
     
-      <category term="翻译" scheme="http://blog.morefun.mobi/categories/%E7%BF%BB%E8%AF%91/"/>
+      <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
     
-      <category term="NSCoding" scheme="http://blog.morefun.mobi/categories/%E7%BF%BB%E8%AF%91/NSCoding/"/>
     
-      <category term="runtime" scheme="http://blog.morefun.mobi/categories/%E7%BF%BB%E8%AF%91/NSCoding/runtime/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/tags/%E7%BF%BB%E8%AF%91/"/>
     
+      <category term="运行时" scheme="http://blog.morefun.mobi/tags/%E8%BF%90%E8%A1%8C%E6%97%B6/"/>
+    
+      <category term="NSCoding" scheme="http://blog.morefun.mobi/tags/NSCoding/"/>
     
   </entry>
   
@@ -568,7 +718,7 @@
     <link href="http://blog.morefun.mobi/2014/03/21/2014-03-21-yi-7chong-chang-jian-de-dai-ma-wen-ti/"/>
     <id>http://blog.morefun.mobi/2014/03/21/2014-03-21-yi-7chong-chang-jian-de-dai-ma-wen-ti/</id>
     <published>2014-03-21T01:20:00.000Z</published>
-    <updated>2017-08-13T08:53:48.000Z</updated>
+    <updated>2017-08-29T16:42:32.000Z</updated>
     
     <content type="html"><![CDATA[<p>我进行过很多代码审查，其中有7种最常见的代码问题。</p>
 <h2 id="被注释掉的代码"><a href="#被注释掉的代码" class="headerlink" title="被注释掉的代码"></a>被注释掉的代码</h2><p>这让我觉得你没有学会如何使用版本控制工具和标记功能。如果这些旧代码已经不再有用了，我干嘛还需要读它！？</p>
@@ -597,8 +747,10 @@
     
       <category term="编程风格" scheme="http://blog.morefun.mobi/categories/%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC/"/>
     
-      <category term="翻译" scheme="http://blog.morefun.mobi/categories/%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC/%E7%BF%BB%E8%AF%91/"/>
     
+      <category term="翻译" scheme="http://blog.morefun.mobi/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+      <category term="编程风格" scheme="http://blog.morefun.mobi/tags/%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC/"/>
     
   </entry>
   
@@ -607,7 +759,7 @@
     <link href="http://blog.morefun.mobi/2014/03/16/2014-03-16-yi-adopting-modern-objective-c/"/>
     <id>http://blog.morefun.mobi/2014/03/16/2014-03-16-yi-adopting-modern-objective-c/</id>
     <published>2014-03-16T03:46:00.000Z</published>
-    <updated>2017-08-13T08:53:48.000Z</updated>
+    <updated>2017-08-29T16:42:02.000Z</updated>
     
     <content type="html"><![CDATA[<p>苹果2014年03月10日发布了一个新文档，介绍了Objective-C的几个新技巧，包括：</p>
 <ul>
@@ -617,7 +769,7 @@
 <li><a href="#arc">采用ARC</a></li>
 </ul>
 <p>文档名字叫《<a href="https://developer.apple.com/library/ios/releasenotes/ObjectiveC/ModernizationObjC/RevisionHistory.html#//apple_ref/doc/uid/TP40014150-CH99-SW1" target="_blank" rel="external">Adopting Modern Objective-C</a>》，将它翻译成中文了，以下是正文。<br><a id="more"></a></p>
-<h1 id="Adopting-Modern-Objective-C"><a href="#Adopting-Modern-Objective-C" class="headerlink" title="Adopting Modern Objective-C"></a>Adopting Modern Objective-C</h1><p>历经多年，Objective-C语言已经得到了许多增长和演变。虽然核心概念和做法保持一致，但这个语言的部分已经发生显著的变化和改进。这些现代化的改进增强了Objective-C的类型安全、内存管理、性能和一些其他方面，使你可以更轻松地编写正确的代码。在你现有的和将来的代码中采用这些改进可以使你的代码变得更一致，可读性更强，更灵活。</p>
+<h1 id="采用现代的Objective-C"><a href="#采用现代的Objective-C" class="headerlink" title="采用现代的Objective-C"></a>采用现代的Objective-C</h1><p>历经多年，Objective-C语言已经得到了许多增长和演变。虽然核心概念和做法保持一致，但这个语言的部分已经发生显著的变化和改进。这些现代化的改进增强了Objective-C的类型安全、内存管理、性能和一些其他方面，使你可以更轻松地编写正确的代码。在你现有的和将来的代码中采用这些改进可以使你的代码变得更一致，可读性更强，更灵活。</p>
 <p>XCode提供了一个工具来帮你完成这些结构上的更改。但是在你开始使用这个工具之前，你应该想了解一下它会给你的代码带来什么样的改变，以及为什么会带来这样的改变。本文档重点介绍了一些你可以在你的代码中应用的最显著的和最有用的新特性。</p>
 <h2 id="instancetype"><a href="#instancetype" class="headerlink" title="instancetype"></a><span id="instancetype"><strong>instancetype</strong></span></h2><p>在返回类实例对象的方法中用<code>instancetype</code>关键词作为方法的返回值类型。这包括在<code>alloc</code>、<code>init</code>和类工厂方法等方法中。</p>
 <p>在适当的地方用<code>instancetype</code>代替<code>id</code>，可以提高你的Objective-C代码的类型安全。例如，考虑下面的代码：</p>
@@ -722,8 +874,10 @@
     
       <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
     
-      <category term="翻译" scheme="http://blog.morefun.mobi/categories/Objc/%E7%BF%BB%E8%AF%91/"/>
     
+      <category term="Objc" scheme="http://blog.morefun.mobi/tags/Objc/"/>
+    
+      <category term="翻译" scheme="http://blog.morefun.mobi/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
@@ -732,7 +886,7 @@
     <link href="http://blog.morefun.mobi/2014/02/11/2014-02-11-ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/"/>
     <id>http://blog.morefun.mobi/2014/02/11/2014-02-11-ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/</id>
     <published>2014-02-11T06:27:00.000Z</published>
-    <updated>2017-08-13T08:53:48.000Z</updated>
+    <updated>2017-08-29T16:40:21.000Z</updated>
     
     <content type="html"><![CDATA[<p>已废弃(Deprecated)的API指的是那些已经过时并且在将来某个时间最终会被移除掉的方法或类。通常，苹果在引入一个更优秀的API后就会把原来的API给废弃掉。因为，新引入的API通常意味着可以更好的发挥新硬件或操作系统的性能，或者可以使用一些在构建原有API时根本还没有的语言特性(e.g. blocks)。</p>
 <p>每当苹果添加新方法的时候，他们都会在方法声明的后面用一个很特殊的宏来标明哪些iOS版本支持它们。例如，在UIViewController中，苹果引入了一个使用block来处理回调的方法用来展示一个模态controller，它的声明是这样的：</p>
@@ -779,10 +933,12 @@
     
     </summary>
     
-      <category term="iOS" scheme="http://blog.morefun.mobi/categories/iOS/"/>
+      <category term="工具" scheme="http://blog.morefun.mobi/categories/%E5%B7%A5%E5%85%B7/"/>
     
-      <category term="翻译" scheme="http://blog.morefun.mobi/categories/iOS/%E7%BF%BB%E8%AF%91/"/>
     
+      <category term="iOS" scheme="http://blog.morefun.mobi/tags/iOS/"/>
+    
+      <category term="翻译" scheme="http://blog.morefun.mobi/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
@@ -791,7 +947,7 @@
     <link href="http://blog.morefun.mobi/2014/01/08/2014-01-08-uiapplicationdelegate-launchoptions/"/>
     <id>http://blog.morefun.mobi/2014/01/08/2014-01-08-uiapplicationdelegate-launchoptions/</id>
     <published>2014-01-08T02:14:00.000Z</published>
-    <updated>2017-06-17T15:13:49.000Z</updated>
+    <updated>2017-08-29T16:39:44.000Z</updated>
     
     <content type="html"><![CDATA[<p>AppDelegate就是iOS的垃圾场。</p>
 <p>App的生命周期管理、URL处理、通知、CoreData、第三方SDK的初始化，还有那些看起来放到哪里都不合适的函数，统统都被塞到AppDelegate.m里面！</p>
@@ -887,8 +1043,10 @@
     
       <category term="iOS" scheme="http://blog.morefun.mobi/categories/iOS/"/>
     
-      <category term="翻译" scheme="http://blog.morefun.mobi/categories/iOS/%E7%BF%BB%E8%AF%91/"/>
     
+      <category term="iOS" scheme="http://blog.morefun.mobi/tags/iOS/"/>
+    
+      <category term="翻译" scheme="http://blog.morefun.mobi/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
@@ -897,7 +1055,7 @@
     <link href="http://blog.morefun.mobi/2013/06/24/2013-06-24-core-animation-3djie-shao-di-2bu-fen/"/>
     <id>http://blog.morefun.mobi/2013/06/24/2013-06-24-core-animation-3djie-shao-di-2bu-fen/</id>
     <published>2013-06-24T04:58:00.000Z</published>
-    <updated>2017-06-17T14:48:43.000Z</updated>
+    <updated>2017-08-29T16:39:26.000Z</updated>
     
     <content type="html"><![CDATA[<p><a href="/2013/06/11/2013-06-11-core-animation-3djie-shao-di-1bu-fen/">上一篇</a>教程中，我们已经学习了Core Animation中3D绘图的基本方法。这篇教程，我们准备深入一些，讲讲如何创建一个可交互的3D场景。我们将会创建一个类似于旋转木马的3D场景界面，用户可以通过拖拽手势来旋转界面。</p>
 <p>可能你已经在上一篇教程中见过最终APP的样子了，但是，让我们再来看一次吧：</p>
@@ -960,8 +1118,12 @@
     
       <category term="动画" scheme="http://blog.morefun.mobi/categories/%E5%8A%A8%E7%94%BB/"/>
     
-      <category term="翻译" scheme="http://blog.morefun.mobi/categories/%E5%8A%A8%E7%94%BB/%E7%BF%BB%E8%AF%91/"/>
     
+      <category term="动画" scheme="http://blog.morefun.mobi/tags/%E5%8A%A8%E7%94%BB/"/>
+    
+      <category term="翻译" scheme="http://blog.morefun.mobi/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+      <category term="CoreAnimation" scheme="http://blog.morefun.mobi/tags/CoreAnimation/"/>
     
   </entry>
   
@@ -970,7 +1132,7 @@
     <link href="http://blog.morefun.mobi/2013/06/11/2013-06-11-core-animation-3djie-shao-di-1bu-fen/"/>
     <id>http://blog.morefun.mobi/2013/06/11/2013-06-11-core-animation-3djie-shao-di-1bu-fen/</id>
     <published>2013-06-11T05:21:00.000Z</published>
-    <updated>2017-06-17T14:40:52.000Z</updated>
+    <updated>2017-08-29T16:39:00.000Z</updated>
     
     <content type="html"><![CDATA[<p>本教程将向你介绍Core Animation中用于绘制3D图形的一些技术。</p>
 <p>好消息是：我们不必直接使用OpenGL，仅用Core Animation就可以很容易实现一些3D效果。但是，“用Core Animation来制作一个复杂的3D游戏”也并不是一个好主意。</p>
@@ -1082,8 +1244,12 @@
     
       <category term="动画" scheme="http://blog.morefun.mobi/categories/%E5%8A%A8%E7%94%BB/"/>
     
-      <category term="翻译" scheme="http://blog.morefun.mobi/categories/%E5%8A%A8%E7%94%BB/%E7%BF%BB%E8%AF%91/"/>
     
+      <category term="动画" scheme="http://blog.morefun.mobi/tags/%E5%8A%A8%E7%94%BB/"/>
+    
+      <category term="翻译" scheme="http://blog.morefun.mobi/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+      <category term="CoreAnimation" scheme="http://blog.morefun.mobi/tags/CoreAnimation/"/>
     
   </entry>
   
@@ -1092,7 +1258,7 @@
     <link href="http://blog.morefun.mobi/2013/05/20/2013-05-20-ios-mvcshe-ji-mo-shi-zui-jia-shi-jian-yao-dian/"/>
     <id>http://blog.morefun.mobi/2013/05/20/2013-05-20-ios-mvcshe-ji-mo-shi-zui-jia-shi-jian-yao-dian/</id>
     <published>2013-05-20T03:04:00.000Z</published>
-    <updated>2017-06-17T14:16:15.000Z</updated>
+    <updated>2017-08-29T16:38:30.000Z</updated>
     
     <content type="html"><![CDATA[<p>一些关于MVC模式的实践要点，摘自《iOS5 Programming Pushing The Limits》。</p>
 <h3 id="模型-Model"><a href="#模型-Model" class="headerlink" title="模型(Model)"></a>模型(Model)</h3><ul>
@@ -1152,8 +1318,10 @@
     
       <category term="编程思想" scheme="http://blog.morefun.mobi/categories/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
     
-      <category term="设计模式" scheme="http://blog.morefun.mobi/categories/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
+      <category term="编程思想" scheme="http://blog.morefun.mobi/tags/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
+    
+      <category term="设计模式" scheme="http://blog.morefun.mobi/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   
@@ -1162,7 +1330,7 @@
     <link href="http://blog.morefun.mobi/2013/05/16/2013-05-16-ru-he-shi-yong-objcde-associatedobjecthan-shu-gei-xian-you-lei-tian-jia-xin-property/"/>
     <id>http://blog.morefun.mobi/2013/05/16/2013-05-16-ru-he-shi-yong-objcde-associatedobjecthan-shu-gei-xian-you-lei-tian-jia-xin-property/</id>
     <published>2013-05-16T03:49:00.000Z</published>
-    <updated>2017-06-17T14:14:19.000Z</updated>
+    <updated>2017-08-29T16:46:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>Objective-C的Category(类别)是一个很强大的特性。使用Category我们可以给现有类增加一些新的方法。但是也仅限于方法，不能直接增加新的property。但通过运行时中的<code>objc_setAssociatedObject</code>/<code>objc_getAssociatedObject</code>函数，就可以很方便的为现有类增加新property。</p>
 <p>如下面代码所示：</p>
@@ -1180,8 +1348,10 @@
     
       <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
     
-      <category term="runtime" scheme="http://blog.morefun.mobi/categories/Objc/runtime/"/>
     
+      <category term="Objc" scheme="http://blog.morefun.mobi/tags/Objc/"/>
+    
+      <category term="运行时" scheme="http://blog.morefun.mobi/tags/%E8%BF%90%E8%A1%8C%E6%97%B6/"/>
     
   </entry>
   
@@ -1190,7 +1360,7 @@
     <link href="http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-xia-pian/"/>
     <id>http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-xia-pian/</id>
     <published>2013-05-07T08:19:00.000Z</published>
-    <updated>2017-08-13T08:53:48.000Z</updated>
+    <updated>2017-11-28T04:48:40.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Dispatch-Queue的一些函数"><a href="#Dispatch-Queue的一些函数" class="headerlink" title="Dispatch Queue的一些函数"></a>Dispatch Queue的一些函数</h2><p>GCD还提供了许多很有用的API用于控制队列中的任务。接下来，我们挨个看看这些API，你就明白为什么GCD如此强大。</p>
 <h3 id="dispatch-set-target-queue"><a href="#dispatch-set-target-queue" class="headerlink" title="dispatch_set_target_queue"></a>dispatch_set_target_queue</h3><p><code>dispatch_set_target_queue</code>函数用于设置一个”目标”队列。这个函数主要用来为新创建的队列设置优先级。当用<code>dispatch_queue_create</code>函数创建一个队列后，无论创建的是并行队列还是串行队列，队列的优先级都和全局队列的默认优先级一样。创建队列后，你可以用这个函数来修改队列的优先级。下面的代码演示了如何给一个串行队列设置background优先级。</p>
@@ -1308,12 +1478,12 @@
     
     </summary>
     
-      <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
+      <category term="多线程" scheme="http://blog.morefun.mobi/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
-      <category term="GCD" scheme="http://blog.morefun.mobi/categories/Objc/GCD/"/>
     
-      <category term="翻译" scheme="http://blog.morefun.mobi/categories/Objc/GCD/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/tags/%E7%BF%BB%E8%AF%91/"/>
     
+      <category term="GCD" scheme="http://blog.morefun.mobi/tags/GCD/"/>
     
   </entry>
   
@@ -1322,7 +1492,7 @@
     <link href="http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-shang-pian/"/>
     <id>http://blog.morefun.mobi/2013/05/07/2013-05-07-gcdshi-yong-xiang-jie-shang-pian/</id>
     <published>2013-05-07T06:46:00.000Z</published>
-    <updated>2017-08-13T08:53:48.000Z</updated>
+    <updated>2017-11-28T04:48:30.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Dispatch-Queues"><a href="#Dispatch-Queues" class="headerlink" title="Dispatch Queues"></a>Dispatch Queues</h2><p>Dispatch Queue，顾名思义，它是一个队列，用于存储要执行的任务。程序员可以用block语法编写要执行的任务，再通过<code>dispatch_async</code>函数将它加入到一个dispatch队列中。然后dispatch队列会按照FIFO的顺序执行这些任务。如图7-1所示。</p>
 <p><img src="/images/posts/GCD7-1_execution_on_a_dispatch_queue.png" alt=""></p>
@@ -1389,12 +1559,12 @@
     
     </summary>
     
-      <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
+      <category term="多线程" scheme="http://blog.morefun.mobi/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
-      <category term="GCD" scheme="http://blog.morefun.mobi/categories/Objc/GCD/"/>
     
-      <category term="翻译" scheme="http://blog.morefun.mobi/categories/Objc/GCD/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://blog.morefun.mobi/tags/%E7%BF%BB%E8%AF%91/"/>
     
+      <category term="GCD" scheme="http://blog.morefun.mobi/tags/GCD/"/>
     
   </entry>
   
@@ -1403,7 +1573,7 @@
     <link href="http://blog.morefun.mobi/2013/04/24/2013-04-24-guan-yu-bu-yao-zai-inithe-deallocli-mian-shi-yong-accessor-de-wen-ti/"/>
     <id>http://blog.morefun.mobi/2013/04/24/2013-04-24-guan-yu-bu-yao-zai-inithe-deallocli-mian-shi-yong-accessor-de-wen-ti/</id>
     <published>2013-04-24T08:23:00.000Z</published>
-    <updated>2017-06-16T16:05:11.000Z</updated>
+    <updated>2017-08-29T16:51:59.000Z</updated>
     
     <content type="html"><![CDATA[<p>过去几年Cocoa社区已经发生了很大变化。曾经，在init/dealloc中使用accessor方法是很令人厌恶的，这种做法彻底地被认为是错误的。他们的说法是：最好直接操作实例变量，而不使用accessor方法。并且建议像这样写代码：</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">id</span>)initWithWhatever:(<span class="keyword">id</span>)whatever</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>((<span class="keyword">self</span> = [<span class="keyword">self</span> init]))</div><div class="line">    &#123;</div><div class="line">        _whatever = [whatever <span class="keyword">retain</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)dealloc</div><div class="line">&#123;</div><div class="line">    [_whatever release];</div><div class="line"></div><div class="line">    [<span class="keyword">super</span> dealloc];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -1438,8 +1608,10 @@
     
       <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
     
-      <category term="翻译" scheme="http://blog.morefun.mobi/categories/Objc/%E7%BF%BB%E8%AF%91/"/>
     
+      <category term="Objc" scheme="http://blog.morefun.mobi/tags/Objc/"/>
+    
+      <category term="翻译" scheme="http://blog.morefun.mobi/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
@@ -1448,7 +1620,7 @@
     <link href="http://blog.morefun.mobi/2013/04/19/2013-04-19-she-zhi-yin-ying-lu-jing-de-zhong-yao-xing/"/>
     <id>http://blog.morefun.mobi/2013/04/19/2013-04-19-she-zhi-yin-ying-lu-jing-de-zhong-yao-xing/</id>
     <published>2013-04-19T02:46:00.000Z</published>
-    <updated>2017-06-16T16:04:59.000Z</updated>
+    <updated>2017-08-29T16:51:40.000Z</updated>
     
     <content type="html"><![CDATA[<p>iOS中，给视图加阴影很容易，只需要：</p>
 <ol>
@@ -1489,113 +1661,10 @@
     
       <category term="iOS" scheme="http://blog.morefun.mobi/categories/iOS/"/>
     
-      <category term="性能" scheme="http://blog.morefun.mobi/categories/iOS/%E6%80%A7%E8%83%BD/"/>
     
+      <category term="iOS" scheme="http://blog.morefun.mobi/tags/iOS/"/>
     
-  </entry>
-  
-  <entry>
-    <title>高效的ARC代码和陷阱</title>
-    <link href="http://blog.morefun.mobi/2012/12/05/2012-12-05-effective-obj-c-arc-and-pitfalls-in-it/"/>
-    <id>http://blog.morefun.mobi/2012/12/05/2012-12-05-effective-obj-c-arc-and-pitfalls-in-it/</id>
-    <published>2012-12-05T02:00:00.000Z</published>
-    <updated>2017-08-13T08:53:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Objective-C是一个非常酷的编程语言。<a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html" target="_blank" rel="external">TIOBE</a>已经公布了十一月的编程语言排行榜，Objective-C很可能会再次成为年度编程语言。Objective-C的流行不只是因为iOS和Mac OS X平台的原因，还得益于它在移动设备上的高性能。在Objective-C中，手动内存管理代替了垃圾回收机制。当然，现在Objective-C也不需要纯手动管理内存了，苹果引入了自动引用计数(Automatic Reference Counting, 简称ARC)机制，在编译时自动加入内存管理代码。大部分情况下，这非常棒。然而，当ARC和Core Foundation对象混用的时候，总是感觉很混乱。今天，我们聊聊ARC的要点和陷阱，尤其是用toll-free bridging将Objc对象和CF对象相互转换时的一些注意事项。<a id="more"></a></p>
-<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>本文先简单的介绍一下ARC的两个主要的使用场景：Objective-C的property 和 ARC修饰符。然后再重点关注一下ARC与Core Foundation框架的内存管理问题。</p>
-<h3 id="ARC-和-Objective-C的property"><a href="#ARC-和-Objective-C的property" class="headerlink" title="ARC 和 Objective-C的property"></a>ARC 和 Objective-C的property</h3><p>首先感谢一下，没有<a href="https://twitter.com/amattn" target="_blank" rel="external">@amattn</a>写的《ARC最佳实践》，就很难有这篇文章。点击这个链接查看<a href="http://amattn.com/2011/12/07/arc_best_practices.html" target="_blank" rel="external">ARC Best Practices</a>的原文。下面是我总结的文章中的重点：</p>
-<ul>
-<li><p>需要retain的实例变量对象，用 <code>strong</code>。</p>
-  <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="keyword">id</span> childObject;</div></pre></td></tr></table></figure>
-</li>
-<li><p>防止引用循环(reference cycle)，要用 <code>weak</code>。</p>
-  <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span> delegate;</div></pre></td></tr></table></figure>
-</li>
-<li><p>基本数据类型，用 <code>assign</code>。</p>
-  <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span> width;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span> height;</div></pre></td></tr></table></figure>
-</li>
-<li><p>不可变的容器类型以及字符串和block，用 <code>copy</code>。要避免使用可变容器类型(比如：NSMutableArray这些…)作为property，如果要用可变的容器类型，就用 <code>strong</code>。</p>
-  <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span>* name;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSArray</span>* components;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) (<span class="keyword">void</span> (^)(<span class="keyword">void</span>)) job;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableArray</span>* badPatterns;</div></pre></td></tr></table></figure>
-</li>
-<li><p>dealloc中</p>
-<ul>
-<li>移除观察者。</li>
-<li>注销通知。</li>
-<li><del>停掉timer。</del>(<strong>译注</strong>：因为系统会retain传递给timer的target对象，在timer停掉前，target对象是不会被dealloc的。 所以原文里的这点是错误的，<font color="red">别把停掉timer的操作放到dealloc中。</font>在确定不再需要当前这对象的时候，要主动停掉timer。)</li>
-</ul>
-</li>
-<li><p>IBOutlets一般用 <code>weak</code>，除非它是文件的所有者(File’s Owner)在nib文件中的顶层对象。如果将它设置为strong了，就需要在<code>viewDidUnload</code>方法中将它设置为nil。</p>
-<p>  (<strong>译注</strong>：<code>viewDidUnload</code>在iOS6.0以后没有了，要移到<code>didReciveMemoryWorning</code>中。详细请阅读苹果的《<a href="https://developer.apple.com/library/content/featuredarticles/ViewControllerPGforiPhoneOS/DefiningYourSubclass.html#//apple_ref/doc/uid/TP40007457-CH7-SW1" target="_blank" rel="external">View Controller Programming Guide for iOS</a>》)</p>
-</li>
-</ul>
-<h3 id="ARC类型修饰符"><a href="#ARC类型修饰符" class="headerlink" title="ARC类型修饰符"></a>ARC类型修饰符</h3><p>类型修饰符的使用规则，可以看看我<a href="http://www.idryman.org/blog/2012/10/29/type-qualifiers/" target="_blank" rel="external">以前的一篇文章</a>。ARC相关的类型修饰符，有4个：</p>
-<ul>
-<li><code>__strong</code>表示到一个对象的强引用。只要有任意一个强引用指向对象，对象就不会被销毁。这个是ARC中所有对象的默认属性。</li>
-<li><code>__weak</code>指定到一个对象的弱引用。弱引用不会使它指向的对象保持一直存在，当没有任何强引用指向这个对象后，对象会被释放，然后弱引用会指向nil。</li>
-<li><code>__unsafe_unretained</code>指定到一个对象的弱引用，当它指向的对象被销毁后，它不会指向nil，就变成一个野指针了。</li>
-<li><code>__autoreleasing</code>用来表示参数按引用传递，在函数返回后，这个参数就被自动释放了。</li>
-</ul>
-<p>注意，ARC类型修饰符只能用在指针上。也就是说，必须把修饰符放到星号的右边。</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">MyClass * __<span class="keyword">weak</span> w_self = <span class="keyword">self</span>; <span class="comment">// 正确</span></div><div class="line">MyClass __<span class="keyword">weak</span> * w_self = <span class="keyword">self</span>; <span class="comment">// 错误! 可能导致很严重的bug!</span></div><div class="line">__<span class="keyword">weak</span> MyClass * w_self = <span class="keyword">self</span>; <span class="comment">// 错误!</span></div><div class="line"></div><div class="line">__<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) w_self = <span class="keyword">self</span>;</div><div class="line"><span class="comment">// 正确，将会被展开为 __weak (MyClass *) w_self = self;</span></div><div class="line"><span class="comment">// (参见gcc的typeof说明)</span></div><div class="line"></div><div class="line"><span class="keyword">typeof</span>(<span class="keyword">self</span>) __<span class="keyword">weak</span> w_self = <span class="keyword">self</span>; <span class="comment">// 正确, 这个安全些</span></div></pre></td></tr></table></figure>
-<p>等等，难道网上这么多写法都是错误的？哦，原来因为苹果官方文档里面提到：“你应该正确修饰变量。当修饰符用在对象变量上的时候，正确的格式是 <code>ClassName * qualifier variableName;</code> ”</p>
-<blockquote>
-<p>You should decorate variables correctly. When using qualifiers in an object variable declaration, the correct format is: <code>ClassName * qualifier variableName;</code></p>
-</blockquote>
-<h3 id="ARC-和-Toll-free绑定"><a href="#ARC-和-Toll-free绑定" class="headerlink" title="ARC 和 Toll-free绑定"></a>ARC 和 Toll-free绑定</h3><p>ARC和Core Foundation混用的时候坑最多。以下是一些重要的原则：</p>
-<ul>
-<li>传递Objc对象给一个CF引用时，要retain它。</li>
-<li>传递一个CF引用给一个Objc对象时，要release它。</li>
-<li>传递时如果不明确的指定对象的所有权，会很危险。有时Clang编译器会帮你修正，但不是总是会，这样就会造成很严重的问题。</li>
-<li>Core Foundation里面没有autorelease。你必须遵守它的内存管理规则：<ul>
-<li>名字中带有<code>Create</code>或<code>Copy</code>的函数返回的对象，你会持有它，因此你要负责释放它。</li>
-<li>如果函数名字中是带的<code>get</code>，你不会持有它返回的对象，不需要你释放它。</li>
-</ul>
-</li>
-</ul>
-<p>ARC中有两种方法来retain一个CF对象：用类型转换符<code>(__bridge_retained)</code> 或者 C函数<code>CFBridgingRetain</code>。我更喜欢后者，因为代码简洁清晰。</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">CFArrayRef</span> arr = <span class="built_in">CFBridgingRetain</span>( @[<span class="string">@"abc"</span>, <span class="string">@"def"</span>, @<span class="number">3.14</span>] );</div><div class="line"><span class="comment">// or CFArrayRef arr = (__bridge_retained CFArrayRef)@[...];</span></div><div class="line"><span class="comment">// do stuffs..</span></div><div class="line"><span class="built_in">CFRelease</span>(arr);</div></pre></td></tr></table></figure>
-<p>当用Core Foundation中名字中带有Create或者Copy的方法获得一个对象的时候，用<code>(__bridge_transfor)</code>或者<code>CFBridgingRealease</code>来将对象的所有权转移给ARC，这样就能让ARC负责对象的释放。</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)logFirstNameOfPerson:(ABRecordRef)person &#123;</div><div class="line">	<span class="built_in">NSString</span> *name = (<span class="built_in">NSString</span> *)<span class="built_in">CFBridgingRelease</span>(ABRecordCopyValue(person, kABPersonFirstNameProperty));</div><div class="line">	<span class="built_in">NSLog</span>(<span class="string">@"Person's first name: %@"</span>, name);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="Toll-free绑定的注意事项"><a href="#Toll-free绑定的注意事项" class="headerlink" title="Toll-free绑定的注意事项"></a>Toll-free绑定的注意事项</h3><p>要当心下面这种代码：</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">CGColorRef</span>)foo &#123;</div><div class="line">	<span class="built_in">UIColor</span>* color = [<span class="built_in">UIColor</span> redColor];</div><div class="line">	<span class="keyword">return</span> [color <span class="built_in">CGColor</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>它任何时候都可能崩溃。由于我们没有保持对UIColor的引用，它可能创建后就立即被释放掉了！CGColor也跟着释放掉了，就会引起崩溃。</p>
-<p>有3种方法来修正这个问题：</p>
-<ul>
-<li><p>使用<code>__autorelease</code>修饰符。这样UIColor就被延迟到当前runloop结束时才被释放，就不会崩溃了。应该是<a href="https://twitter.com/amattn" target="_blank" rel="external">@amattn</a>第一个发现了这种解决方法。</p>
-  <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">CGColorRef</span>)getFooColor &#123;</div><div class="line">	<span class="built_in">UIColor</span> * __autoreleasing color = [<span class="built_in">UIColor</span> redColor];</div><div class="line">	<span class="keyword">return</span> [color <span class="built_in">CGColor</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>使用Core Foundation的命名规则来改变返回值的所有权。</p>
-  <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">CGColorRef</span>)fooColorCopy &#123;</div><div class="line">	<span class="built_in">UIColor</span>* color = [<span class="built_in">UIColor</span> redColor];</div><div class="line">	<span class="built_in">CGColorRef</span> c = <span class="built_in">CFRetain</span>([color <span class="built_in">CGColor</span>]);</div><div class="line">	<span class="keyword">return</span> c;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">CGColorRef</span> c = [obj fooColorCopy];</div><div class="line"><span class="comment">// do stuffs</span></div><div class="line"><span class="built_in">CFRelease</span>(c);</div></pre></td></tr></table></figure>
-</li>
-<li><p>用self来持有CF对象。但如果self被dealloc，仍然会引起崩溃。</p>
-  <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">CGColorRef</span>)getFooColor &#123;</div><div class="line">	<span class="built_in">CGColorRef</span> c = <span class="keyword">self</span>.myColor.CGColor;</div><div class="line">	<span class="keyword">return</span> c;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="ARC中使用Block的注意事项"><a href="#ARC中使用Block的注意事项" class="headerlink" title="ARC中使用Block的注意事项"></a>ARC中使用Block的注意事项</h3><p>如果用block做实例变量，block会隐式的retain self，这样就会造成引用循环。</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MyClass</span> </span>&#123;</div><div class="line">	<span class="keyword">id</span> child;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) (<span class="keyword">void</span>(^)(<span class="keyword">void</span>)) job;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">MyClass</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)foo &#123;</div><div class="line">	<span class="keyword">self</span>.job = ^&#123;</div><div class="line">		[child work];</div><div class="line">		<span class="comment">// will expand to [self-&gt;child work]</span></div><div class="line">	&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>解决这个问题的方法是使用self的弱引用，然后在block内部临时将弱引用转换为强引用。在block内部使用强引用的原因，是因为我们想确保在使用self的时候它不会被其它人释放掉。</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)foo &#123;</div><div class="line">	MyClass * __<span class="keyword">weak</span> w_self = <span class="keyword">self</span>;</div><div class="line">	<span class="keyword">self</span>.block = ^&#123;</div><div class="line">		MyClass *s_self = w_self; <span class="comment">// self retained, but only in this scope!</span></div><div class="line">		<span class="keyword">if</span> (s_self) &#123;</div><div class="line">			[s_self-&gt;child work];</div><div class="line">			<span class="comment">// do other stuffs</span></div><div class="line">		&#125;</div><div class="line">	&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="NSError的注意事项"><a href="#NSError的注意事项" class="headerlink" title="NSError的注意事项"></a>NSError的注意事项</h3><p>实现带NSError参数方法的时候，要注意正确地使用类型修饰符！</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)doStuffWithError:(<span class="built_in">NSError</span> * __autoreleasing *)error; <span class="comment">// correct</span></div><div class="line">- (<span class="keyword">void</span>)doStuffWithError:(__autoreleasing <span class="built_in">NSError</span> **)error; <span class="comment">// wrong!</span></div></pre></td></tr></table></figure>
-<p>创建一个NSError对象的时候，通常最好把它定义成一个自动释放对象：</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSError</span> * __autoreleasing error = <span class="literal">nil</span>; <span class="comment">// 正确</span></div><div class="line">__autoreleasing <span class="built_in">NSError</span> *error = <span class="literal">nil</span>; <span class="comment">// 错误</span></div><div class="line"><span class="built_in">NSError</span> *error = <span class="literal">nil</span>; <span class="comment">// clang编译器下正确。(clang编译器会帮我们做优化)</span></div></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>ARC很方便，但是刚开始使用时可能不容易搞清楚用法。当面对复杂的对象所有权关系时，可以写一些测试代码，看看对象的retain count是怎样的。下面是我用来测试retain count的代码：</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)testCGColorRetainCount1 &#123;</div><div class="line">	<span class="built_in">CGColorRef</span> s_ref;</div><div class="line">	<span class="keyword">@autoreleasepool</span> &#123;</div><div class="line">		<span class="built_in">UIColor</span> * __autoreleasing shadowColor = [<span class="built_in">UIColor</span> colorWithRed:<span class="number">0.12</span> green:<span class="number">0.12</span> blue:<span class="number">0.12</span> alpha:<span class="number">1.0</span>];</div><div class="line">		s_ref = shadowColor.CGColor;</div><div class="line">		<span class="built_in">CFRetain</span>(s_ref);</div><div class="line">	&#125;</div><div class="line">	STAssertEquals(<span class="built_in">CFGetRetainCount</span>(s_ref), <span class="number">1</span>L, <span class="string">@"retain count owned by us"</span>);</div><div class="line"></div><div class="line">	<span class="built_in">CGColorRef</span>(^strangeBlock)(<span class="keyword">void</span>) = ^&#123;</div><div class="line">		<span class="keyword">return</span> <span class="built_in">CGColorCreateCopy</span>(s_ref);</div><div class="line">	&#125;;</div><div class="line"></div><div class="line">	<span class="built_in">CGColorRef</span> myCopy = strangeBlock();</div><div class="line">	STAssertEquals(<span class="built_in">CFGetRetainCount</span>(s_ref), <span class="number">2</span>L, <span class="string">@"retain count owned by block and us"</span>);</div><div class="line">	<span class="built_in">CFRelease</span>(s_ref);</div><div class="line">	STAssertEquals(<span class="built_in">CFGetRetainCount</span>(s_ref), <span class="number">1</span>L, <span class="string">@"retain count owned by block"</span>);</div><div class="line">	STAssertEquals(<span class="built_in">CFGetRetainCount</span>(myCopy), <span class="number">1</span>L, <span class="string">@"retain count owned by us"</span>);</div><div class="line">	<span class="built_in">CFRelease</span>(myCopy);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>希望这篇文章对你有帮助！欢迎讨论和分享！</p>
-<p>原文：<a href="http://www.idryman.org/blog/2012/11/22/arc-best-practices-and-pitfalls/" target="_blank" rel="external">Effective Obj-C ARC and Pitfalls in It</a></p>
-<p>译注：如果还想了解ARC更详细的知识，可以看看官方文档《<a href="http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html" target="_blank" rel="external">Transitioning to ARC Release Notes</a>》或这篇《<a href="http://www.cocoachina.com/bbs/read.php?tid=92507" target="_blank" rel="external">iOS5 ARC完全指南</a>》。</p>
-<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Objective-C是一个非常酷的编程语言。&lt;a href=&quot;http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;TIOBE&lt;/a&gt;已经公布了十一月的编程语言排行榜，Objective-C很可能会再次成为年度编程语言。Objective-C的流行不只是因为iOS和Mac OS X平台的原因，还得益于它在移动设备上的高性能。在Objective-C中，手动内存管理代替了垃圾回收机制。当然，现在Objective-C也不需要纯手动管理内存了，苹果引入了自动引用计数(Automatic Reference Counting, 简称ARC)机制，在编译时自动加入内存管理代码。大部分情况下，这非常棒。然而，当ARC和Core Foundation对象混用的时候，总是感觉很混乱。今天，我们聊聊ARC的要点和陷阱，尤其是用toll-free bridging将Objc对象和CF对象相互转换时的一些注意事项。
-    
-    </summary>
-    
-      <category term="Objc" scheme="http://blog.morefun.mobi/categories/Objc/"/>
-    
-      <category term="翻译" scheme="http://blog.morefun.mobi/categories/Objc/%E7%BF%BB%E8%AF%91/"/>
-    
+      <category term="性能" scheme="http://blog.morefun.mobi/tags/%E6%80%A7%E8%83%BD/"/>
     
   </entry>
   

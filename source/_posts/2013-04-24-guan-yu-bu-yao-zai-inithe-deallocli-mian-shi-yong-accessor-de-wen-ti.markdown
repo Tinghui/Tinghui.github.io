@@ -4,7 +4,8 @@ title: "在init和dealloc中使用accessor"
 date: 2013-04-24 16:23
 comments: true
 published: true
-categories: [Objc, 翻译]
+categories: Objc
+tag: [Objc,翻译]
 ---
 
 过去几年Cocoa社区已经发生了很大变化。曾经，在init/dealloc中使用accessor方法是很令人厌恶的，这种做法彻底地被认为是错误的。他们的说法是：最好直接操作实例变量，而不使用accessor方法。并且建议像这样写代码：

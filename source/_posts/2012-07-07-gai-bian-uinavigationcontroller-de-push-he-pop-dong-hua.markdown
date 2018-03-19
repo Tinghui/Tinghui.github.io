@@ -2,9 +2,10 @@
 layout: post
 title: "改变导航控制器的Push和Pop动画效果"
 date: 2012-07-07 20:00
-categories: [动画, iOS]
 published: true
 comments: true
+categories: iOS
+tag: [动画, iOS]
 ---
 
 UINavigationController的push和pop动画只有从右边推入和推出这一种效果。以下代码可以很灵活的改变UINavigationController的push或pop动画效果。

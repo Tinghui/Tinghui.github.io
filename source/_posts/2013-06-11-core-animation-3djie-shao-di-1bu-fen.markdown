@@ -4,7 +4,8 @@ title: "Core Animation 3D介绍 第1部分"
 date: 2013-06-11 13:21
 comments: true
 published: true
-categories: [动画, 翻译]
+categories: 动画
+tag: [动画,CoreAnimation,翻译]
 ---
 
 本教程将向你介绍Core Animation中用于绘制3D图形的一些技术。

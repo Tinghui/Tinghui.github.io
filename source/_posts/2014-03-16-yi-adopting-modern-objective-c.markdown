@@ -3,7 +3,8 @@ layout: post
 title: "Adopting Modern Objective-C"
 date: 2014-03-16 11:46
 comments: true
-categories: [Objc, 翻译]
+categories: Objc
+tag: [Objc,翻译]
 ---
 
 苹果2014年03月10日发布了一个新文档，介绍了Objective-C的几个新技巧，包括：
@@ -16,7 +17,7 @@ categories: [Objc, 翻译]
 文档名字叫《[Adopting Modern Objective-C](https://developer.apple.com/library/ios/releasenotes/ObjectiveC/ModernizationObjC/RevisionHistory.html#//apple_ref/doc/uid/TP40014150-CH99-SW1)》，将它翻译成中文了，以下是正文。
 <!--more-->
 
-# Adopting Modern Objective-C
+# 采用现代的Objective-C
 
 历经多年，Objective-C语言已经得到了许多增长和演变。虽然核心概念和做法保持一致，但这个语言的部分已经发生显著的变化和改进。这些现代化的改进增强了Objective-C的类型安全、内存管理、性能和一些其他方面，使你可以更轻松地编写正确的代码。在你现有的和将来的代码中采用这些改进可以使你的代码变得更一致，可读性更强，更灵活。
 

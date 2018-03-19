@@ -4,7 +4,8 @@ title: "GCD使用详解 下篇"
 date: 2013-05-07 16:19
 comments: true
 published: true
-categories: [Objc, GCD, 翻译]
+categories: 多线程
+tag: [GCD,翻译]
 ---
 
 ## Dispatch Queue的一些函数

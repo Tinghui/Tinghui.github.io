@@ -3,8 +3,9 @@ layout: post
 title: "给阴影设置shadowPath的重要性"
 date: 2013-04-19 10:46
 comments: true
-categories: [iOS, 性能]
 published: true
+categories: iOS
+tag: [iOS,性能]
 ---
 
 

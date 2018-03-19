@@ -2,9 +2,10 @@
 layout: post
 title: "兼容ARC和non-ARC代码"
 date: 2012-05-20 21:00
-categories: [工具, Xcode]
 published: true
 comments: true
+categories: 工具
+tag: [工具, Xcode]
 ---
 
 Objective-C引入ARC(Automatic Reference Counting)后，我们经常会面对这样一种困境：自己的项目使用了ARC，却发现要使用的第三方库是non-ARC的；或者自己的项目是non-ARC的，但是想使用一个ARC的第三方库。

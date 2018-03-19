@@ -4,7 +4,8 @@ title: "关于iOS和OS X废弃的API你需要知道的一切"
 date: 2014-02-11 14:27
 published: true
 comments: true
-categories: [iOS, 翻译]
+categories: 工具
+tag: [iOS,翻译]
 ---
 
 已废弃(Deprecated)的API指的是那些已经过时并且在将来某个时间最终会被移除掉的方法或类。通常，苹果在引入一个更优秀的API后就会把原来的API给废弃掉。因为，新引入的API通常意味着可以更好的发挥新硬件或操作系统的性能，或者可以使用一些在构建原有API时根本还没有的语言特性(e.g. blocks)。

@@ -3,7 +3,8 @@ layout: post
 title: "7种常见的代码问题"
 date: 2014-03-21 09:20
 comments: true
-categories: [编程风格, 翻译]
+categories: 编程风格
+tag: [编程风格,翻译]
 ---
 
 我进行过很多代码审查，其中有7种最常见的代码问题。

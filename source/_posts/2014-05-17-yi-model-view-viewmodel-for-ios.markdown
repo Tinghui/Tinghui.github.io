@@ -4,7 +4,8 @@ title: "iOS的Model-View-ViewModel模式"
 date: 2014-05-17 13:21
 comments: true
 publish: true
-categories: [翻译, 设计模式, 架构]
+categories: 架构
+tag: [翻译,设计模式,架构]
 ---
 
 如果你已经做过一段时间的iOS开发，那么你一定听说过模型—视图—控制器或MVC模式。这是构建iOS应用的标准方式。不过最近，我越来越厌倦MVC的缺点。本文，我们先重温一下MVC是什么，它有什么缺点。然后再介绍一种构建应用的新方式：Model-View-ViewModel。

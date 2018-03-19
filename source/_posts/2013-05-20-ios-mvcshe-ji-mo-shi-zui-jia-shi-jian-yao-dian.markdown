@@ -3,7 +3,8 @@ layout: post
 title: "iOS MVC设计模式最佳实践要点"
 date: 2013-05-20 11:04
 comments: true
-categories: [编程思想, 设计模式]
+categories: 编程思想
+tag: [编程思想,设计模式]
 ---
 
 一些关于MVC模式的实践要点，摘自《iOS5 Programming Pushing The Limits》。

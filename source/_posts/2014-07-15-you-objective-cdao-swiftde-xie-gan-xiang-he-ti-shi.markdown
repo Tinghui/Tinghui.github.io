@@ -3,7 +3,8 @@ layout: post
 title: "Objective-C到Swift：一些想法和建议"
 date: 2014-07-15 09:25
 comments: true
-categories: [Objc, Swift, 编程思想]
+categories: Swift
+tag: [Objc,Swift,编程思想]
 ---
 
 本文分享一些在由Objective-C转换至Swift的过程中产生的思考，并尝试总结了一些技巧建议和一些误区陷阱。本文尽量通过对比来展示这两种语言在同一个问题上的不同处理方法。开始吧！

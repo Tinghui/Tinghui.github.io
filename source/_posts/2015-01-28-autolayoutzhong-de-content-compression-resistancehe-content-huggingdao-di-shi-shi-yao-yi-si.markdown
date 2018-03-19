@@ -4,7 +4,8 @@ title: "Content Compression Resistance和Content Hugging"
 date: 2015-01-28 13:54
 published: true
 comments: true
-categories: [AutoLayout]
+categories: iOS
+tag: [AutoLayout]
 ---
 
 AutoLayout中，`Content Compression Resistance`和`Content Hugging`这两个概念，从字面上很难理解它们意思和用途，苹果官方文档中相关描述也比较少。中文翻译中大多数都把它们按字面翻译成`内容压缩阻力`和`内容吸附性`，也不是很好理解。最近搜索和查看了一些文章和资料，搞清楚了它们的作用，在此整理一下。

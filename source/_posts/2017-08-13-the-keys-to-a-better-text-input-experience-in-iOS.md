@@ -1,13 +1,11 @@
 ---
-layout: post
 title: 打造更好的iOS文本输入体验
 date: 2017-08-13 17:28:20
+layout: post
 published: true
 comments: true
-categories:
-- UI
-- iOS
-- 文本
+categories: iOS
+tag: [UI,iOS,文本]
 ---
 
 做客户端开发，不可避免的需要和文本输入打交道。今天我们来聊聊，如何在iOS里面打造更好的文本输入体验。

@@ -3,7 +3,8 @@ layout: post
 title: "使用NSSecureCoding协议进行编解码"
 date: 2014-04-15 14:08
 comments: true
-categories: [翻译, NSCoding, runtime]
+categories: Objc
+tag: [翻译,NSCoding,运行时]
 ---
 
 在iOS和Mac OS上，`NSCoding`是一种简单方便的数据存储方法。它可以直接将你的数据模型对象写入一个文件，之后又可以直接将它们读入内存而不需要编写任何文件解析和序列化的逻辑。将一个对象（假设它已经实现了NSCoding协议）保存至一个文件，只需要这样做：

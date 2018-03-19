@@ -4,7 +4,8 @@ title: "一起来构建@synchronized"
 date: 2015-06-27 12:03
 comments: true
 published: false
-categories: [翻译, Objc, Swift]
+categories: Objc
+tag: [翻译,Objc,Swift]
 ---
 
 本期的「一起来构建」，我将探索实现Objective-C的@synchronized语法。我会用Swfit来实现它，Objective-C版本的实现也什么差别。

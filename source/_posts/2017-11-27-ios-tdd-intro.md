@@ -1,0 +1,300 @@
+---
+title: iOS测试驱动开发入门介绍
+date: 2017-11-27 23:20:11
+layout: post
+published: true
+comments: true
+categories: 软件工程
+tag: [TDD,单元测试]
+---
+
+1996年，Kent Beck提出了一个称作[**极限编程**](https://zh.wikipedia.org/wiki/极限编程)(Extreme Programming)的软件开发方法。它基于12条编程实践规则，其中一条规则倡导：开发者必须编写单元测试，并且软件的所有部分都必须经过彻底的测试。所有测试都必须在软件(或新功能)发布给客户之前通过。应当先于测试的生产代码之前编写测试。
+
+这种测试优先的程序设计方法被称作[测试驱动开发](https://zh.wikipedia.org/wiki/测试驱动开发)(Test-Driven Development，以下简称TDD)。**它的基本思想是在开发功能代码之前，先编写测试代码。**也就是说在明确要开发某个功能后，首先思考如何对这个功能进行测试，完成测试代码的编写，然后再编写相关的实际功能代码，以满足这些测试用例。然后如此继续添加其他功能，直至完成全部功能的开发。 
+<!-- more --> 
+
+#### TDD的工作流程
+
+<p style="text-align:center"><img src="/images/posts/tdd_workflow.png" width="50%" height="50%" />
+</p>
+
+TDD的工作流程包括三个简单的步骤：红、绿、重构。
+
+**红**：首先编写一个测试用例，它需要测试尚未实现的功能或者你希望确保覆盖的边界条件。因为功能还未实现，测试会失败。
+
+**绿**：编写最简单的代码使测试通过。不用管代码写得好不好或者是否整洁。通常，最简单的实现对于要实现的功能来说是不够的，但只要足以使所有测试通过就可以。后面，你可以增加另外的测试，进一步推动功能的开发。
+
+**重构**：在「绿」步骤中，代码写得如何并不重要。因为在这一步中，你将会改进代码。删除重复，提取公共值，等等。在测试的保护下，不用担心会破坏已经实现的功能，可以大胆的重构，使代码更好。
+
+#### TDD示例演示
+
+假设我们正在开发一个博客平台的应用程序，每个帖子会有一个标题，我们需要将标题中所有单词的首字母转换成大写字母。我们将以TDD的方式来实现这个功能，以演示TDD的开发流程。
+
+首先打开Xcode，选择「iOS - Single View App」，创建一个新项目，名字就叫「FirstTDDDemo」好了。开发语言选择「Swift」，并勾选上「Include Unit Tests」。
+
+开始编写测试之前，我们先要思考以下问题:
+
+* **前置条件（Precondition）**：在调用该方法之前，系统的状态是什么？
+* **调用（Invocation）**：方法的签名应该是什么样的？如果该方法有输入参数，输入参数是什么？
+* **断言（Assertion）**：方法调用的预期结果是什么？怎么判断测试通过？
+
+对于我们这个例子来说：
+
+* 前置条件：没有。
+* 调用：该方法应该取一个字符串并返回一个字符串。方法的名字可以叫`makeHeadline`。
+* 断言：方法输出的字符串应该和输入字符串内容相同，并且所有单词都应该以大写字母开头。
+
+这些信息足够了，我们开始编写测试代码。
+
+**红 - 例1**
+
+打开`FirstTDDDemoTests.swift`文件，在`FirstTDDDemoTests`类中添加以下代码：
+
+```swift
+func testMakeHeadline_ReturnsStringWithEachWordStartCapital() {
+    let viewController = ViewController()
+    
+    let string = "this is A test headline"
+    
+    let headline = viewController.makeHeadline(string)
+}
+```
+
+这个测试方法没有写完，因为我们还没有写断言，没有测试任何东西。但我们不得不暂停。因为现在编译器已经报错，说我们的`ViewController`类没有`makeHeadline`方法。
+
+根据TDD流程，我们需要添加代码，直到编译器不再报错。测试代码编译不通过，也意味着“测试失败”。测试失败意味着我们需要编写代码。
+
+打开`ViewController.swift`，在`ViewController`类中加入以下代码：
+
+```swift
+func makeHeadline(_ string: String) {
+        
+}
+```
+
+编译器仍然在报错，但这是Xcode的原因，我们需要编译运行一下测试。按`Command+U`快捷键，编译运行测试，可以看到测试方法通过，`FirstTDDDemoTests`中所有的测试方法都绿了。
+
+但现在编译器仍然有一个警告：`headline`常量没有被使用。接下来，在测试中加入断言：
+
+```swift
+func testMakeHeadline_ReturnsStringWithEachWordStartCapital() {
+   let viewController = ViewController()
+   
+   let string = "this is A test headline"
+   
+   let headline = viewController.makeHeadline(string)
+   
+   XCTAssertEqual(headline, "This Is A Test Headline")
+}
+```
+
+`Command+U`编译运行测试，可以看到编译器又报错：Argument type '()' does not conform to expected type 'Equatable'。这是因为`makeHeadline(_:)`方法返回的是一个`Void`或者`()`，不能和一个`String`类型对象作比较。
+
+在开始编写测试代码之前，我们思考过方法的签名。方法应该接受一个字符串返回一个字符串，因此我们需要修改`makeHeadline(_:)`方法：
+
+```swift
+func makeHeadline(_ string: String) -> String {
+   return ""
+}
+```
+
+方法返回一个空字符串，测试编译通过。运行测试，可以看到测试失败。我们的测试已经编写完成，这次是测试断言失败。我们需要进入下一步。
+
+**绿 - 例1**
+
+现在，我们的测试在断言时失败。因为空字符串和我们期望得到的字符串`This Is A Test Headline`不相等。根据TDD流程，我们需要添加最简单的代码实现，让测试通过。
+
+回到`ViewController`，将`makeHeadline(_:)`修改为：
+
+```swift
+func makeHeadline(_ string: String) -> String {
+   return "This Is A Test Headline"
+}
+```
+
+我们知道，这段代码是错误的而且很愚蠢，但它是能让测试通过的最简单的代码。运行测试，可以看到测试通过。
+
+虽然我们刚刚编写的代码对于要实现的功能来说毫无用处，但它对我们开发人员仍然是有价值的。它告诉我们，还需要另一个测试。
+
+**重构 - 例1**
+
+在编写更多的测试之前，我们需要重构现有的测试。生产代码中，没有什么可以重构的，它已经不能更简单或更优雅了。但测试代码还是有优化空间的。
+
+我们知道，在XCTest框架中，每个测试类都有一个`setUp()`方法，该方法在每个测试用例被调用前都会被自动调用。
+
+通常，我们在编写测试用例的时候，每个测试类都只针对一个生产类进行测试。比如这里，`FirstTDDDemoTests`这个测试类针对`ViewController`这个生产类进行测试。如果后面要对其他生产类进行测试，通常情况下会为其单独创建一个测试类。
+
+如果我们的测试类`FirstTDDDemoTests`只针对`ViewController`类进行测试，不出意外的话，几乎所有测试用例都需要创建一个`ViewController`的实例对象。这无疑会很麻烦，并且会产生很多重复代码。
+
+所以，我们可以将`viewController`提取出来，成为`FirstTDDDemoTests`类的一个属性，并在`setUp()`方法中进行初始化。由于`setUp()`会在每个测试用例被调用之前被调用。这也相当于，每个测试用例开始时，它拿到的那个`viewController`都是新创建的一个对象，不会有其他测试用例运行后的遗留状态，也能够避免测试数据的干扰。
+
+```swift
+class FirstTDDDemoTests: XCTestCase {
+    
+    var viewController: ViewController!
+    
+    override func setUp() {
+        super.setUp()
+        // Put setup code here. This method is called before the invocation of each test method in the class.
+        viewController = ViewController()
+    }
+    
+    ...
+}
+```
+
+然后，测试用例中的`let viewController = ViewController()`可以移除掉：
+
+```swift
+func testMakeHeadline_ReturnsStringWithEachWordStartCapital() {
+   let string = "this is A test headline"
+   
+   let headline = viewController.makeHeadline(string)
+   
+   XCTAssertEqual(headline, "This Is A Test Headline")
+}
+```
+
+`Command+U`运行测试，测试通过。我们开始编写下一个测试用例。
+
+**红 - 例2**
+
+如前一节所述，我们编写的生产代码只适用于一个特定的标题，但我们要实现的功能必须适用于任何标题。所以，我们需要另一个测试。
+
+在`FirstTDDDemoTests`类中，增加以下测试：
+
+```swift
+func testMakeHeadline_ReturnsStringWithEachWordStartCapital2() {
+   let string = "Here is another Example"
+   
+   let headline = viewController.makeHeadline(string)
+   
+   XCTAssertEqual(headline, "Here Is Another Example")
+}
+```
+
+运行测试，显然会失败。
+
+**绿 - 例2**
+
+打开`ViewController.swift`，将`makeHeadline(_:)`的实现替换为如下代码：
+
+```swift
+func makeHeadline(_ string: String) -> String {
+   let words = string.components(separatedBy: " ")
+   
+   var headline = ""
+   for var word in words {
+       let firstCharacter = word.remove(at: word.startIndex)
+       headline += "\(String(firstCharacter).uppercased())\(word) "
+   }
+   
+   headline.remove(at: headline.index(before: headline.endIndex))
+   return headline
+}
+```
+
+这段实现代码，不过多解释。其实就是将标题拆分成单词列表，然后将单词首字母替换成大写，最后将所有单词拼接成新标题。
+
+运行测试，所有测试都通过。
+
+看起来，我们的工作已经完成，是吧？哈哈，永远不要忘了我们还要重构，除非已经没有任何可以重构的。
+
+**重构 - 例2**
+
+我们编写了两个测试用例，但测试相关的信息不是结构化的。我们可以修改一下，将它们改得更可读：
+
+```swift
+func testMakeHeadline_ReturnsStringWithEachWordStartCapital() {
+    let inputString = "this is A test headline"
+    let expectedHeadline = "This Is A Test Headline"
+    
+    let result = viewController.makeHeadline(inputString)
+    XCTAssertEqual(result, expectedHeadline)
+}
+
+func testMakeHeadline_ReturnsStringWithEachWordStartCapital2() {
+    let inputString = "Here is another Example"
+    let expectedHeadline = "Here Is Another Example"
+    
+    let result = viewController.makeHeadline(inputString)
+    XCTAssertEqual(result, expectedHeadline)
+}
+```
+
+现在，这两个测试用例都很容易阅读和理解。它们都遵循一个逻辑结构：前置条件、调用和断言。
+
+运行测试，所有测试应该仍然能通过。
+
+接下来，我们的实现代码也可以重构一下。现在的实现代码像是从Objective-C翻译过来的Swift代码。但Swift有很多不同的概念，编写的代码可以更少更易读。
+
+我们来将实现代码改得更Swfit化。将`makeHeadline(_:)`替换为如下代码：
+
+```swift
+func makeHeadline(_ string: String) -> String {
+    let headline = string
+        .components(separatedBy: " ")
+        .map {
+            var word = $0
+            let firstCharacter = word.remove(at: word.startIndex)
+            return "\(String(firstCharacter).uppercased())\(word)"
+        }
+        .joined(separator: " ")
+    
+    return headline
+}
+```
+
+修改后这个实现中，我们使用`map`函数来迭代单词数组，并返回另一个包含首字母大写的单词的数组。然后，通过使用空格作为分隔符，将结果转换为字符串。
+
+再次运行测试，以确保我们的重构没有破坏任何东西。所有的测试都应该通过。
+
+回顾一下，我们用一个例子演示了TDD的工作流程。我们从一个测试失败的测试开始。编写代码使测试通过。最后，重构代码以保持整洁。
+
+你看到的这些步骤看起来是如此的简单并且有点愚蠢，以至于你可能认为可以跳过一些步骤。但是，这样它就不再是TDD。TDD的美妙之处在于，这些步骤和规则非常简单。你不必浪费脑力去思考这些步骤到底意味着什么，只需要记住「红-绿-重构」的步骤：编写测试，使它们通过，然后改进代码。
+
+#### TDD的优缺点
+
+我们体验了TDD的开发流程，它在保证开发质量方面，很有吸引力。但它也是一种有别于传统开发流程的开发方法，有优点，也有缺点。
+
+**优点**
+
+* **产出的都是需要的代码**：遵循TDD的规则，当所有测试通过时，你必须停止编写生产代码。由于你写的代码都是以最简单的形式让测试通过的代码。所以，最终产品中的所有代码实际上都是实现这些功能所需要的代码。
+
+* **更模块化的设计**：在TDD中，你一次只集中一个小功能。而当你先编写测试时，代码会自动变得容易测试。易于测试的代码具有清晰的接口。这将为你的应用程序带来更模块化的设计。
+
+* **更易于维护**：由于应用程序的各个部分彼此解耦，并且具有清晰的接口，代码变得更易于维护。你可以在不影响其他模块的情况下为功能更换一个更好的实现。
+
+* **更易于重构**：所有功能都已经经过彻底地测试。你不用害怕做出巨大的修改，因为如果所有测试仍然通过，那么一切都安好。
+
+* **高测试覆盖率**：每个功能都有测试，这会带来高测试覆盖率，让你对自己的代码更有信心。
+
+* **测试既是代码的文档**：测试代码展示了你的代码是如何使用的。因此它相当于是你的代码的文档和示例代码，展示了代码的作用以及如何使用接口。
+
+* **更少的调试**：你每天浪费了多少时间在调试找Bug上？使用TDD，在编写测试时可以提前发现错误，更不容易产出Bug。
+
+**缺点**
+
+* **没有银弹**：测试有助于发现错误，但它们不能发现你在测试代码和实现代码中引入的bug。如果你没有明白你需要解决的问题是什么，那么编写测试也没有多大帮助。
+
+* **开始看起来比较慢**：如果你刚开始TDD，你会觉得需要更长的时间才能完成一个简单的实现。你需要先考虑接口设计，编写测试代码并运行测试，最后才能开始编写实现代码。
+
+* **团队中所有成员都需要做TDD**：由于TDD影响代码的设计，因此建议团队中的所有成员都使用TDD或者都不使用。除此之外，有时很难向管理层证明TDD。因为他们经常会觉得，如果开发人员花一半的时间来编写最终并不会存在于产品中的代码(测试代码)，那么新功能的实现将会需要更长的时间。所以，如果整个团队都认同单元测试的重要性，这才有所帮助。
+
+* **需求变化时需要维护测试用例**：也许对TDD最强烈的争论就是测试与代码一样必须进行维护。无论什么时候需求变化了，你都需要修改代码和测试。但是你使用的是TDD，这意味着你需要先更改测试，然后再通过测试。因此，实际上，这个缺点和前一个一样，显然需要花费更长时间。
+
+
+
+<font color=gray>
+全文完。
+
+以上大部分内容，来自「Test-Driven iOS Development with Swift」一书内容的转译。如果对iOS上的TDD感兴趣，推荐阅读该书。里面有一个贯穿全书的ToDoList应用作为例子，对数据模型的测试、视图控制器的测试、网络接口测试、UI界面测试以及如何使用Mock对象进行测试等内容都做了介绍。
+</font>
+
+
+参考：
+
+1. [维基百科 - 测试驱动开发](https://zh.wikipedia.org/wiki/测试驱动开发)
+2. [Test-Driven iOS Development with Swift](https://www.packtpub.com/application-development/test-driven-ios-development-swift)
+
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%" /></p>

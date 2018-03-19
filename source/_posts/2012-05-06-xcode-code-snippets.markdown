@@ -2,9 +2,10 @@
 layout: post
 title: "在Xcode中添加自定义代码片段"
 date: 2012-05-06 20:00
-categories: [工具, Xcode]
 published: true
 comments: true
+categories: 工具
+tag: [工具, Xcode]
 ---
 我们经常会定义一些retain的property，而且大概每次我们都会像这样写：
 

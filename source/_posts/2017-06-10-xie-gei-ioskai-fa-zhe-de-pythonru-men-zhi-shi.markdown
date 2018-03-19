@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "写给iOS开发者的Python入门知识"
+title: "写给iOS开发者的Python入门介绍"
 date: 2017-06-10 14:00
 comments: true
 published: false
-categories: 
-- Python
+categories: Python
+tag: [Python]
 ---
 
 最近对Python来了兴趣，在[codecademy.com](https://www.codecademy.com)上断断续续花了几天，学完了Python的入门教程，这里做个简单的总结。

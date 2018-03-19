@@ -4,8 +4,8 @@ title: "什么时候使用updateConstraints"
 date: 2015-09-01 23:22
 comments: true
 published: true
-categories:
-- AutoLayout
+categories: iOS
+tag: [AutoLayout]
 ---
 
 UIView中的`updateConstraints`方法一直是一个令人纠结的地方。按照[苹果官方文档](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/#//apple_ref/occ/instm/UIView/updateConstraints)中给出的建议：

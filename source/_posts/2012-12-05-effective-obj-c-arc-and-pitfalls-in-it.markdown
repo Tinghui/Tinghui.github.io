@@ -2,9 +2,10 @@
 layout: post
 title: "高效的ARC代码和陷阱"
 date: 2012-12-05 10:00
-categories: [Objc, 翻译]
 published: true
 comments: true
+categories: Objc
+tag: [Objc,翻译,ARC]
 ---
 
 Objective-C是一个非常酷的编程语言。[TIOBE](http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html)已经公布了十一月的编程语言排行榜，Objective-C很可能会再次成为年度编程语言。Objective-C的流行不只是因为iOS和Mac OS X平台的原因，还得益于它在移动设备上的高性能。在Objective-C中，手动内存管理代替了垃圾回收机制。当然，现在Objective-C也不需要纯手动管理内存了，苹果引入了自动引用计数(Automatic Reference Counting, 简称ARC)机制，在编译时自动加入内存管理代码。大部分情况下，这非常棒。然而，当ARC和Core Foundation对象混用的时候，总是感觉很混乱。今天，我们聊聊ARC的要点和陷阱，尤其是用toll-free bridging将Objc对象和CF对象相互转换时的一些注意事项。<!--more-->

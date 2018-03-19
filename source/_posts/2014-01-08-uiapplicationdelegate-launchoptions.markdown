@@ -4,7 +4,8 @@ title: "UIApplication​Delegate的launch​Options"
 date: 2014-01-08 10:14
 published: true
 comments: true
-categories: [iOS, 翻译]
+categories: iOS
+tag: [iOS,翻译]
 ---
 
 AppDelegate就是iOS的垃圾场。

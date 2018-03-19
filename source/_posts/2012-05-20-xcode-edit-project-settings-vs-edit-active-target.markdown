@@ -2,9 +2,10 @@
 layout: post
 title: "Target Settings和Project Settings的区别"
 date: 2012-05-20 23:00
-categories: [工具, Xcode]
 published: true
 comments: true
+categories: 工具
+tag: [工具, Xcode]
 ---
 
 ![](/images/posts/Project-setting-vs-Target-setting.png)

@@ -4,7 +4,8 @@ title: "使用Autolayout实现UITableView的Cell动态布局和动态行高"
 date: 2014-10-15 18:22
 comments: true
 published: true
-categories: [AutoLayout]
+categories: iOS
+tag: [AutoLayout]
 ---
 
 本文翻译自：[stackoverflow](http://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights)

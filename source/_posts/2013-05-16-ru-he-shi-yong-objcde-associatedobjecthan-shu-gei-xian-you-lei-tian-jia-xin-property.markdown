@@ -3,7 +3,8 @@ layout: post
 title: "使用objc的AssociatedObject函数给现有类添加新property"
 date: 2013-05-16 11:49
 comments: true
-categories: [Objc, runtime]
+categories: Objc
+tag: [Objc,运行时]
 ---
 
 Objective-C的Category(类别)是一个很强大的特性。使用Category我们可以给现有类增加一些新的方法。但是也仅限于方法，不能直接增加新的property。但通过运行时中的`objc_setAssociatedObject`/`objc_getAssociatedObject`函数，就可以很方便的为现有类增加新property。

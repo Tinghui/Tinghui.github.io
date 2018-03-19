@@ -4,7 +4,8 @@ title: "Core Animation 3D介绍 第2部分"
 date: 2013-06-24 12:58
 comments: true
 published: true
-categories: [动画, 翻译]
+categories: 动画
+tag: [CoreAnimation,动画,翻译]
 ---
 
 [上一篇](/2013/06/11/2013-06-11-core-animation-3djie-shao-di-1bu-fen/)教程中，我们已经学习了Core Animation中3D绘图的基本方法。这篇教程，我们准备深入一些，讲讲如何创建一个可交互的3D场景。我们将会创建一个类似于旋转木马的3D场景界面，用户可以通过拖拽手势来旋转界面。

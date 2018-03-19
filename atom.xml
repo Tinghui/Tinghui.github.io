@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.morefun.mobi/"/>
-  <updated>2017-11-28T04:44:18.968Z</updated>
+  <updated>2018-03-19T02:31:41.424Z</updated>
   <id>http://blog.morefun.mobi/</id>
   
   <author>
@@ -16,11 +16,63 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Swift的写时复制机制</title>
+    <link href="http://blog.morefun.mobi/2018/01/25/2018-01-25-copy-on-write-in-swift/"/>
+    <id>http://blog.morefun.mobi/2018/01/25/2018-01-25-copy-on-write-in-swift/</id>
+    <published>2018-01-25T12:18:09.000Z</published>
+    <updated>2018-03-19T02:31:41.424Z</updated>
+    
+    <content type="html"><![CDATA[<p>在Swift中，我们有引用类型（比如：类）和值类型（比如：结构体、元组、枚举）。值类型具有复制语义。这意味着如果你将一个值类型分配给一个变量，该值的底层数据将会被复制。你会得到两个具有相同内容的值，但分配在不同的内存地址中。</p>
+<p>如下例所示，把<code>str1</code>赋值给<code>str2</code>后，<code>str2</code>的内容和<code>str1</code>的内容相同，都是字符串“Hello”，但两个值的内存地址不同。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> str1 = <span class="string">"Hello"</span>  <span class="comment">//Hello</span></div><div class="line"><span class="keyword">var</span> str2 = str1     <span class="comment">//Hello，str1的内容被复制给str2，str2的内容和str1的内容一样</span></div><div class="line"></div><div class="line">address(of: str1)   <span class="comment">//0x604000059670</span></div><div class="line">address(of: str2)   <span class="comment">//0x604000059cd0</span></div></pre></td></tr></table></figure>
+<p>然而，把包含大量信息的值类型作为参数分配或传递给函数时，对于性能来说，复制是非常昂贵的操作。为了尽量减少这个问题，Swift标准库为一些值类型（比如数组、字典）实现了一套叫做<strong><a href="https://zh.wikipedia.org/wiki/寫入時複製" target="_blank" rel="external">写时复制</a></strong>的机制。</p>
+<p>其核心思想是，如果有多个调用者（callers）同时要求相同资源（如内存或磁盘上的数据存储），他们会共同获取相同的指针指向相同的资源，直到某个调用者试图修改资源的内容时，系统才会真正复制一份专用副本（private copy）给该调用者，而其他调用者所见到的最初的资源仍然保持不变。</p>
+<p>所以，如果只是将数组分配给一个变量或将其传递给一个函数并不会复制它，直到对它进行修改时才可能会进行复制，这样就提高了性能。</p>
+<a id="more"></a>
+<p>如下例所示，将<code>arr1</code>赋值给<code>arr2</code>时，并没有产生复制行为，两个数组的内存地址是相同的。当给<code>arr2</code>中加入一个新元素<code>7</code>之后，<code>arr2</code>发生改变，可以看到两个数组的内存地址不同。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]    <span class="comment">//[1, 3, 5]</span></div><div class="line"><span class="keyword">var</span> arr2 = arr1         <span class="comment">//[1, 3, 5]</span></div><div class="line"></div><div class="line">address(of: arr1)       <span class="comment">//0x600000075020</span></div><div class="line">address(of: arr2)       <span class="comment">//0x600000075020</span></div><div class="line"></div><div class="line">arr2.append(<span class="number">7</span>)          <span class="comment">//[1, 3, 5, 7]</span></div><div class="line"></div><div class="line">address(of: arr1)       <span class="comment">//0x600000075020</span></div><div class="line">address(of: arr2)       <span class="comment">//0x600000082640</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">address</span><span class="params">(of object: UnsafeRawPointer)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">let</span> addr = <span class="type">Int</span>(bitPattern: object)</div><div class="line">    <span class="keyword">return</span> <span class="type">String</span>(format: <span class="string">"%p"</span>, addr)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="实现写时复制"><a href="#实现写时复制" class="headerlink" title="实现写时复制"></a>实现写时复制</h2><p>写时复制不是值类型的默认行为，在Swift标准库中，也只有少数几个值类型实现了写时复制，比如：数组、字典、集合。也就是说并非所有的标准库中的值类型都有这个行为。如果我们有一个包含大量信息的结构体，也需要自己实现写时复制来提高性能以避免无用的复制。</p>
+<p>为了实现高效的写时复制特性，我们需要知道一个对象是否是唯一的。如果它是唯一的，我们可以直接原地修改对象，否则我们就需要在修改前创建对象的一个副本。为此我们需要用到Swift中的<code>isKnownUniquelyReferenced</code>函数来检查引用是否只有一个持有者。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Ref</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">  <span class="keyword">var</span> val : <span class="type">T</span></div><div class="line">  <span class="keyword">init</span>(<span class="number">_</span> v : <span class="type">T</span>) &#123;val = v&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Box</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">var</span> ref : <span class="type">Ref</span>&lt;<span class="type">T</span>&gt;</div><div class="line">    <span class="keyword">init</span>(<span class="number">_</span> x : <span class="type">T</span>) &#123; ref = <span class="type">Ref</span>(x) &#125;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> value: <span class="type">T</span> &#123;</div><div class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> ref.val &#125;</div><div class="line">        <span class="keyword">set</span> &#123;</div><div class="line">          <span class="keyword">if</span> (!isKnownUniquelyReferenced(&amp;ref)) &#123;</div><div class="line">            ref = <span class="type">Ref</span>(newValue)</div><div class="line">            <span class="keyword">return</span></div><div class="line">          &#125;</div><div class="line">          ref.val = newValue</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个例子来自Swift官方的<a href="https://github.com/apple/swift/blob/master/docs/OptimizationTips.rst#advice-use-copy-on-write-semantics-for-large-values" target="_blank" rel="external">性能优化技巧</a>，它展示了如何使用引用类型为一个泛型值类型实现写时复制。本质上，它只是一个管理引用类型的包装器，如果该值未被唯一引用，则只返回新实例；否则，只改变引用类型的值。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>写时复制是一种非常巧妙的用于优化值类型的复制性能的方法。这是一个在Swift中大量被使用的机制，尽管大多数时候我们都没有明确地看到它，但标准库中某些常用类型已经实现了这个机制。我们自定义的值类型，如果需要实现相同的机制，使用<code>isKnownUniquelyReferenced</code>函数也能很容易的实现。</p>
+<p><br><br>参考：</p>
+<ol>
+<li><a href="https://www.objccn.io/products/advanced-swift/" target="_blank" rel="external">Swift进阶</a> 一书中的「结构体和类」章节</li>
+<li><a href="https://developer.apple.com/swift/blog/?id=10" target="_blank" rel="external">Value and Reference Types</a></li>
+<li><a href="https://medium.com/@lucianoalmeida1/understanding-swift-copy-on-write-mechanisms-52ac31d68f2f" target="_blank" rel="external">Understanding Swift Copy-on-Write mechanisms</a></li>
+</ol>
+<p><br></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>
+
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在Swift中，我们有引用类型（比如：类）和值类型（比如：结构体、元组、枚举）。值类型具有复制语义。这意味着如果你将一个值类型分配给一个变量，该值的底层数据将会被复制。你会得到两个具有相同内容的值，但分配在不同的内存地址中。&lt;/p&gt;
+&lt;p&gt;如下例所示，把&lt;code&gt;str1&lt;/code&gt;赋值给&lt;code&gt;str2&lt;/code&gt;后，&lt;code&gt;str2&lt;/code&gt;的内容和&lt;code&gt;str1&lt;/code&gt;的内容相同，都是字符串“Hello”，但两个值的内存地址不同。&lt;/p&gt;
+&lt;figure class=&quot;highlight swift&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; str1 = &lt;span class=&quot;string&quot;&gt;&quot;Hello&quot;&lt;/span&gt;  &lt;span class=&quot;comment&quot;&gt;//Hello&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; str2 = str1     &lt;span class=&quot;comment&quot;&gt;//Hello，str1的内容被复制给str2，str2的内容和str1的内容一样&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;address(of: str1)   &lt;span class=&quot;comment&quot;&gt;//0x604000059670&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;address(of: str2)   &lt;span class=&quot;comment&quot;&gt;//0x604000059cd0&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然而，把包含大量信息的值类型作为参数分配或传递给函数时，对于性能来说，复制是非常昂贵的操作。为了尽量减少这个问题，Swift标准库为一些值类型（比如数组、字典）实现了一套叫做&lt;strong&gt;&lt;a href=&quot;https://zh.wikipedia.org/wiki/寫入時複製&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;写时复制&lt;/a&gt;&lt;/strong&gt;的机制。&lt;/p&gt;
+&lt;p&gt;其核心思想是，如果有多个调用者（callers）同时要求相同资源（如内存或磁盘上的数据存储），他们会共同获取相同的指针指向相同的资源，直到某个调用者试图修改资源的内容时，系统才会真正复制一份专用副本（private copy）给该调用者，而其他调用者所见到的最初的资源仍然保持不变。&lt;/p&gt;
+&lt;p&gt;所以，如果只是将数组分配给一个变量或将其传递给一个函数并不会复制它，直到对它进行修改时才可能会进行复制，这样就提高了性能。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Swift" scheme="http://blog.morefun.mobi/tags/Swift/"/>
+    
+      <category term="内存" scheme="http://blog.morefun.mobi/tags/%E5%86%85%E5%AD%98/"/>
+    
+      <category term="写时复制" scheme="http://blog.morefun.mobi/tags/%E5%86%99%E6%97%B6%E5%A4%8D%E5%88%B6/"/>
+    
+  </entry>
+  
+  <entry>
     <title>iOS测试驱动开发入门介绍</title>
-    <link href="http://blog.morefun.mobi/2017/11/27/ios-tdd-intro/"/>
-    <id>http://blog.morefun.mobi/2017/11/27/ios-tdd-intro/</id>
+    <link href="http://blog.morefun.mobi/2017/11/27/2017-11-27-ios-tdd-intro/"/>
+    <id>http://blog.morefun.mobi/2017/11/27/2017-11-27-ios-tdd-intro/</id>
     <published>2017-11-27T15:20:11.000Z</published>
-    <updated>2017-11-28T04:44:18.968Z</updated>
+    <updated>2018-01-20T03:22:06.000Z</updated>
     
     <content type="html"><![CDATA[<p>1996年，Kent Beck提出了一个称作<a href="https://zh.wikipedia.org/wiki/极限编程" target="_blank" rel="external"><strong>极限编程</strong></a>(Extreme Programming)的软件开发方法。它基于12条编程实践规则，其中一条规则倡导：开发者必须编写单元测试，并且软件的所有部分都必须经过彻底的测试。所有测试都必须在软件(或新功能)发布给客户之前通过。应当先于测试的生产代码之前编写测试。</p>
 <p>这种测试优先的程序设计方法被称作<a href="https://zh.wikipedia.org/wiki/测试驱动开发" target="_blank" rel="external">测试驱动开发</a>(Test-Driven Development，以下简称TDD)。<strong>它的基本思想是在开发功能代码之前，先编写测试代码。</strong>也就是说在明确要开发某个功能后，首先思考如何对这个功能进行测试，完成测试代码的编写，然后再编写相关的实际功能代码，以满足这些测试用例。然后如此继续添加其他功能，直至完成全部功能的开发。<br><a id="more"></a> </p>
@@ -149,12 +201,14 @@
     
       <category term="TDD" scheme="http://blog.morefun.mobi/tags/TDD/"/>
     
+      <category term="单元测试" scheme="http://blog.morefun.mobi/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/"/>
+    
   </entry>
   
   <entry>
     <title>打造更好的iOS文本输入体验</title>
-    <link href="http://blog.morefun.mobi/2017/08/13/the-keys-to-a-better-text-input-experience-in-iOS/"/>
-    <id>http://blog.morefun.mobi/2017/08/13/the-keys-to-a-better-text-input-experience-in-iOS/</id>
+    <link href="http://blog.morefun.mobi/2017/08/13/2017-08-13-the-keys-to-a-better-text-input-experience-in-iOS/"/>
+    <id>http://blog.morefun.mobi/2017/08/13/2017-08-13-the-keys-to-a-better-text-input-experience-in-iOS/</id>
     <published>2017-08-13T09:28:20.000Z</published>
     <updated>2017-11-27T15:25:31.000Z</updated>
     
@@ -1612,59 +1666,6 @@
       <category term="Objc" scheme="http://blog.morefun.mobi/tags/Objc/"/>
     
       <category term="翻译" scheme="http://blog.morefun.mobi/tags/%E7%BF%BB%E8%AF%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>给阴影设置shadowPath的重要性</title>
-    <link href="http://blog.morefun.mobi/2013/04/19/2013-04-19-she-zhi-yin-ying-lu-jing-de-zhong-yao-xing/"/>
-    <id>http://blog.morefun.mobi/2013/04/19/2013-04-19-she-zhi-yin-ying-lu-jing-de-zhong-yao-xing/</id>
-    <published>2013-04-19T02:46:00.000Z</published>
-    <updated>2017-08-29T16:51:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>iOS中，给视图加阴影很容易，只需要：</p>
-<ol>
-<li>项目中引入QuartzCore框架</li>
-<li>实现文件中import QuartzCore的头文件</li>
-<li>然后仅需一行代码<code>[myView.layer setShadowOpacity:0.5]</code></li>
-</ol>
-<p><img src="https://markpospesel.files.wordpress.com/2012/04/shadow1.png?w=584" alt="image">  </p>
-<p>然而，最简单的方法通常都不是性能最好的方法。<br><a id="more"></a></p>
-<p>如果再用这个视图作动画(特别当它是UITableViewCell的一部分的时候)，你可能会注意到动画的卡顿。这是因为在计算视图阴影的时候，为了计算出怎样渲染视图的阴影，Core Animation需要做一次离屏渲染才能确定视图的形状。</p>
-<p>为了证明这一点。现在打开模拟器，勾选上「Debug」菜单中的「Color Off-screen Rendered」选项。</p>
-<p><img src="https://markpospesel.files.wordpress.com/2012/04/simulator-menu.png?w=584" alt="image"></p>
-<p>或者，接上iOS设备，启动Instruments(⌘I)，选择Core Animation模板，选中Core Animation栏，勾上”Color Offscreen-Rendered Yellow”选项。</p>
-<p><img src="https://markpospesel.files.wordpress.com/2012/04/instruments.png?w=584" alt="IMAGE"></p>
-<p>之后在模拟器（或设备）上，会看到类似下面的画面：</p>
-<p><img src="https://markpospesel.files.wordpress.com/2012/04/offscreen-rendered1.png?w=584" alt="IMAGE"></p>
-<p>这表明某些东西（在我们这个例子中就是阴影）造成了一个昂贵的离屏渲染。</p>
-<h3 id="快速修正"><a href="#快速修正" class="headerlink" title="快速修正"></a>快速修正</h3><p>幸运地是，修正阴影的这个性能问题和添加阴影一样简单。只需告诉Core Animation视图是什么形状的就行了。使用view.layer的<code>setShadowPath:</code>方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[myView.layer setShadowPath:[[UIBezierPath bezierPathWithRect:myView.bounds] CGPath]];</div></pre></td></tr></table></figure>
-<p>(注意：因为视图不同的形状，这里代码可能有所不同。UIBezierPath有许多便捷的方法可以调用。比如你的视图有圆角，可以使用<code>bezierPathWithRoundedRect:cornerRadius:</code>方法。)</p>
-<p>现在再测试一下，指示离屏渲染内容的黄色区块应该消失了吧。</p>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>当视图的bounds变化后，你需要更新layer的shadowPath。同样，如果你要做一个bounds变化的动画，也需要给layer的shadowPath做动画来匹配bounds的变化。给layer的shadowPath做动画需要用到CAAnimation，因为UIView不能直接对shadowPath做动画(shadowPath是CALayer的属性)。用CAKeyframeAnimation可以很简单地对shadowPath做一个动画，只需从一个CGPath变化到另一个CGPath就可以了。</p>
-<p>原文: <a href="http://markpospesel.wordpress.com/2012/04/03/on-the-importance-of-setting-shadowpath/" target="_blank" rel="external">On the importance of setting shadowPath</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;iOS中，给视图加阴影很容易，只需要：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;项目中引入QuartzCore框架&lt;/li&gt;
-&lt;li&gt;实现文件中import QuartzCore的头文件&lt;/li&gt;
-&lt;li&gt;然后仅需一行代码&lt;code&gt;[myView.layer setShadowOpacity:0.5]&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src=&quot;https://markpospesel.files.wordpress.com/2012/04/shadow1.png?w=584&quot; alt=&quot;image&quot;&gt;  &lt;/p&gt;
-&lt;p&gt;然而，最简单的方法通常都不是性能最好的方法。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="iOS" scheme="http://blog.morefun.mobi/categories/iOS/"/>
-    
-    
-      <category term="iOS" scheme="http://blog.morefun.mobi/tags/iOS/"/>
-    
-      <category term="性能" scheme="http://blog.morefun.mobi/tags/%E6%80%A7%E8%83%BD/"/>
     
   </entry>
   

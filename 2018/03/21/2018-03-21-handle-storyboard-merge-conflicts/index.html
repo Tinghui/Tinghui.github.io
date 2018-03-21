@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> [译]处理Storyboard的合并冲突 · Coding With MoreFun</title><meta name="description" content="[译]处理Storyboard的合并冲突 - Tinghui"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://blog.morefun.mobi/atom.xml" title="Coding With MoreFun"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/Tinghui" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="mailto:tinghui.zhang3@gmail.com" target="_self" class="nav-list-link">EMAIL</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">[译]处理Storyboard的合并冲突</h1><div class="post-info">2018年3月21日</div><div class="post-content"><p>Storyboard是用于开发iOS、macOS、tvOS和watchOS用户界面的非常有用的工具。它除了提供一种用auto layout进行可视化布局界面的方法之外，还提供了一种构建和查看视图控制器之间的导航和关系的方法。如果使用得当，它们可以极大地简化和减少开发人员在项目中进行交互所需的代码量。那么为什么不是所有的开发者都使用storyboard呢？</p>
+<p>不使用storyboard的一个被提及的最多的原因就是合并冲突。在一个团队中，如果多人同时使用一个storyboard，这种情况下，合并冲突是一种常见现象，这足以阻止在团队中使用storyboard。而且storyboard是机器生成的XML，合并冲突难以诊断和解决。但是，很多情况下，并不一定非要这样做。</p>
+<p>有五种常见情况，在storyboard中经常遇到合并冲突。这篇文章将详细介绍这些内容，以描述合并冲突是如何发生的，如何避免以及如何解决它们。</p>
+<a id="more"></a>
+<h2 id="文档信息"><a href="#文档信息" class="headerlink" title="文档信息"></a>文档信息</h2><p>当新版本的Xcode发布时，会发生一个最简单的合并冲突。当一个用户在旧版Interface Builder中编辑并提交storyboard时，另一用户在新版Interface Builder中编辑并提交相同的storyboard，会发生合并冲突。请注意，甚至都不需要对storyboard进行任何实质性的修改——只需打开storyboard就足以产生修改。</p>
+<p>为什么会出现合并冲突？在这种情况下，Xcode更新了storyboard源文件中的<code>document</code>标签和<code>plugIn</code>标签，如图1所示：</p>
+<p><img src="/images/posts/20180226_storyboard_figure1@2x.png" alt="Figure 1"></p>
+<p>这种合并冲突是最容易解决的：只需注意是否修改storyboard时使用了只在新版本中才支持的新特性即可。因此最好的解决方案就是选择较新的版本来解决冲突并合并。<strong>当然，如果没有发生实质性的修改，开发人员应该恢复对storyboard的更改，而不是将其包含在提交中。</strong></p>
+<p>有一点需要注意：storyboard的初始视图控制器（initial view controller）也在<code>document</code>标签中指定——请务必在解决合并冲突之前检查它是否未被更改。</p>
+<p>为了避免这种类型的合并冲突，建议团队同步更新Xcode。</p>
+<h2 id="自动更新"><a href="#自动更新" class="headerlink" title="自动更新"></a>自动更新</h2><p>似乎每次开发人员打开storyboard时，Interface Builder都会自动更新它。通常情况下，更新是由于在具有不同显示器尺寸或类型的不同机器（例如，视网膜与非视网膜）上打开storyboard而引起的。这种类型的更改（如果提交）可能会导致合并冲突（请参见图2）。</p>
+<p><img src="/images/posts/20180226_storyboard_figure2@2x.png" alt="Figure 2"></p>
+<p>这类冲突很容易识别，因为整个文档中视图的<code>frame</code>或布局信息的变化很小。为了避免这类冲突，请不要条件反射似的自动提交更改。开发人员应当评估他们是否真的对storyboard进行了修改，只有真的进行了修改，才将其包含在提交中。如果遇到此类合并冲突，最简单的方法是查看冲突，如果它们是较小的布局调整，选择最新的更改以解决冲突。如果冲突显示相应的约束条件也发生了变化（可以通过检查更新了<code>rect</code>信息那个对象的<code>id</code>是否被<code>更新后的约束条件</code>引用来确定是否如此），则布局的更改可能是因为更新了约束条件，那么应当在解决合并冲突时包含更新后的约束。</p>
+<h2 id="资源信息"><a href="#资源信息" class="headerlink" title="资源信息"></a>资源信息</h2><p>这种类型的冲突发生在两个开发人员在storyboard中使用之前没有使用过的图片资源时。图片资源可用于按钮、图像视图或任何其他可显示图像的视图。对图片资源的引用被添加到storyboard的XML文件中的资源部分（resources section），这可能导致合并冲突，而不管是在storyboard中的哪个位置使用了图片（参见图3）。</p>
+<p><img src="/images/posts/20180226_storyboard_figure3@2x.png" alt="Figure 3"></p>
+<p>幸运的是，资源部分的冲突微不足道——它与向Xcode项目文件中添加新文件时的冲突非常相似。选择其中一个“双方”可取的选项以合并更改，顺序无关紧要。</p>
+<h2 id="多个新场景（New-Scenes）"><a href="#多个新场景（New-Scenes）" class="headerlink" title="多个新场景（New Scenes）"></a>多个新场景（New Scenes）</h2><p>当两个开发人员各自都将新场景添加到storyboard中，并且storyboard将新场景添加到XML中的相同位置，则可能会发生此冲突。为了解决冲突，请检查它们以确保冲突处于场景（scene）级别，如图4所示。</p>
+<p><img src="/images/posts/20180226_storyboard_figure4@2x.png" alt="Figure 4"></p>
+<p>检查每一方的冲突。如果产生冲突的XML被包含在<code>scene</code>标签中（包括<code>scene</code>标签），并且冲突出现在XML中的相同位置，则冲突可能属于此类别。复杂一些的冲突也可以用同样的方式来确定，如果一方或两方都有几个场景元素，则可能是开发者在storyboard中添加了多个场景。如果两方的冲突是发生在同一个场景元素中，那么冲突属于下一个类别：“编辑同一场景”。</p>
+<p>有两种方法可以解决冲突，具体取决于如何处理差异。如果是两方整个场景的差异，则选择一个“双方”可取的选项来合并冲突，场景的顺序无关紧要。如果两方的场景有点类似，diff可能看起来像图4中这个例子，场景的某些部分看起来没有变化，但其他部分有冲突。在这种情况下，使用文本编辑器将场景从一方移到另一方场景的下方，然后移除所有冲突标签。移除每个场景的冲突标签时注意保持一致——如果场景是右侧的，则只移除它在左侧产生的冲突。</p>
+<p>合并后但在提交已解决的冲突之前，请务必打开storyboard以确认更改是否正确，而且没有破坏XML结构。 然后，更新新场景的布局，因为它们可能堆叠在一起。</p>
+<h2 id="编辑同一场景"><a href="#编辑同一场景" class="headerlink" title="编辑同一场景"></a>编辑同一场景</h2><p>当两个开发人员对同一场景进行编辑时会发生此类冲突。有时开发人员可以侥幸避免同时编辑相同场景的冲突——诀窍是避免直接或通过约束触碰到场景中的相同对象。由于XML非常复杂，发生冲突时通常难以手动解决。不仅场景中的对象会有差异，而且每一个对象都可能和其他对象有约束交互关系。有关这种类型的合并冲突的示例，请参见图5。</p>
+<p><img src="/images/posts/20180226_storyboard_figure5@2x.png" alt="Figure 5"></p>
+<p>“编辑同一场景”类型冲突的最佳解决方法是提前避免它们。给开发人员分配任务时，将任务以场景进行隔离，如果多个任务会影响storyboard中的同一个场景，请检查这些任务是否可以组合或可以分配给同一开发人员以协调更改并避免冲突。</p>
+<p><code>Storyboard references</code>技术对大型storyboard特别有用。Interface Builder可以将一个storyboard reference对象放置在任何storyboard中，它可以表示任何其他storyboard的场景（只需在storyboard reference对象的检查器中选择storyboard和场景）。你可以将segues附加到storyboard reference中，它们就像同一个storyboard中的场景一样。Interface Builder还提供了一个工具，用于将一个或多个场景剪切出来以制作一个新的storyboard，并用一个storyboard reference对象（选中一个或多个场景后，使用菜单命令 「Editor | Refactor to Storyboard…」）来替换被剪切出去的场景。</p>
+<p>另一种方法是，当一个场景的某些部分服务于不同的功能需求时，将这部分分解为可嵌入场景或父视图控制器中的子视图控制器。这可能会导致管理子视图控制器之间的交互的复杂性出现小幅增加，带来的好处是使其分隔成较小的单元，可以由不同的开发人员编辑。</p>
+<p>发生这种冲突时，最快的解决方案是接受更复杂的一方的更改，放弃简单的一方的更改，然后将更改合并到父分支中，并将来自父分支的更改合并回简单的一方的分支。此时，开发人员可以重新执行本来已做的更改，并根据需要对从更复杂的一方引入的更改进行调整、测试并进行合并，就不会发生冲突。</p>
+<p>为什么不直接合并冲突然后祈祷不会出错？以前我尝试这种方法时，经常遇到storyboard出现怪异的行为，因为XML没有以Interface Builder可以处理的方式进行更新。这种怪异的行为可能以任何形式出现，可能是对象的布局错误，也可能是在Interface Builder中对象无法按预期地响应编辑操作。怪异和意想不到的行为也可能出现在App运行过程中，例如按钮可能无法按预期地识别点击操作，或者可能发生与现有约束联系起来毫无理由的布局问题。这些类型的问题令人沮丧，需要很长时间进行研究和解决，特别是当你没有意识到这些问题是由于尝试手动解决合并冲突造成的。这种情况下，你最终只能将场景分裂重建，以使其正常工作。</p>
+<h2 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h2><p>当你慢慢熟悉阅读storyboard的XML源码并诊断冲突类型后，你可能会遇到在尝试合并时发生多种不同类型的冲突的情况。以上描述的这些方法可以组合使用来解决storyboard的多重冲突——只需注意准确识别每种类型的冲突或者可能发生的糟糕情况。</p>
+<h2 id="无所畏惧"><a href="#无所畏惧" class="headerlink" title="无所畏惧"></a>无所畏惧</h2><p>使用这里描述的类别以及在为开发人员分配任务方面的一些谨慎和纪律性时，故事板中的合并冲突可能会从灾难性变为有效处理。 不要错过项目中的故事板的好处，以避免合并冲突可能带来的一些可能的痛苦 - 您可以处理它们！</p>
+<p>使用这里描述的这些方法并且在分配任务给开发人员时谨慎合理一些，storyboard中的冲突就能得到有效的处理，不再会是灾难。不要仅仅为了避免合并冲突可能带来的一些痛苦就错过了在项目中使用storyboard的好处 ——你能解决它们！</p>
+<p><br></p>
+<p>译自：<a href="http://martiancraft.com/blog/2018/02/handling-storyboard-merge-conflicts/?utm_campaign=iOS+Dev+Weekly&amp;utm_medium=email&amp;utm_source=iOS+Dev+Weekly+Issue+341" target="_blank" rel="external">HANDLING STORYBOARD MERGE CONFLICTS</a></p>
+<p><br></p>
+<p style="text-align:center"><img src="/images/posts/thx_money.png" width="50%" height="50%"></p>
+
+
+</div></article></div></main><footer><div class="paginator"><a href="/2018/01/25/2018-01-25-copy-on-write-in-swift/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'rockonmycode';
+var disqus_identifier = '2018/03/21/2018-03-21-handle-storyboard-merge-conflicts/';
+var disqus_title = '[译]处理Storyboard的合并冲突';
+var disqus_url = 'http://blog.morefun.mobi/2018/03/21/2018-03-21-handle-storyboard-merge-conflicts/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//rockonmycode.disqus.com/count.js" async></script><div class="copyright"><p>© 2012 - 2018 <a href="http://blog.morefun.mobi">Tinghui</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>
